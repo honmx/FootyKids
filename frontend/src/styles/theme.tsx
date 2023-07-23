@@ -1,0 +1,101 @@
+/* eslint-disable no-unused-vars */
+import { Link, createTheme } from "@mui/material";
+import { Noto_Sans } from "next/font/google";
+import NextLink, { LinkProps } from "next/link";
+import { Ref, forwardRef } from "react";
+
+const font = Noto_Sans({
+  subsets: ["cyrillic", "latin"],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+});
+
+declare module "@mui/material/styles" {
+  interface Palette {
+    typography: Palette["primary"];
+  }
+
+  interface PaletteOptions {
+    typography: PaletteOptions["primary"];
+  }
+}
+
+declare module "@mui/material/Button" {
+  interface ButtonPropsColorOverrides {
+    typography: true;
+  }
+}
+
+export const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#478DE0",
+      dark: "#276FC5",
+      // light: "#ff0000",
+      contrastText: "#FFFFFF",
+    },
+    secondary: {
+      main: "#CCCCCC",
+      dark: "#AFAFAF",
+      // light: "#ff0000",
+      contrastText: "#FFFFFF",
+    },
+    typography: {
+      main: "#0075FF",
+      dark: "#000000",
+      light: "#FFFFFF"
+    },
+  },
+  typography: {
+    fontFamily: font.style.fontFamily,
+  },
+  shape: {
+    borderRadius: 5
+  },
+  components: {
+    MuiContainer: {
+      styleOverrides: {
+        root: {
+          paddingInline: "15px"
+        }
+      }
+    },
+    MuiAppBar: {
+      styleOverrides: {
+        root: {
+          padding: 0,
+          backgroundColor: "#FFFFFF88",
+          backdropFilter: "blur(7px)",
+          boxShadow: "none",
+          borderBottom: "1px solid #DDDDDD"
+        },
+      }
+    },
+    MuiLink: {
+      variants: [
+        {
+          props: { currentUrl: true },
+          style: {  }
+        }
+      ],
+      defaultProps: {
+        component: forwardRef<HTMLAnchorElement, LinkProps>(function LinkBehaviour(props, ref) {          
+          return <NextLink  {...props} ref={ref} />
+        })
+      },
+      styleOverrides: {
+        root: {
+          fontFamily: font.style.fontFamily,
+          fontWeight: "300",
+          color: "#000000",
+          transition: "all 0.15s ease",
+          // "&:visited": {
+          //   color: "#000000"
+          // },
+          "&:hover": {
+            color: "#0075FF"
+          }
+        }
+      }
+    }
+  }
+});
