@@ -17,7 +17,7 @@ interface Props {
 
 const AboutUs: FC<Props> = ({ }) => {
   return (
-    <Stack direction="column" spacing={7.5}>
+    <Stack direction="column" component="section" spacing={7.5}>
       <Box sx={{ display: "flex", justifyContent: "center" }}>
         <Title>
           <Typography fontSize={30} fontWeight={700} color="typography.light" component="h3">О нас</Typography>
