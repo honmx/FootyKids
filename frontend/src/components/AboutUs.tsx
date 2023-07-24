@@ -71,8 +71,8 @@ const AboutUs: FC<Props> = ({ }) => {
           <Grid container spacing={4}>
             <Grid item xs={4}><AboutCard icon={standarts}>Европейские стандарты обучения</AboutCard></Grid>
             <Grid item xs={8}><AboutCard icon={peopleGroup}>Квалифицированный тренерский состав, прошедший обучение в центре подготовки тренеров Российского Футбольного Союза</AboutCard></Grid>
-            <Grid item xs={4}><AboutCard icon={increase}>Собственная, постоянно обновляющаяся методика</AboutCard></Grid>
-            <Grid item xs={8}><AboutCard icon={twoPeople}>2 тренера проводят занятие с группой до 15 детей, что позволяет уделить внимание каждому юному футболисту</AboutCard></Grid>
+            <Grid item xs={5}><AboutCard icon={increase}>Собственная, постоянно обновляющаяся методика</AboutCard></Grid>
+            <Grid item xs={7}><AboutCard icon={twoPeople}>2 тренера проводят занятие с группой до 15 детей, что позволяет уделить внимание каждому юному футболисту</AboutCard></Grid>
             <Grid item xs={8}><AboutCard icon={diary}>Мотивационная система «Дневник футболиста»: После каждой тренировки ребенок получает наклейку в виде золотого либо серебряного мяча. По ходу заполнения дневника юный футболист зарабатывает медали и кубки.</AboutCard></Grid>
             <Grid item xs={4}><AboutCard icon={ball}>Специализированные мячи, разработанные под анатомию стопы детей от 4-х лет, а также разнообразный инвентарь</AboutCard></Grid>
           </Grid>

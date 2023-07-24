@@ -81,6 +81,7 @@ export const theme = createTheme({
         root: {
           aspectRatio: 1,
           filter: "brightness(10%) invert(1)",
+          transition: "all 0.15s ease",
           "&:hover": {
             backgroundColor: "transparent",
             filter: "brightness(0) invert(1)"

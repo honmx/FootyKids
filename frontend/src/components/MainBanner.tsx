@@ -25,14 +25,15 @@ const MainBanner: FC<Props> = ({ }) => {
         <Box position="absolute" sx={{
           top: "50%",
           left: "15px",
-          transform: "translateY(-50%)"
+          transform: "translateY(-50%)",
+          color: "typography.light"
         }}>
           <Stack direction="column" spacing={3}>
             <Title type="main">
-              <Typography fontSize={80} fontWeight={700} lineHeight={1.35} color="typography.light" component="h1">FootyKids</Typography>
+              <Typography fontSize={80} fontWeight={700} lineHeight={1.35} component="h1">FootyKids</Typography>
             </Title>
-            <Typography color="typography.light" lineHeight={1.2} fontSize={22} fontWeight={600}>Футбольная школа <br /> для детей от 4 лет</Typography>
-            <Typography color="typography.light" lineHeight={1.2} fontSize={22} fontWeight={600}>Мы учим детей любить спорт!</Typography>
+            <Typography lineHeight={1.2} fontSize={22} fontWeight={600}>Футбольная школа <br /> для детей от 4 лет</Typography>
+            <Typography lineHeight={1.2} fontSize={22} fontWeight={600}>Мы учим детей любить спорт!</Typography>
           </Stack>
         </Box>
       </Container>
