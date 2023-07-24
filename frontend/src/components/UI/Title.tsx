@@ -1,20 +1,20 @@
 import { FC, ReactNode } from "react";
-import { Box } from "@mui/material";
+import { Box, BoxProps } from "@mui/material";
 import leftSide from "@/assets/title-left-side-bg.svg";
 import rightSide from "@/assets/title-right-side-bg.svg";
 import Image from "next/image";
 
-interface Props {
+interface Props extends BoxProps {
   type?: "main" | "regular"
   children: ReactNode;
 }
 
-const Title: FC<Props> = ({ type="regular", children }) => {
+const Title: FC<Props> = ({ type="regular", children, ...restProps }) => {
   return (
     <Box sx={{
-      display: "flex",
-      alignSelf: "flex-start",
-      position: "relative"
+      display: "inline-grid",
+      position: "relative",
+      ...restProps
     }}>
       <Box sx={{
         zIndex: 10
@@ -24,10 +24,10 @@ const Title: FC<Props> = ({ type="regular", children }) => {
       <Box sx={{
         position: "absolute",
         display: "flex",
-        width: type === "main" ? "120%" : "150%",
+        width: type === "main" ? "120%" : "calc(120% + '50px')",
         height: "100%",
-        ml: type === "main" ? "-12%" : "-20%",
-        mr: "-13%",
+        left: type === "main" ? "-12%" : "-30px",
+        right: type === "main" ? "-13%" : "-45px"
       }}>
         <Image src={leftSide} alt="left side" style={{ height: "100%", width: "auto" }} />
         <Box sx={{
