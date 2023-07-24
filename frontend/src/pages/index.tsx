@@ -3,13 +3,17 @@ import { NextPage } from "next";
 import MainBanner from "@/components/MainBanner";
 import AboutUs from "@/components/AboutUs";
 import { Stack } from "@mui/material";
+import { NextPageWithLayout } from "@/types/INextPageWithLayout";
+import Layout from "@/components/Layout/Layout";
+import Header from "@/components/Layout/Header";
+import Footer from "@/components/Layout/Footer";
 
 
 interface Props {
 
 }
 
-const HomePage: NextPage<Props> = ({ }) => {
+const HomePage: NextPageWithLayout<Props> = ({ }) => {
 
   return (
     <>
@@ -24,6 +28,17 @@ const HomePage: NextPage<Props> = ({ }) => {
         <AboutUs />
       </Stack>
     </>
+  )
+}
+
+HomePage.getLayout = (page) => {
+  return (
+    <Layout
+      renderHeader={() => <Header />}
+      renderFooter={() => <Footer />}
+    >
+      {page}
+    </Layout>
   )
 }
 

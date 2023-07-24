@@ -1,20 +1,20 @@
-import { FC, ReactNode } from "react";
+import { FC, ReactElement, ReactNode } from "react";
 import { Box } from "@mui/material";
-import Header from "./Header";
-import Footer from "./Footer";
 
 interface Props {
+  renderHeader?: () => ReactElement;
+  renderFooter?: () => ReactElement;
   children: ReactNode;
 }
 
-const Layout: FC<Props> = ({ children }) => {
+const Layout: FC<Props> = ({ renderHeader, renderFooter, children }) => {
   return (
     <Box sx={{ display: "flex", flexDirection: "column", overflow: "hidden", minHeight: "200vh" }}>
-      <Header />
+      {renderHeader && renderHeader()}
       <Box component="main" sx={{ flex: "1 1 0", backgroundColor: "sheet.main", paddingBottom: 7.5 }}>
         {children}
       </Box>
-      <Footer />
+      {renderFooter && renderFooter()}
     </Box>
   )
 };
