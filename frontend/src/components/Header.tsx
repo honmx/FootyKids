@@ -3,7 +3,7 @@ import Image from "next/image";
 import { AppBar, Box, Container, Link, Stack } from "@mui/material";
 import logo from "@/assets/footykids-logo.svg";
 import { useRouter } from "next/router";
-import CustomLink from "./CustomLink";
+import CustomLink from "./UI/CustomLink";
 
 interface Props {
 

@@ -19,7 +19,7 @@ const HomePage: NextPage<Props> = ({ }) => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Stack direction="column" spacing={5}>
+      <Stack direction="column" spacing={7.5}>
         <MainBanner />
         <AboutUs />
       </Stack>

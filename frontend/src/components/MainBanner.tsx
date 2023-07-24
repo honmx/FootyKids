@@ -2,8 +2,8 @@ import { FC } from "react";
 import { Box, Container, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import banner from "@/assets/photo-bg.jpg";
-import DarkForeground from "@/components/DarkForeground";
-import Title from "@/components/Title";
+import DarkForeground from "@/components/UI/DarkForeground";
+import Title from "@/components/UI/Title";
 
 interface Props {
 
@@ -17,6 +17,7 @@ const MainBanner: FC<Props> = ({ }) => {
           width: "100%",
           height: "100vh",
           objectFit: "cover",
+          objectPosition: "top",
           filter: "grayscale(100%)",
         }} />
       </DarkForeground>

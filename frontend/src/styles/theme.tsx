@@ -12,10 +12,12 @@ const font = Noto_Sans({
 declare module "@mui/material/styles" {
   interface Palette {
     typography: Palette["primary"];
+    sheet: Palette["primary"];
   }
 
   interface PaletteOptions {
     typography: PaletteOptions["primary"];
+    sheet: PaletteOptions["primary"];
   }
 }
 
@@ -44,6 +46,10 @@ export const theme = createTheme({
       dark: "#000000",
       light: "#FFFFFF"
     },
+    sheet: {
+      main: "#F8F8F8",
+      dark: ""
+    }
   },
   typography: {
     fontFamily: font.style.fontFamily,
