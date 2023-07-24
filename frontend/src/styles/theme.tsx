@@ -76,13 +76,19 @@ export const theme = createTheme({
         },
       }
     },
-    MuiLink: {
-      variants: [
-        {
-          props: { currentUrl: true },
-          style: {  }
+    MuiIconButton: {
+      styleOverrides: {
+        root: {
+          aspectRatio: 1,
+          filter: "brightness(10%) invert(1)",
+          "&:hover": {
+            backgroundColor: "transparent",
+            filter: "brightness(0) invert(1)"
+          }
         }
-      ],
+      }
+    },
+    MuiLink: {
       defaultProps: {
         component: forwardRef<HTMLAnchorElement, LinkProps>(function LinkBehaviour(props, ref) {          
           return <NextLink  {...props} ref={ref} />

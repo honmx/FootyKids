@@ -1,4 +1,4 @@
-import Layout from "@/components/Layout";
+import Layout from "@/components/Layout/Layout";
 import { theme } from "@/styles/theme";
 import { ThemeProvider } from "@emotion/react";
 import type { AppProps } from "next/app";
