@@ -1,6 +1,6 @@
 import { AppProps } from "next/app";
-import { NextPageWithLayout } from "./INextPageWithLayout";
+import { INextPageWithLayout } from "./INextPageWithLayout";
 
 export interface IAppPropsWithLayout extends AppProps {
-  Component: NextPageWithLayout
+  Component: INextPageWithLayout;
 }
