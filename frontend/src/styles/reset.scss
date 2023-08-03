@@ -86,3 +86,14 @@ label {
 legend {
 	display: block;
 }
+
+::-webkit-scrollbar {
+  width: 10px;
+  background-color: #F8F8F8;
+}
+
+::-webkit-scrollbar-thumb {
+  // background-color: #478DE0;
+  background-color: #AAAAAA;
+  border-radius: 100vw;
+}
