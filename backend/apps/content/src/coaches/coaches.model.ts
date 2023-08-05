@@ -18,33 +18,33 @@ export class Coach extends Model<Coach, CoachCreationAttrs> {
   @Column({ type: DataType.INTEGER, unique: true, autoIncrement: true, primaryKey: true })
   id: number;
   
-  @Column({ type: DataType.STRING, allowNull: true, defaultValue: null })
+  @Column({ type: DataType.TEXT, allowNull: true, defaultValue: null })
   photo: string;
   
-  @Column({ type: DataType.STRING })
+  @Column({ type: DataType.TEXT })
   type: "Тренер" | "Главный тренер" | "Руководитель";
   
-  @Column({ type: DataType.STRING })
+  @Column({ type: DataType.TEXT })
   name: string;
   
-  @Column({ type: DataType.STRING })
+  @Column({ type: DataType.TEXT })
   birth: string;
   
-  @Column({ type: DataType.ARRAY(DataType.STRING), defaultValue: [] })
+  @Column({ type: DataType.ARRAY(DataType.TEXT), defaultValue: [] })
   education: string[];
   
   @Column({ type: DataType.INTEGER })
   startedPlaying: number;
   
-  @Column({ type: DataType.STRING })
+  @Column({ type: DataType.TEXT })
   firstCoachName: string;
 
-  @Column({ type: DataType.STRING, allowNull: true, defaultValue: null })
+  @Column({ type: DataType.TEXT, allowNull: true, defaultValue: null })
   currentTeam: string;
   
-  @Column({ type: DataType.ARRAY(DataType.STRING), defaultValue: [] })
+  @Column({ type: DataType.ARRAY(DataType.TEXT), defaultValue: [] })
   teams: string[];
   
-  @Column({ type: DataType.ARRAY(DataType.STRING), defaultValue: [] })
+  @Column({ type: DataType.ARRAY(DataType.TEXT), defaultValue: [] })
   achievements: string[];
 }
