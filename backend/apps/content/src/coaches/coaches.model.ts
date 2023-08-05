@@ -30,7 +30,7 @@ export class Coach extends Model<Coach, CoachCreationAttrs> {
   @Column({ type: DataType.STRING })
   birth: string;
   
-  @Column({ type: DataType.ARRAY(DataType.STRING), allowNull: true, defaultValue: null })
+  @Column({ type: DataType.ARRAY(DataType.STRING), defaultValue: [] })
   education: string[];
   
   @Column({ type: DataType.INTEGER })
@@ -42,9 +42,9 @@ export class Coach extends Model<Coach, CoachCreationAttrs> {
   @Column({ type: DataType.STRING, allowNull: true, defaultValue: null })
   currentTeam: string;
   
-  @Column({ type: DataType.ARRAY(DataType.STRING), allowNull: true, defaultValue: null })
+  @Column({ type: DataType.ARRAY(DataType.STRING), defaultValue: [] })
   teams: string[];
   
-  @Column({ type: DataType.ARRAY(DataType.STRING), allowNull: true, defaultValue: null })
+  @Column({ type: DataType.ARRAY(DataType.STRING), defaultValue: [] })
   achievements: string[];
 }
