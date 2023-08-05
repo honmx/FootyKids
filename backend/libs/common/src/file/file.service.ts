@@ -18,15 +18,15 @@ export class FileService {
   constructor(private readonly configService: ConfigService) { }
 
   async uploadFile(file: Express.Multer.File, folder = "", name?: string) {
-    // const buffer = file.buffer;
-    // const uploadedFile = await this.s3.Upload(
-    //   {
-    //     buffer,
-    //     name: name || file.originalname
-    //   },
-    //   `/${folder}`
-    // ) as IUploadedFile;
-    // return uploadedFile;
-    return {} as IUploadedFile;
+    const buffer = file.buffer;
+    const uploadedFile = await this.s3.Upload(
+      {
+        buffer,
+        name: name || file.originalname
+      },
+      `/${folder}`
+    ) as IUploadedFile;
+    return uploadedFile;
+    // return {} as IUploadedFile;
   }
 }
