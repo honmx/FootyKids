@@ -23,7 +23,7 @@ const AboutCard: FC<Props> = ({ icon, children, ...restProps }) => {
           <Image src={icon} alt="icon" />
         </Box>
       }
-      <Paper elevation={10} sx={{
+      <Paper sx={{
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
@@ -33,7 +33,6 @@ const AboutCard: FC<Props> = ({ icon, children, ...restProps }) => {
         <Typography
           fontSize={20}
           fontWeight={300}
-          lineHeight={1}
           textAlign="center"
         >
           {children}

@@ -24,6 +24,9 @@
     "eqeqeq": "error",
     "no-console": "warn",
     "react/react-in-jsx-scope": "off",
-    "react/self-closing-comp": "warn"
+    "react/self-closing-comp": "warn",
+    "react-hooks/exhaustive-deps": "off",
+    "react/prop-types": "off",
+    "import/no-anonymous-default-export": "off"
   }
 }

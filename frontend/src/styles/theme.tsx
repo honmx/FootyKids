@@ -32,13 +32,13 @@ export const theme = createTheme({
     primary: {
       main: "#478DE0",
       dark: "#276FC5",
-      // light: "#ff0000",
+      light: "#ff0000",
       contrastText: "#FFFFFF",
     },
     secondary: {
       main: "#CCCCCC",
       dark: "#AFAFAF",
-      // light: "#ff0000",
+      light: "#EFEFEF",
       contrastText: "#FFFFFF",
     },
     typography: {
@@ -59,6 +59,9 @@ export const theme = createTheme({
   },
   components: {
     MuiContainer: {
+      defaultProps: {
+        maxWidth: "md"
+      },
       styleOverrides: {
         root: {
           paddingInline: "15px"
@@ -74,6 +77,11 @@ export const theme = createTheme({
           boxShadow: "none",
           borderBottom: "1px solid #DDDDDD"
         },
+      }
+    },
+    MuiButton: {
+      styleOverrides: {
+        
       }
     },
     MuiIconButton: {
@@ -107,6 +115,18 @@ export const theme = createTheme({
           "&:hover": {
             color: "#0075FF"
           }
+        }
+      }
+    },
+    MuiPaper: {
+      defaultProps: {
+        elevation: 7
+      }
+    },
+    MuiTypography: {
+      styleOverrides: {
+        root: {
+          lineHeight: 1
         }
       }
     }

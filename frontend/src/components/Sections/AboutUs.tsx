@@ -1,15 +1,16 @@
 import { FC } from "react";
-import Title from "./UI/Title";
+import Title from "../UI/Title";
 import { Box, Container, Grid, Stack, Typography } from "@mui/material";
-import AdvantagesCard from "./UI/Cards/AdvantagesCard";
-import PurposeCard from "./UI/Cards/PurposeCard";
-import AboutCard from "./UI/Cards/AboutCard";
+import AdvantagesCard from "../Cards/AdvantagesCard";
+import PurposeCard from "../Cards/PurposeCard";
+import AboutCard from "../Cards/AboutCard";
 import standarts from "@/assets/standarts.svg";
 import peopleGroup from "@/assets/3people.svg";
 import increase from "@/assets/increase.svg";
 import twoPeople from "@/assets/2people.svg";
 import ball from "@/assets/ball.svg";
 import diary from "@/assets/diary.svg";
+import SectionWrapper from "./SectionWrapper";
 
 interface Props {
 
@@ -17,12 +18,10 @@ interface Props {
 
 const AboutUs: FC<Props> = ({ }) => {
   return (
-    <Stack direction="column" component="section" spacing={7.5}>
-      <Box sx={{ display: "flex", justifyContent: "center" }}>
-        <Title>
-          <Typography fontSize={30} fontWeight={700} color="typography.light" component="h3">О нас</Typography>
-        </Title>
-      </Box>
+    <SectionWrapper>
+      <Title sx={{ textAlign: "center" }}>
+        <Typography fontSize={30} fontWeight={700} component="h3">О нас</Typography>
+      </Title>
       <Box>
         <iframe
           src="https://www.youtube.com/embed/7xJ7SEru57I"
@@ -36,7 +35,7 @@ const AboutUs: FC<Props> = ({ }) => {
         />
       </Box>
       <Box>
-        <Container maxWidth="md">
+        <Container>
           <Stack direction="row" display="grid" gridTemplateColumns="1fr 1fr 1fr 1fr" columnGap={5}>
             <AdvantagesCard accentText="5+" usualText="лет опыта" />
             <AdvantagesCard accentText="10" usualText="тренеров" />
@@ -47,7 +46,7 @@ const AboutUs: FC<Props> = ({ }) => {
       </Box>
       <Typography textAlign="center" fontSize={26} fontWeight={300}>Цели проекта</Typography>
       <Box>
-        <Container maxWidth="md" sx={{
+        <Container sx={{
           display: "grid",
           gridTemplateAreas: `
             "a a a . . . ."
@@ -56,7 +55,7 @@ const AboutUs: FC<Props> = ({ }) => {
             "c c c . d d d"
             "c c c . d d d"
             ". . . . d d d"
-            `,
+          `,
           marginTop: "-55px"
         }}>
           <PurposeCard count="01" gridArea="a" justifySelf="start">Вовлечь в футбол как можно больше детей</PurposeCard>
@@ -66,7 +65,7 @@ const AboutUs: FC<Props> = ({ }) => {
         </Container>
       </Box>
       <Box>
-        <Container maxWidth="md">
+        <Container>
           <Typography fontSize={26} fontWeight={300} sx={{ marginBottom: "50px" }}>Футбольная школа FootyKids - это</Typography>
           <Grid container spacing={4}>
             <Grid item xs={4}><AboutCard icon={standarts}>Европейские стандарты обучения</AboutCard></Grid>
@@ -78,7 +77,7 @@ const AboutUs: FC<Props> = ({ }) => {
           </Grid>
         </Container>
       </Box>
-    </Stack>
+    </SectionWrapper>
   )
 };
 
