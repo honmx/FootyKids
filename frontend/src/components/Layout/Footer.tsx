@@ -34,17 +34,17 @@ const Footer: FC<Props> = ({ }) => {
             justifyContent: "center",
             alignItems: "center"
           }}>
-            <Link href="https://vk.com/footykids_miass">
+            <Link href="https://vk.com/footykids_miass" target="_blank">
               <IconButton size="medium" >
                 <Image src={vk} alt="vk" />
               </IconButton>
             </Link>
-            <Link href="https://instagram.com/footykids_miass">
+            <Link href="https://instagram.com/footykids_miass" target="_blank">
               <IconButton size="medium">
                 <Image src={inst} alt="instagram" />
               </IconButton>
             </Link>
-            <Link href="https://www.youtube.com/@footykids-1526">
+            <Link href="https://www.youtube.com/@footykids-1526" target="_blank">
               <IconButton size="medium">
                 <Image src={youtube} alt="youtube" />
               </IconButton>

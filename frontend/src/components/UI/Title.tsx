@@ -9,32 +9,37 @@ interface Props extends BoxProps {
   children: ReactNode;
 }
 
-const Title: FC<Props> = ({ type="regular", children, ...restProps }) => {
+const Title: FC<Props> = ({ type = "regular", children, ...restProps }) => {
   return (
-    <Box sx={{
-      display: "inline-grid",
-      position: "relative",
-      ...restProps
-    }}>
-      <Box sx={{
-        zIndex: 10
-      }}>
-        {children}
-      </Box>
-      <Box sx={{
-        position: "absolute",
-        display: "flex",
-        width: type === "main" ? "120%" : "calc(120% + '50px')",
-        height: "100%",
-        left: type === "main" ? "-12%" : "-30px",
-        right: type === "main" ? "-13%" : "-45px"
-      }}>
-        <Image src={leftSide} alt="left side" style={{ height: "100%", width: "auto" }} />
+    <Box  {...restProps}>
+      <Box
+        sx={{
+          display: "inline-grid",
+          position: "relative",
+        }}
+      >
         <Box sx={{
-          flex: "1 1 0",
-          backgroundColor: "primary.main"
-        }} />
-        <Image src={rightSide} alt="right side" style={{ height: "100%", width: "auto" }} />
+          padding: "10px 0",
+          color: "typography.light",
+          zIndex: 10,
+        }}>
+          {children}
+        </Box>
+        <Box sx={{
+          position: "absolute",
+          display: "flex",
+          width: type === "main" ? "120%" : "calc(120% + '50px')",
+          height: "100%",
+          left: type === "main" ? "-12%" : "-30px",
+          right: type === "main" ? "-13%" : "-45px"
+        }}>
+          <Image src={leftSide} alt="left side" style={{ height: "100%", width: "auto" }} />
+          <Box sx={{
+            flex: "1 1 0",
+            backgroundColor: "primary.main"
+          }} />
+          <Image src={rightSide} alt="right side" style={{ height: "100%", width: "auto" }} />
+        </Box>
       </Box>
     </Box>
   )

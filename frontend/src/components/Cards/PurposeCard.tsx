@@ -22,7 +22,6 @@ const PurposeCard: FC<Props> = ({ count, children, ...restProps }) => {
           <Typography
             fontSize={50}
             fontWeight={700}
-            lineHeight={1}
             color="sheet.main"
             sx={{
               textShadow: "0 0 2px #000"
@@ -32,7 +31,7 @@ const PurposeCard: FC<Props> = ({ count, children, ...restProps }) => {
           </Typography>
         </Box>
       }
-      <Paper elevation={10} sx={{
+      <Paper sx={{
         padding: "15px 40px"
       }}>
         <Typography

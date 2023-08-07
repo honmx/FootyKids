@@ -32,13 +32,13 @@ export const theme = createTheme({
     primary: {
       main: "#478DE0",
       dark: "#276FC5",
-      // light: "#ff0000",
+      light: "#ff0000",
       contrastText: "#FFFFFF",
     },
     secondary: {
       main: "#CCCCCC",
       dark: "#AFAFAF",
-      // light: "#ff0000",
+      light: "#EFEFEF",
       contrastText: "#FFFFFF",
     },
     typography: {
@@ -58,7 +58,11 @@ export const theme = createTheme({
     borderRadius: 5
   },
   components: {
+    // WIDGETS
     MuiContainer: {
+      defaultProps: {
+        maxWidth: "md"
+      },
       styleOverrides: {
         root: {
           paddingInline: "15px"
@@ -74,6 +78,25 @@ export const theme = createTheme({
           boxShadow: "none",
           borderBottom: "1px solid #DDDDDD"
         },
+      }
+    },
+    // ENTITIES
+    MuiModal: {
+      styleOverrides: {
+        backdrop: {
+          transition: "all 0.15s ease !important"
+        }
+      }
+    },
+    MuiPaper: {
+      defaultProps: {
+        elevation: 7
+      }
+    },
+    // UI COMPONENTS
+    MuiButton: {
+      styleOverrides: {
+        
       }
     },
     MuiIconButton: {
@@ -101,12 +124,17 @@ export const theme = createTheme({
           fontWeight: "300",
           color: "#000000",
           transition: "all 0.15s ease",
-          // "&:visited": {
-          //   color: "#000000"
-          // },
           "&:hover": {
             color: "#0075FF"
           }
+        }
+      }
+    },
+    MuiTypography: {
+      styleOverrides: {
+        root: {
+          lineHeight: 1,
+          fontWeight: 300
         }
       }
     }
