@@ -7,9 +7,7 @@ interface Props {
 
 const DarkForeground: FC<Props> = ({ children }) => {
   return (
-    <Box sx={{
-      position: "relative"
-    }}>
+    <Box sx={{ position: "relative" }}>
       {children}
       <Box sx={{
         position: "absolute",
@@ -17,7 +15,7 @@ const DarkForeground: FC<Props> = ({ children }) => {
         left: 0,
         right: 0,
         bottom: 0,
-        backgroundColor: "#000000AA"
+        backgroundColor: "#000000AA",
       }} />
     </Box>
   )

@@ -12,10 +12,7 @@ interface Props {
 const Coaches: FC<Props> = ({ coaches }) => {
 
   return (
-    <SectionWrapper>
-      <Title textAlign="center">
-        <Typography component="h3" fontSize={30} fontWeight={700}>Тренерский состав</Typography>
-      </Title>
+    <SectionWrapper title="Тренерский состав">
       <CoachesGroup
         title="Руководитель и главный тренер"
         coaches={coaches.filter(coach => coach.type !== "Тренер")}

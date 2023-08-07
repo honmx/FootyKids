@@ -18,10 +18,7 @@ interface Props {
 
 const AboutUs: FC<Props> = ({ }) => {
   return (
-    <SectionWrapper>
-      <Title sx={{ textAlign: "center" }}>
-        <Typography fontSize={30} fontWeight={700} component="h3">О нас</Typography>
-      </Title>
+    <SectionWrapper title="О нас">
       <Box>
         <iframe
           src="https://www.youtube.com/embed/7xJ7SEru57I"

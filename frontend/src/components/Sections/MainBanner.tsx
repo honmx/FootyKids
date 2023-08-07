@@ -4,6 +4,7 @@ import Image from "next/image";
 import banner from "@/assets/photo-bg.jpg";
 import DarkForeground from "@/components/UI/DarkForeground";
 import Title from "@/components/UI/Title";
+import SectionWrapper from "../Wrappers/SectionWrapper";
 
 interface Props {
 
@@ -11,7 +12,7 @@ interface Props {
 
 const MainBanner: FC<Props> = ({ }) => {
   return (
-    <Box component="section" position="relative">
+    <SectionWrapper sx={{ position: "relative" }}>
       <DarkForeground>
         <Image src={banner} alt="banner" style={{
           width: "100%",
@@ -35,7 +36,7 @@ const MainBanner: FC<Props> = ({ }) => {
           <Typography lineHeight={1.2} fontSize={22} fontWeight={600}>Мы учим детей любить спорт!</Typography>
         </Stack>
       </Box>
-    </Box>
+    </SectionWrapper>
   )
 };
 

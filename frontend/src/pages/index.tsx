@@ -10,6 +10,7 @@ import { Stack } from "@mui/material";
 import contentService from "@/services/contentService";
 import { INextPageWithLayout } from "@/types/INextPageWithLayout";
 import { ICoach } from "@/types/ICoach";
+import Faq from "@/components/Sections/FAQ";
 
 
 interface Props {
@@ -33,6 +34,7 @@ const HomePage: INextPageWithLayout<Props> = ({ coaches }) => {
         <MainBanner />
         <AboutUs />
         <Coaches coaches={coaches} />
+        <Faq />
       </Stack>
     </>
   )

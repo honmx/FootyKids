@@ -17,12 +17,8 @@ const ModalWrapper: FC<Props> = ({ open, handleCloseClick, children, ...restProp
   useEffect(() => {
     if (!ref.current) return;
 
-    setIsOverflowing(ref.current?.getBoundingClientRect().height > window.innerHeight);
+    setIsOverflowing(ref.current?.getBoundingClientRect().height > window.innerHeight - 100);
   }, [open]);
-
-  useEffect(() => {
-    console.log(isOverflowing);
-  }, [isOverflowing]);
 
   return (
     <Modal
