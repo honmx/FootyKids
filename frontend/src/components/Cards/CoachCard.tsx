@@ -5,6 +5,7 @@ import Image from "next/image";
 import coachIcon from "@/assets/coach icon.svg";
 import { createPortal } from "react-dom";
 import CoachModal from "../Modals/CoachModal";
+import ModalWrapper from "../Wrappers/ModalWrapper";
 
 interface Props {
   coach: ICoach;

@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import { Box, IconButton, Modal, ModalProps, Paper } from "@mui/material";
 import crossIcon from "@/assets/cross icon.svg";
 import Image from "next/image";
@@ -10,6 +10,20 @@ interface Props extends ModalProps {
 
 const ModalWrapper: FC<Props> = ({ open, handleCloseClick, children, ...restProps }) => {
 
+  const ref = useRef<HTMLDivElement>(null);
+
+  const [isOverflowing, setIsOverflowing] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (!ref.current) return;
+
+    setIsOverflowing(ref.current?.getBoundingClientRect().height > window.innerHeight);
+  }, [open]);
+
+  useEffect(() => {
+    console.log(isOverflowing);
+  }, [isOverflowing]);
+
   return (
     <Modal
       open={open}
@@ -20,11 +34,11 @@ const ModalWrapper: FC<Props> = ({ open, handleCloseClick, children, ...restProp
       <Box sx={{
         display: "flex",
         justifyContent: "center",
-        alignItems: "center",
-        height: "100%",
+        alignItems: isOverflowing ? "stretch" : "center",
+        minHeight: "100%",
       }}>
-        <Box sx={{ position: "relative" }}>
-          <Paper sx={{ maxWidth: "1000px", overflow: "hidden" }}>
+        <Box sx={{ position: "relative", margin: isOverflowing ? "50px 0" : "0" }}>
+          <Paper ref={ref} sx={{ maxWidth: "1000px", overflow: "hidden" }}>
             {children}
           </Paper>
           <IconButton onClick={handleCloseClick} sx={{

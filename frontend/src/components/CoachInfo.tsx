@@ -26,6 +26,10 @@ const CoachInfo: FC<Props> = ({ coach, ...restProps }) => {
       <Typography>Воспитанник Миасского футбола, начал заниматься с {coach.startedPlaying} лет</Typography>
       <Typography>Воспитанник Миасского футбола, начал заниматься с {coach.startedPlaying} лет</Typography>
       <Typography>Воспитанник Миасского футбола, начал заниматься с {coach.startedPlaying} лет</Typography>
+      <Typography>Воспитанник Миасского футбола, начал заниматься с {coach.startedPlaying} лет</Typography>
+      <Typography>Воспитанник Миасского футбола, начал заниматься с {coach.startedPlaying} лет</Typography>
+      <Typography>Воспитанник Миасского футбола, начал заниматься с {coach.startedPlaying} лет</Typography>
+      <Typography>Воспитанник Миасского футбола, начал заниматься с {coach.startedPlaying} лет</Typography>
       <Typography>Первый тренер: {coach.firstCoachName}</Typography>
       {
         coach.currentTeam &&

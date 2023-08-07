@@ -16,12 +16,9 @@ const CoachModal: FC<Props> = ({ open, handleCloseClick, coach, ...restProps }) 
 
   return (
     <ModalWrapper disablePortal open={open} handleCloseClick={handleCloseClick} {...restProps}>
-      <Stack
-        direction="row"
-
-      >
-        <Box sx={{ width: "50%", minHeight: "100%" }}>
-          <CoachInfo coach={coach} sx={{ padding: 3, overflow: "auto", height: 0, minHeight: "100%" }} />
+      <Stack direction="row">
+        <Box sx={{ width: "50%" }}>
+          <CoachInfo coach={coach} sx={{ padding: 3, overflow: "auto" }} />
         </Box>
         <Box sx={{ width: "50%" }}>
           <Image
