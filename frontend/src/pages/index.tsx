@@ -1,16 +1,16 @@
 import Head from "next/head";
 import { GetStaticProps } from "next";
-import MainBanner from "@/components/Sections/MainBanner";
-import AboutUs from "@/components/Sections/AboutUs";
-import Coaches from "@/components/Sections/Coaches";
 import Layout from "@/components/Layout/Layout";
 import Header from "@/components/Layout/Header";
 import Footer from "@/components/Layout/Footer";
+import MainBanner from "@/components/Sections/MainBanner";
+import AboutUs from "@/components/Sections/AboutUs";
+import Coaches from "@/components/Sections/Coaches";
+import Faq from "@/components/Sections/Faq";
 import { Stack } from "@mui/material";
 import contentService from "@/services/contentService";
 import { INextPageWithLayout } from "@/types/INextPageWithLayout";
 import { ICoach } from "@/types/ICoach";
-import Faq from "@/components/Sections/FAQ";
 
 
 interface Props {

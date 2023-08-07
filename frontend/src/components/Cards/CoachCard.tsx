@@ -35,6 +35,7 @@ const CoachCard: FC<Props> = ({ coach }) => {
           <Image
             src={coach.photo ? coach.photo : coachIcon}
             alt={coach.name}
+            priority
             width={1080}
             height={1920}
             style={{
