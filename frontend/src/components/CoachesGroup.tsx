@@ -20,9 +20,7 @@ const CoachesGroup: FC<Props> = ({ title, coaches }) => {
         <Typography
           fontWeight={300}
           fontSize={20}
-          sx={{
-            marginBottom: 3
-          }}
+          sx={{ marginBottom: 3 }}
         >
           {title}
         </Typography>

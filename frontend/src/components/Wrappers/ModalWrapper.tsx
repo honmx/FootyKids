@@ -11,7 +11,12 @@ interface Props extends ModalProps {
 const ModalWrapper: FC<Props> = ({ open, handleCloseClick, children, ...restProps }) => {
 
   return (
-    <Modal open={open} onClose={handleCloseClick} {...restProps}>
+    <Modal
+      open={open}
+      onClose={handleCloseClick}
+      sx={{ overflowY: "auto", paddingInline: 5 }}
+      {...restProps}
+    >
       <Box sx={{
         display: "flex",
         justifyContent: "center",

@@ -133,7 +133,8 @@ export const theme = createTheme({
     MuiTypography: {
       styleOverrides: {
         root: {
-          lineHeight: 1
+          lineHeight: 1,
+          fontWeight: 300
         }
       }
     }

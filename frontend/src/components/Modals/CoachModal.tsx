@@ -4,6 +4,7 @@ import { Box, ModalProps, Stack, Typography } from "@mui/material";
 import ModalWrapper from "../Wrappers/ModalWrapper";
 import { ICoach } from "@/types/ICoach";
 import coachIcon from "@/assets/coach icon.svg";
+import CoachInfo from "../CoachInfo";
 
 interface Props extends Omit<ModalProps, "children"> {
   open: boolean;
@@ -12,16 +13,15 @@ interface Props extends Omit<ModalProps, "children"> {
 }
 
 const CoachModal: FC<Props> = ({ open, handleCloseClick, coach, ...restProps }) => {
+
   return (
     <ModalWrapper disablePortal open={open} handleCloseClick={handleCloseClick} {...restProps}>
-      <Stack direction="row">
-        <Box sx={{ width: "50%", padding: 3 }}>
-          <Typography>dfgdfgsldjfgknjsernjtnjekrtrktnlerwktweknrknltret</Typography>
-          <Typography>dfgdfgsldjfgknjsernjtnjekrt</Typography>
-          <Typography>dfgdfgsldjfgknjsernjtnjekrt</Typography>
-          <Typography>dfgdfgsldjfgknjsernjtnjekrt</Typography>
-          <Typography>dfgdfgsldjfgknjsernjtnjekrt</Typography>
-          <Typography>dfgdfgsldjfgknjsernjtnjekrt</Typography>
+      <Stack
+        direction="row"
+
+      >
+        <Box sx={{ width: "50%", minHeight: "100%" }}>
+          <CoachInfo coach={coach} sx={{ padding: 3, overflow: "auto", height: 0, minHeight: "100%" }} />
         </Box>
         <Box sx={{ width: "50%" }}>
           <Image
