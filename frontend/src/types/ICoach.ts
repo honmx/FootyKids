@@ -7,7 +7,7 @@ export interface ICoach {
   startedPlaying: number;
   firstCoachName: string;
   currentTeam?: string;
-  education?: string[];
-  teams?: string[];
-  achievements?: string[];
+  education: string[];
+  teams: string[];
+  achievements: string[];
 }

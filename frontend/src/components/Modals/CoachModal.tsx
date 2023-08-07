@@ -1,6 +1,6 @@
 import { FC } from "react";
 import Image from "next/image";
-import { Box, ModalProps, Stack, Typography } from "@mui/material";
+import { Box, ModalProps, Stack } from "@mui/material";
 import ModalWrapper from "../Wrappers/ModalWrapper";
 import { ICoach } from "@/types/ICoach";
 import coachIcon from "@/assets/coach icon.svg";
@@ -17,8 +17,8 @@ const CoachModal: FC<Props> = ({ open, handleCloseClick, coach, ...restProps }) 
   return (
     <ModalWrapper disablePortal open={open} handleCloseClick={handleCloseClick} {...restProps}>
       <Stack direction="row">
-        <Box sx={{ width: "50%" }}>
-          <CoachInfo coach={coach} sx={{ padding: 3, overflow: "auto" }} />
+        <Box sx={{ width: "50%", minHeight: "100%" }}>
+          <CoachInfo coach={coach} sx={{ padding: 3, overflow: "auto", height: 0, minHeight: "100%" }} />
         </Box>
         <Box sx={{ width: "50%" }}>
           <Image

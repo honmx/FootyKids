@@ -1,5 +1,5 @@
 import { FC, useEffect, useRef, useState } from "react";
-import { Box, IconButton, Modal, ModalProps, Paper } from "@mui/material";
+import { Box, IconButton, Modal, ModalProps, Paper, Typography } from "@mui/material";
 import crossIcon from "@/assets/cross icon.svg";
 import Image from "next/image";
 
