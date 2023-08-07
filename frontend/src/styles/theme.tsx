@@ -58,6 +58,7 @@ export const theme = createTheme({
     borderRadius: 5
   },
   components: {
+    // WIDGETS
     MuiContainer: {
       defaultProps: {
         maxWidth: "md"
@@ -79,6 +80,20 @@ export const theme = createTheme({
         },
       }
     },
+    // ENTITIES
+    MuiModal: {
+      styleOverrides: {
+        backdrop: {
+          transition: "all 0.15s ease !important"
+        }
+      }
+    },
+    MuiPaper: {
+      defaultProps: {
+        elevation: 7
+      }
+    },
+    // UI COMPONENTS
     MuiButton: {
       styleOverrides: {
         
@@ -109,18 +124,10 @@ export const theme = createTheme({
           fontWeight: "300",
           color: "#000000",
           transition: "all 0.15s ease",
-          // "&:visited": {
-          //   color: "#000000"
-          // },
           "&:hover": {
             color: "#0075FF"
           }
         }
-      }
-    },
-    MuiPaper: {
-      defaultProps: {
-        elevation: 7
       }
     },
     MuiTypography: {

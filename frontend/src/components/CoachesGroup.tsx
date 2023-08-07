@@ -6,14 +6,13 @@ import { useResize } from "@/hooks/useResize";
 import Carousel from "./UI/Carousel";
 
 interface Props {
-  singularTitle: string;
-  pluralTitle: string;
+  title: string;
   coaches: ICoach[];
 }
 
-const CoachesGroup: FC<Props> = ({ singularTitle, pluralTitle, coaches }) => {
+const CoachesGroup: FC<Props> = ({ title, coaches }) => {
 
-  const isTablet = useResize(1023);
+  const isTablet = useResize(1024);
 
   return (
     <Box>
@@ -25,7 +24,7 @@ const CoachesGroup: FC<Props> = ({ singularTitle, pluralTitle, coaches }) => {
             marginBottom: 3
           }}
         >
-          {coaches.length === 1 ? singularTitle : pluralTitle}
+          {title}
         </Typography>
         {
           !isTablet &&
@@ -36,18 +35,14 @@ const CoachesGroup: FC<Props> = ({ singularTitle, pluralTitle, coaches }) => {
               gap: 3,
             }}
           >
-            {
-              coaches.map(coach => <CoachCard key={coach.id} coach={coach} />)
-            }
+            {coaches.map(coach => <CoachCard key={coach.id} coach={coach} />)}
           </Box>
         }
       </Container>
       {
         isTablet &&
         <Carousel>
-          {
-            coaches.map(coach => <CoachCard key={coach.id} coach={coach} />)
-          }
+          {coaches.map(coach => <CoachCard key={coach.id} coach={coach} />)}
         </Carousel>
       }
     </Box>

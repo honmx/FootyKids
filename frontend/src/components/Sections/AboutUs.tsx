@@ -10,7 +10,7 @@ import increase from "@/assets/increase.svg";
 import twoPeople from "@/assets/2people.svg";
 import ball from "@/assets/ball.svg";
 import diary from "@/assets/diary.svg";
-import SectionWrapper from "./SectionWrapper";
+import SectionWrapper from "../Wrappers/SectionWrapper";
 
 interface Props {
 
