@@ -81,6 +81,32 @@ export const theme = createTheme({
       }
     },
     // ENTITIES
+    MuiAccordion: {
+      styleOverrides: {
+        root: {
+          backgroundColor: "transparent",
+          boxShadow: "none",
+          "&::before": {
+            display: "none",
+          },
+          "&:not(:last-child)": {
+            borderBottom: "1px solid #BBBBBB"
+          }
+        }
+      }
+    },
+    MuiAccordionSummary: {
+      styleOverrides: {
+        content: {
+          margin: "20px 0"
+        },
+        expandIconWrapper: {
+          "&.Mui-expanded": {
+            transform: "rotate(-45deg)"
+          }
+        }
+      }
+    },
     MuiModal: {
       styleOverrides: {
         backdrop: {
@@ -96,7 +122,7 @@ export const theme = createTheme({
     // UI COMPONENTS
     MuiButton: {
       styleOverrides: {
-        
+
       }
     },
     MuiIconButton: {
@@ -114,7 +140,7 @@ export const theme = createTheme({
     },
     MuiLink: {
       defaultProps: {
-        component: forwardRef<HTMLAnchorElement, LinkProps>(function LinkBehaviour(props, ref) {          
+        component: forwardRef<HTMLAnchorElement, LinkProps>(function LinkBehaviour(props, ref) {
           return <NextLink  {...props} ref={ref} />
         })
       },

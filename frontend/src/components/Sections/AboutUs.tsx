@@ -1,5 +1,4 @@
 import { FC } from "react";
-import Title from "../UI/Title";
 import { Box, Container, Grid, Stack, Typography } from "@mui/material";
 import AdvantagesCard from "../Cards/AdvantagesCard";
 import PurposeCard from "../Cards/PurposeCard";
