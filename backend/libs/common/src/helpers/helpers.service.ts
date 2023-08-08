@@ -4,7 +4,7 @@ import { ICoach } from '../types/ICoach';
 @Injectable()
 export class HelpersService {
 
-  hash(obj: ICoach): string {
+  hash<T extends object>(obj: T): string {
     let result = "";
 
     for (const prop in obj) {
