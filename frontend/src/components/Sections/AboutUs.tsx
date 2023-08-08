@@ -3,19 +3,16 @@ import { Box, Container, Grid, Stack, Typography } from "@mui/material";
 import AdvantagesCard from "../Cards/AdvantagesCard";
 import PurposeCard from "../Cards/PurposeCard";
 import AboutCard from "../Cards/AboutCard";
-import standarts from "@/assets/standarts.svg";
-import peopleGroup from "@/assets/3people.svg";
-import increase from "@/assets/increase.svg";
-import twoPeople from "@/assets/2people.svg";
-import ball from "@/assets/ball.svg";
-import diary from "@/assets/diary.svg";
 import SectionWrapper from "../Wrappers/SectionWrapper";
+import { incline } from "@/helpers/incline";
+import { infoAboutSchool } from "@/data/infoAboutSchool";
+import { purposes } from "@/data/purposes";
 
 interface Props {
-
+  coachesCount: number;
 }
 
-const AboutUs: FC<Props> = ({ }) => {
+const AboutUs: FC<Props> = ({ coachesCount }) => {
   return (
     <SectionWrapper title="О нас">
       <Box>
@@ -34,7 +31,7 @@ const AboutUs: FC<Props> = ({ }) => {
         <Container>
           <Stack direction="row" display="grid" gridTemplateColumns="1fr 1fr 1fr 1fr" columnGap={5}>
             <AdvantagesCard accentText="5+" usualText="лет опыта" />
-            <AdvantagesCard accentText="10" usualText="тренеров" />
+            <AdvantagesCard accentText={coachesCount.toString()} usualText={incline(coachesCount, "тренер", "тренера", "тренеров")} />
             <AdvantagesCard accentText="250+" usualText="детей" />
             <AdvantagesCard accentText="5+" usualText="лет опыта" />
           </Stack>
@@ -54,22 +51,29 @@ const AboutUs: FC<Props> = ({ }) => {
           `,
           marginTop: "-55px"
         }}>
-          <PurposeCard count="01" gridArea="a" justifySelf="start">Вовлечь в футбол как можно больше детей</PurposeCard>
-          <PurposeCard count="02" gridArea="b" justifySelf="end">Привить детям любовь к спорту и здоровому образу жизни</PurposeCard>
-          <PurposeCard count="03" gridArea="c" justifySelf="start">Дать качественную начальную футбольную подготовку</PurposeCard>
-          <PurposeCard count="04" gridArea="d" justifySelf="end">Выявить одарённых детей и развить их способности</PurposeCard>
+          {
+            purposes.map(purpose => (
+              <PurposeCard
+                key={purpose.text}
+                count={purpose.count}
+                gridArea={purpose.gridArea}
+                justifySelf={purpose.justifySelf}
+              >
+                {purpose.text}
+              </PurposeCard>
+            ))
+          }
         </Container>
       </Box>
       <Box>
         <Container>
           <Typography fontSize={26} fontWeight={300} sx={{ marginBottom: "50px" }}>Футбольная школа FootyKids - это</Typography>
           <Grid container spacing={4}>
-            <Grid item xs={4}><AboutCard icon={standarts}>Европейские стандарты обучения</AboutCard></Grid>
-            <Grid item xs={8}><AboutCard icon={peopleGroup}>Квалифицированный тренерский состав, прошедший обучение в центре подготовки тренеров Российского Футбольного Союза</AboutCard></Grid>
-            <Grid item xs={5}><AboutCard icon={increase}>Собственная, постоянно обновляющаяся методика</AboutCard></Grid>
-            <Grid item xs={7}><AboutCard icon={twoPeople}>2 тренера проводят занятие с группой до 15 детей, что позволяет уделить внимание каждому юному футболисту</AboutCard></Grid>
-            <Grid item xs={7}><AboutCard icon={diary}>Мотивационная система «Дневник футболиста»: После каждой тренировки ребенок получает наклейку в виде золотого либо серебряного мяча. По ходу заполнения дневника юный футболист зарабатывает медали и кубки.</AboutCard></Grid>
-            <Grid item xs={5}><AboutCard icon={ball}>Специализированные мячи, разработанные под анатомию стопы детей от 4-х лет, а также разнообразный инвентарь</AboutCard></Grid>
+            {
+              infoAboutSchool.map(info => (
+                <Grid key={info.text} item xs={info.xs}><AboutCard icon={info.icon}>{info.text}</AboutCard></Grid>
+              ))
+            }
           </Grid>
         </Container>
       </Box>
