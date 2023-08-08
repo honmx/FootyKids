@@ -98,7 +98,7 @@ export const theme = createTheme({
     MuiAccordionSummary: {
       styleOverrides: {
         content: {
-          margin: "20px 0"
+          margin: "20px 0",
         },
         expandIconWrapper: {
           "&.Mui-expanded": {

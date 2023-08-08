@@ -32,7 +32,7 @@ const HomePage: INextPageWithLayout<Props> = ({ coaches }) => {
       </Head>
       <Stack direction="column" spacing={7.5}>
         <MainBanner />
-        <AboutUs />
+        <AboutUs coachesCount={coaches.length} />
         <Coaches coaches={coaches} />
         <Faq />
       </Stack>
