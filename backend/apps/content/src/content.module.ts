@@ -6,6 +6,8 @@ import { CoachesModule } from './coaches/coaches.module';
 import { CoachesController } from './coaches/coaches.controller';
 import { CoachesService } from './coaches/coaches.service';
 import { Coach } from './coaches/coaches.model';
+import { NewsModule } from './news/news.module';
+import { News } from './news/news.model';
 
 @Module({
   imports: [
@@ -20,11 +22,12 @@ import { Coach } from './coaches/coaches.model';
       username: "postgres",
       password: "postgres",
       database: "footykids",
-      models: [Coach],
+      models: [Coach, News],
       autoLoadModels: true
     }),
     RmqModule,
     CoachesModule,
+    NewsModule,
   ],
   controllers: [],
   providers: [],

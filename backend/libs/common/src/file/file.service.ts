@@ -26,7 +26,19 @@ export class FileService {
       },
       `/${folder}`
     ) as IUploadedFile;
+    
     return uploadedFile;
-    // return {} as IUploadedFile;
+  }
+
+  async uploadFiles(files: Express.Multer.File[], folder = "", names?: string[]) {
+    const uploadedFile = await this.s3.Upload(
+      files.map((file, i) => ({
+        buffer: file.buffer,
+        name: names[i] || file.originalname
+      })),
+      `/${folder}`
+    ) as IUploadedFile[];
+
+    return uploadedFile;
   }
 }
