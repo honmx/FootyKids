@@ -117,6 +117,11 @@ export const theme = createTheme({
     MuiPaper: {
       defaultProps: {
         elevation: 7
+      },
+      styleOverrides: {
+        root: {
+          overflow: "hidden",
+        }
       }
     },
     // UI COMPONENTS

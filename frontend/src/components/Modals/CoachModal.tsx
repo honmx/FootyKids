@@ -5,10 +5,9 @@ import ModalWrapper from "../Wrappers/ModalWrapper";
 import { ICoach } from "@/types/ICoach";
 import coachIcon from "@/assets/coach icon.svg";
 import CoachInfo from "../CoachInfo";
+import { IModalProps } from "@/types/IModalProps";
 
-interface Props extends Omit<ModalProps, "children"> {
-  open: boolean;
-  handleCloseClick: () => void;
+interface Props extends IModalProps {
   coach: ICoach;
 }
 
