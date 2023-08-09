@@ -25,10 +25,11 @@ const NewsModal: FC<Props> = ({ open, handleCloseClick, news, ...restProps }) =>
         <Box sx={{ width: "50%" }}>
           <Box sx={{
             display: "grid",
-            gridTemplateAreas: newsPhotosGridTemplateAreas[news.photos.length - 1]
+            gridTemplateAreas: newsPhotosGridTemplateAreas[3]
           }}>
             {
-              news.photos.map((photo, i) => (
+              new Array(4).fill(news.photos[0]).map((photo, i) => (
+              // news.photos.map((photo, i) => (
                 <Image
                   key={photo}
                   src={photo}

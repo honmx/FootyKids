@@ -31,7 +31,8 @@ export const theme = createTheme({
   palette: {
     primary: {
       main: "#478DE0",
-      dark: "#276FC5",
+      // dark: "#276FC5",
+      dark: "#4483CD",
       light: "#ff0000",
       contrastText: "#FFFFFF",
     },
@@ -125,9 +126,47 @@ export const theme = createTheme({
       }
     },
     // UI COMPONENTS
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          "& .MuiOutlinedInput-root": {
+            "& fieldset": {
+              backgroundColor: "#F0F0F0",
+              borderColor: "transparent",
+              transition: "all 0.15s ease"
+            },
+            "& input": {
+              fontWeight: 300,
+              zIndex: 2,
+            },
+            "&:hover fieldset": {
+              borderColor: "#CCCCCC",
+            },
+            "&.Mui-focused fieldset": {
+              borderColor: "#0075FF",
+            },
+            "&.Mui-error fieldset": {
+              borderColor: "#FF0000"
+            }
+          },
+        }
+      }
+    },
+    MuiInputLabel: {
+      styleOverrides: {
+        root: {
+          fontWeight: 300
+        }
+      }
+    },
     MuiButton: {
       styleOverrides: {
-
+        root: {
+          boxShadow: "none",
+          "&:hover": {
+            boxShadow: "none"
+          }
+        }
       }
     },
     MuiIconButton: {
