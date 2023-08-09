@@ -15,7 +15,7 @@ const applicationSchema = yup
     parentName: yup.string().required(),
     childName: yup.string().required(),
     childBirth: yup.string().matches(/^\d\d.\d\d.\d\d\d\d$/).required(),
-    phone: yup.string().required(),
+    phone: yup.string().min(10).max(10).required(),
   })
   .required();
 
@@ -64,28 +64,24 @@ const GetInTouch: FC<Props> = ({ }) => {
                       control={control}
                       name="parentName"
                       label="ФИО родителя"
-                      rules={{ required: true }}
                       fullWidth
                     />
                     <ControlledTextField
                       control={control}
                       name="childName"
                       label="ФИО ребенка"
-                      rules={{ required: true }}
                       fullWidth
                     />
                     <ControlledTextField
                       control={control}
                       name="childBirth"
                       label="Дата рождения ребенка (ДД.ММ.ГГГГ)"
-                      rules={{ required: true }}
                       fullWidth
                     />
                     <ControlledTextField
                       control={control}
                       name="phone"
                       label="Телефон"
-                      rules={{ required: true }}
                       fullWidth
                     />
                   </Stack>
