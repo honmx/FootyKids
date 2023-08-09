@@ -81,7 +81,7 @@ const NewsCard: FC<Props> = ({ news, ...restProps }) => {
       {
         typeof window !== "undefined" &&
         createPortal(
-          <NewsModal open={isModalActive} handleCloseClick={handleOpenModalClick} />,
+          <NewsModal open={isModalActive} handleCloseClick={handleOpenModalClick} news={news} />,
           document.body.querySelector("#modal-container") as Element
         )
       }

@@ -6,6 +6,7 @@ import { ICoach } from "@/types/ICoach";
 import coachIcon from "@/assets/coach icon.svg";
 import CoachInfo from "../CoachInfo";
 import { IModalProps } from "@/types/IModalProps";
+import ModalItemWithScrollingContentWrapper from "../Wrappers/ModalItemWithScrollingContentWrapper";
 
 interface Props extends IModalProps {
   coach: ICoach;
@@ -14,11 +15,11 @@ interface Props extends IModalProps {
 const CoachModal: FC<Props> = ({ open, handleCloseClick, coach, ...restProps }) => {
 
   return (
-    <ModalWrapper disablePortal open={open} handleCloseClick={handleCloseClick} {...restProps}>
+    <ModalWrapper open={open} handleCloseClick={handleCloseClick} {...restProps}>
       <Stack direction="row">
-        <Box sx={{ width: "50%", minHeight: "100%" }}>
-          <CoachInfo coach={coach} sx={{ padding: 3, overflow: "auto", height: 0, minHeight: "100%" }} />
-        </Box>
+        <ModalItemWithScrollingContentWrapper>
+          <CoachInfo coach={coach} />
+        </ModalItemWithScrollingContentWrapper>
         <Box sx={{ width: "50%" }}>
           <Image
             src={coach?.photo ? coach.photo : coachIcon}

@@ -24,6 +24,7 @@ const ModalWrapper: FC<Props> = ({ open, handleCloseClick, children, ...restProp
     <Modal
       open={open}
       onClose={handleCloseClick}
+      disablePortal
       sx={{ overflowY: "auto", paddingInline: 5 }}
       {...restProps}
     >

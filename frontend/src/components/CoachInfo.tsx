@@ -2,14 +2,14 @@ import { FC } from "react";
 import { ICoach } from "@/types/ICoach";
 import { Stack, StackProps, Typography } from "@mui/material";
 
-interface Props extends StackProps {
+interface Props {
   coach: ICoach;
 }
 
-const CoachInfo: FC<Props> = ({ coach, ...restProps }) => {
+const CoachInfo: FC<Props> = ({ coach }) => {
 
   return (
-    <Stack spacing={2.5} {...restProps}>
+    <Stack spacing={2.5}>
       <Typography fontSize={34} color="typography.main">{coach.type}</Typography>
       <Stack spacing={0.5}>
         <Typography fontSize={24}>{coach.name}</Typography>
