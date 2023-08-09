@@ -11,16 +11,20 @@ import { Stack } from "@mui/material";
 import contentService from "@/services/contentService";
 import { INextPageWithLayout } from "@/types/INextPageWithLayout";
 import { ICoach } from "@/types/ICoach";
+import News from "@/components/Sections/News";
+import { INews } from "@/types/INews";
 
 
 interface Props {
   coaches: ICoach[] | undefined;
+  news: INews[] | undefined;
 }
 
-const HomePage: INextPageWithLayout<Props> = ({ coaches }) => {
+const HomePage: INextPageWithLayout<Props> = ({ coaches, news }) => {
 
   // todo: return error page
   if (!coaches) return "error with coaches";
+  if (!news) return "error with news";
 
   return (
     <>
@@ -34,6 +38,7 @@ const HomePage: INextPageWithLayout<Props> = ({ coaches }) => {
         <MainBanner />
         <AboutUs coachesCount={coaches.length} />
         <Coaches coaches={coaches} />
+        <News news={news} />
         <Faq />
       </Stack>
     </>
@@ -54,10 +59,12 @@ HomePage.getLayout = (page) => {
 export const getStaticProps: GetStaticProps = async () => {
 
   const coaches = await contentService.getCoaches();
+  const news = await contentService.getNews();
 
   return {
     props: {
-      coaches
+      coaches,
+      news
     }
   }
 }
