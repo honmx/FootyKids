@@ -4,6 +4,7 @@ import bg from "@/assets/get-in-touch-bg.jpg";
 import { Box, Container, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import DarkForeground from "../UI/DarkForeground";
+import Link from "next/link";
 
 interface Props {
 
@@ -33,7 +34,9 @@ const GetInTouchTemporary: FC<Props> = ({ }) => {
         }}>
           <Stack spacing={2}>
             <Typography color="typography.light" fontSize={50} fontWeight={500} textAlign="center">Запишитесь на бесплатное пробное занятие</Typography>
-            <Typography color="typography.light" fontSize={26} fontWeight={500} textAlign="center">+7-900-000-00-00</Typography>
+            <Typography color="typography.light" fontSize={26} fontWeight={500} textAlign="center">
+              <Link href="tel:+79000000000" style={{ color: "#FFFFFF" }}>+7-900-000-00-00</Link>
+            </Typography>
           </Stack>
         </Container>
       </Box>
