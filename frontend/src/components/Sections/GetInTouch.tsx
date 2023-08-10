@@ -2,13 +2,13 @@ import { FC } from "react";
 import Image from "next/image";
 import { Box, Button, Container, Paper, Stack, TextField, Typography } from "@mui/material";
 import { useForm, Controller, SubmitHandler, Control } from "react-hook-form";
+import * as yup from "yup";
+import { InferType } from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 import SectionWrapper from "../Wrappers/SectionWrapper";
 import ControlledTextField from "../UI/ControlledTextField";
 import DarkForeground from "../UI/DarkForeground";
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
 import photo from "@/assets/get-in-touch-photo.jpg";
-import { InferType } from "yup";
 
 const applicationSchema = yup
   .object({

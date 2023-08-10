@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Box, Container, IconButton, Stack, Typography } from "@mui/material";
+import { Box, BoxProps, Container, IconButton, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
 import logo from "@/assets/footykids-logo.svg";
@@ -7,18 +7,22 @@ import vk from "@/assets/vk.svg";
 import inst from "@/assets/inst.svg";
 import youtube from "@/assets/youtube.svg";
 
-interface Props {
+interface Props extends BoxProps {
 
 }
 
-const Footer: FC<Props> = ({ }) => {
+const Footer: FC<Props> = ({ ...restProps }) => {
   return (
-    <Box component="footer" sx={{
-      backgroundColor: "primary.main",
-      color: "typography.light",
-      paddingTop: "10px",
-      paddingBottom: "10px"
-    }}>
+    <Box
+      component="footer"
+      sx={{
+        backgroundColor: "primary.main",
+        color: "typography.light",
+        paddingTop: "10px",
+        paddingBottom: "10px"
+      }}
+      {...restProps}
+    >
       <Container maxWidth={false} disableGutters sx={{
         display: "grid",
         gridTemplateColumns: "repeat(3, 1fr)",
