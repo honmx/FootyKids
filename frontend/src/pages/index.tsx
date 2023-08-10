@@ -13,6 +13,8 @@ import { INextPageWithLayout } from "@/types/INextPageWithLayout";
 import { ICoach } from "@/types/ICoach";
 import News from "@/components/Sections/News";
 import { INews } from "@/types/INews";
+import GetInTouch from "@/components/Sections/GetInTouch";
+import GetInTouchTemporary from "@/components/Sections/GetInTouchTemporary";
 
 
 interface Props {
@@ -40,6 +42,8 @@ const HomePage: INextPageWithLayout<Props> = ({ coaches, news }) => {
         <Coaches coaches={coaches} />
         <News news={news} />
         <Faq />
+        <GetInTouchTemporary />
+        {/* <GetInTouch /> */}
       </Stack>
     </>
   )

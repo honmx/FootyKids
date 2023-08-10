@@ -12,7 +12,10 @@ export const newsPhotosGridTemplateAreas = [
     "b c"
   `,
   `
-    "a b"
-    "c d"
+    "a a"
+    "a a"
+    "b c"
+    "d d"
+    "d d"
   `
 ];
