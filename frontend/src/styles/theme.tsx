@@ -27,6 +27,13 @@ declare module "@mui/material/Button" {
   }
 }
 
+declare module "@mui/material/IconButton" {
+  interface IconButtonPropsColorOverrides {
+    white: true;
+    black: true;
+  }
+}
+
 export const theme = createTheme({
   palette: {
     primary: {
@@ -54,6 +61,7 @@ export const theme = createTheme({
   },
   typography: {
     fontFamily: font.style.fontFamily,
+
   },
   shape: {
     borderRadius: 5
@@ -173,14 +181,32 @@ export const theme = createTheme({
       styleOverrides: {
         root: {
           aspectRatio: 1,
-          filter: "brightness(10%) invert(1)",
           transition: "all 0.15s ease",
           "&:hover": {
-            backgroundColor: "transparent",
-            filter: "brightness(0) invert(1)"
+            backgroundColor: "transparent"
           }
         }
-      }
+      },
+      variants: [
+        {
+          props: { color: "white" },
+          style: {
+            filter: "brightness(10%) invert(1)",
+            "&:hover": {
+              filter: "brightness(0) invert(1)"
+            }
+          }
+        },
+        {
+          props: { color: "black" },
+          style: {
+            filter: "brightness(0) invert(0)",
+            "&:hover": {
+              filter: "invert(35%) sepia(78%) saturate(4713%) hue-rotate(203deg) brightness(102%) contrast(109%)"
+            }
+          }
+        },
+      ]
     },
     MuiLink: {
       defaultProps: {

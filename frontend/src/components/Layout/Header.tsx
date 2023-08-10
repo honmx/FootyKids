@@ -1,9 +1,11 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import Image from "next/image";
-import { AppBar, Box, Container, Link, Stack } from "@mui/material";
-import logo from "@/assets/footykids-logo.svg";
-import { useRouter } from "next/router";
+import { AppBar, Box, Container, Drawer, IconButton, Link, List, ListItem, ListItemButton, Stack, SwipeableDrawer, Typography } from "@mui/material";
 import CustomLink from "../UI/CustomLink";
+import { useResize } from "@/hooks/useResize";
+import { headerLinks } from "@/data/headerLinks";
+import logo from "@/assets/footykids-logo.svg";
+import menu from "@/assets/menu icon.svg";
 
 interface Props {
 
@@ -11,22 +13,74 @@ interface Props {
 
 const Header: FC<Props> = ({ }) => {
 
-  const router = useRouter();
+  const isTablet = useResize(1024);
+
+  const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
+
+  const handleOpenDrawerClick = () => {
+    setIsDrawerOpen(prev => !prev);
+  }
 
   return (
-    <AppBar sx={{ display: "flex", flexDirection: "row", pt: 2, pb: 2 }}>
-      <Container maxWidth={false} disableGutters>
+    <AppBar sx={{ paddingTop: 2, paddingBottom: 2 }}>
+      <Container
+        maxWidth={false}
+        disableGutters
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center"
+        }}
+      >
         <Box>
           <Link href="/">
             <Image src={logo} alt="FootyKids" />
           </Link>
         </Box>
-        <Box sx={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}>
-          <Stack direction="row" spacing={2}>
-            <CustomLink href="/">Главная</CustomLink>
-            <CustomLink href="/account">Личный кабинет</CustomLink>
-          </Stack>
-        </Box>
+        {
+          isTablet
+            ? (
+              <Box>
+                <IconButton size="medium" color="black" onClick={handleOpenDrawerClick}>
+                  <Image src={menu} alt="menu" />
+                </IconButton>
+                <SwipeableDrawer
+                  open={isDrawerOpen}
+                  anchor="right"
+                  onOpen={handleOpenDrawerClick}
+                  onClose={handleOpenDrawerClick}
+                  sx={{
+                    "& .MuiDrawer-paper": {
+                      width: "min(calc(100% - 60px), 300px)",
+                      paddingTop: 5
+                      // justifyContent: "center"
+                    }
+                  }}
+                >
+                  <List>
+                    {
+                      headerLinks.map(link => (
+                        <ListItemButton key={link.href} sx={{ justifyContent: "center" }}>
+                          <CustomLink href={link.href}>{link.text}</CustomLink>
+                        </ListItemButton>
+                      ))
+                    }
+                  </List>
+                </SwipeableDrawer>
+              </Box>
+            ) : (
+              <Box sx={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}>
+                <Stack direction="row" spacing={2}>
+                  {
+                    headerLinks.map(link => (
+                      <CustomLink key={link.href} href={link.href}>{link.text}</CustomLink>
+                    ))
+                  }
+                </Stack>
+              </Box>
+            )
+        }
       </Container>
     </AppBar>
   )
