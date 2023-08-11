@@ -287,7 +287,7 @@ export const createCustomTheme = ({ deviceType }: ICreateThemeProps) => {
       MuiTypography: {
         styleOverrides: {
           root: {
-            lineHeight: 1,
+            lineHeight: 1.1,
             fontWeight: 300
           }
         }

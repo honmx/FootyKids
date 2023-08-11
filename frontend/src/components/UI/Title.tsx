@@ -24,7 +24,7 @@ const Title: FC<Props> = ({ type = "regular", children, ...restProps }) => {
           zIndex: 10,
           "&>*": {
             fontSize: {
-              smallPhone: 22,
+              smallPhone: 24,
               largePhone: 26,
               tablet: 30,
             }

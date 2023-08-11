@@ -9,11 +9,48 @@ interface Props {
 const CoachInfo: FC<Props> = ({ coach }) => {
 
   return (
-    <Stack spacing={2.5}>
-      <Typography fontSize={34} color="typography.main">{coach.type}</Typography>
+    <Stack
+      spacing={{
+        smallPhone: 1.5,
+        middlePhone: 2.5,
+      }}
+      sx={{
+        "& *": {
+          fontSize: {
+            smallPhone: 13,
+            middlePhone: 14,
+            largePhone: 16,
+          }
+        }
+      }}
+    >
+      <Typography
+        fontSize={{
+          smallPhone: "23px !important",
+          middlePhone: "30px !important",
+          largePhone: "34px !important"
+        }}
+        color="typography.main"
+      >
+        {coach.type}
+      </Typography>
       <Stack spacing={0.5}>
-        <Typography fontSize={24}>{coach.name}</Typography>
-        <Typography fontSize={14}>{coach.birth}</Typography>
+        <Typography
+          fontSize={{
+            smallPhone: "20px !important",
+            middlePhone: "24px !important"
+          }}
+        >
+          {coach.name}
+        </Typography>
+        <Typography
+          fontSize={{
+            smallPhone: "12px !important",
+            middlePhone: "14px !important"
+          }}
+        >
+          {coach.birth}
+        </Typography>
       </Stack>
       {
         coach.education.length > 0 &&
