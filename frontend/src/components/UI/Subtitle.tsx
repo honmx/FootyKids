@@ -9,7 +9,9 @@ const Subtitle: FC<Props> = ({ children, ...restProps }) => {
   return (
     <Typography
       fontSize={{
-        smallPhone: 20,
+        smallPhone: 18,
+        middlePhone: 20,
+        largePhone: 24,
         tablet: 26
       }}
       fontWeight={300}

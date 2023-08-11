@@ -4,6 +4,7 @@ import CoachCard from "./Cards/CoachCard";
 import Carousel from "./UI/Carousel";
 import { useResize } from "@/hooks/useResize";
 import { ICoach } from "@/types/ICoach";
+import Subtitle from "./UI/Subtitle";
 
 interface Props {
   title: string;
@@ -17,13 +18,7 @@ const CoachesGroup: FC<Props> = ({ title, coaches }) => {
   return (
     <Box>
       <Container>
-        <Typography
-          fontWeight={300}
-          fontSize={20}
-          sx={{ marginBottom: 3 }}
-        >
-          {title}
-        </Typography>
+        <Subtitle sx={{ marginBottom: 3 }}>{title}</Subtitle>
         {
           !isTablet &&
           <Box
