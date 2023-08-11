@@ -1,6 +1,6 @@
 import { FC, useState } from "react";
 import Image from "next/image";
-import { AppBar, Box, Container, Divider, Drawer, IconButton, Link, List, ListItem, ListItemButton, Stack, SwipeableDrawer, Typography } from "@mui/material";
+import { AppBar, Box, Container, Divider, Drawer, IconButton, Link, List, ListItem, ListItemButton, Stack, SwipeableDrawer, Typography, useMediaQuery } from "@mui/material";
 import CustomLink from "../UI/CustomLink";
 import { useResize } from "@/hooks/useResize";
 import { headerLinks } from "@/data/headerLinks";
@@ -13,7 +13,8 @@ interface Props {
 
 const Header: FC<Props> = ({ }) => {
 
-  const isTablet = useResize(1024);
+  // const isTablet = useResize(1024);
+  const isTablet = useMediaQuery("(max-width: 1023px)");
 
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
 
