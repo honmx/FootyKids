@@ -18,24 +18,26 @@ const News: FC<Props> = ({ news }) => {
     <SectionWrapper title="Новости">
       <Box>
         <Container>
-          <Box sx={{
-            display: "grid",
-            gridTemplateColumns: "repeat(5, 1fr)",
-            gridTemplateRows: "repeat(2, 1fr)",
-            gap: 2
-          }}>
-            {
-              !isTablet &&
-              new Array(7).fill(news[0]).map((news, i) => (
-                <NewsCard
-                  key={i}
-                  news={news}
-                  gridRow={i === 0 ? "span 2" : ""}
-                  gridColumn={i === 0 ? "span 2" : ""}
-                />
-              ))
-            }
-          </Box>
+          {
+            !isTablet &&
+            <Box sx={{
+              display: "grid",
+              gridTemplateColumns: "repeat(5, 1fr)",
+              gridTemplateRows: "repeat(2, 1fr)",
+              gap: 2
+            }}>
+              {
+                new Array(7).fill(news[0]).map((news, i) => (
+                  <NewsCard
+                    key={i}
+                    news={news}
+                    gridRow={i === 0 ? "span 2" : ""}
+                    gridColumn={i === 0 ? "span 2" : ""}
+                  />
+                ))
+              }
+            </Box>
+          }
         </Container>
         {
           isTablet &&
