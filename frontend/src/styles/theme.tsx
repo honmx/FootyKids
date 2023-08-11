@@ -38,7 +38,6 @@ declare module "@mui/material/IconButton" {
 
 declare module "@mui/material/styles" {
   interface BreakpointOverrides {
-    xs: false,
     sm: false,
     md: false,
     lg: false,
@@ -46,6 +45,7 @@ declare module "@mui/material/styles" {
     smallPhone: true,
     middlePhone: true,
     largePhone: true,
+    smallTablet: true,
     tablet: true,
     laptop: true,
     desktop: true,
@@ -86,9 +86,11 @@ export const createCustomTheme = ({ deviceType }: ICreateThemeProps) => {
     },
     breakpoints: {
       values: {
+        xs: 0,
         smallPhone: 320,
         middlePhone: 375,
         largePhone: 425,
+        smallTablet: 600,
         tablet: 768,
         laptop: 1024,
         desktop: 1440,
@@ -122,6 +124,15 @@ export const createCustomTheme = ({ deviceType }: ICreateThemeProps) => {
         styleOverrides: {
           root: {
             paddingInline: "15px"
+          }
+        }
+      },
+      MuiGrid: {
+        styleOverrides: {
+          root: {
+            "@media screen and (min-width: 900px)": {
+              maxWidth: "none"
+            }
           }
         }
       },

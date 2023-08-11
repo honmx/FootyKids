@@ -35,11 +35,11 @@ const MainBanner: FC<Props> = ({ }) => {
           <Title type="main">
             <Typography
               fontSize={{
-                smallPhone: 50,
-                largePhone: 60,
-                tablet: 70,
-                laptop: 80,
-                desktop: 90
+                smallPhone: "50px !important",
+                largePhone: "60px !important",
+                tablet: "70px !important",
+                laptop: "80px !important",
+                desktop: "90px !important"
               }}
               fontWeight={700}
               component="h1"
