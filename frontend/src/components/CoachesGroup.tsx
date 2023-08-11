@@ -1,9 +1,9 @@
 import { ICoach } from "@/types/ICoach";
-import { Box, Container, Typography } from "@mui/material";
+import { Box, Container, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { FC } from "react";
 import CoachCard from "./Cards/CoachCard";
-import { useResize } from "@/hooks/useResize";
 import Carousel from "./UI/Carousel";
+import { useResize } from "@/hooks/useResize";
 
 interface Props {
   title: string;
@@ -12,7 +12,7 @@ interface Props {
 
 const CoachesGroup: FC<Props> = ({ title, coaches }) => {
 
-  const isTablet = useResize(1024);
+  const isTablet = useResize("laptop");
 
   return (
     <Box>

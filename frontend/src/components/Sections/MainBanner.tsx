@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography, useMediaQuery, useTheme } from "@mui/material";
 import Image from "next/image";
 import banner from "@/assets/photo-bg.jpg";
 import DarkForeground from "@/components/UI/DarkForeground";
@@ -11,6 +11,7 @@ interface Props {
 }
 
 const MainBanner: FC<Props> = ({ }) => {
+
   return (
     <SectionWrapper sx={{ position: "relative" }}>
       <DarkForeground>

@@ -36,6 +36,23 @@ declare module "@mui/material/IconButton" {
   }
 }
 
+declare module "@mui/material/styles" {
+  interface BreakpointOverrides {
+    xs: false,
+    sm: false,
+    md: false,
+    lg: false,
+    xl: false,
+    smallPhone: true,
+    middlePhone: true,
+    largePhone: true,
+    tablet: true,
+    laptop: true,
+    desktop: true,
+    container: true,
+  }
+}
+
 interface ICreateThemeProps {
   deviceType: "mobile" | "desktop";
 }
@@ -66,9 +83,19 @@ export const createCustomTheme = ({ deviceType }: ICreateThemeProps) => {
         dark: ""
       }
     },
+    breakpoints: {
+      values: {
+        smallPhone: 320,
+        middlePhone: 375,
+        largePhone: 425,
+        tablet: 768,
+        laptop: 1024,
+        desktop: 1440,
+        container: 900
+      }
+    },
     typography: {
       fontFamily: font.style.fontFamily,
-  
     },
     shape: {
       borderRadius: 5
@@ -88,7 +115,7 @@ export const createCustomTheme = ({ deviceType }: ICreateThemeProps) => {
       // WIDGETS
       MuiContainer: {
         defaultProps: {
-          maxWidth: "md"
+          maxWidth: "container"
         },
         styleOverrides: {
           root: {

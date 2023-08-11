@@ -1,10 +1,10 @@
 import { INews } from "@/types/INews";
 import { FC } from "react";
 import SectionWrapper from "../Wrappers/SectionWrapper";
-import { Box, Container } from "@mui/material";
+import { Box, Container, useMediaQuery, useTheme } from "@mui/material";
 import NewsCard from "../Cards/NewsCard";
-import { useResize } from "@/hooks/useResize";
 import Carousel from "../UI/Carousel";
+import { useResize } from "@/hooks/useResize";
 
 interface Props {
   news: INews[];
@@ -12,7 +12,7 @@ interface Props {
 
 const News: FC<Props> = ({ news }) => {
 
-  const isTablet = useResize(1024);
+  const isTablet = useResize("laptop");
 
   return (
     <SectionWrapper title="Новости">

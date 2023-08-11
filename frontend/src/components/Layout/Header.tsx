@@ -1,11 +1,11 @@
 import { FC, useState } from "react";
 import Image from "next/image";
-import { AppBar, Box, Container, Divider, Drawer, IconButton, Link, List, ListItem, ListItemButton, Stack, SwipeableDrawer, Typography, useMediaQuery } from "@mui/material";
+import { AppBar, Box, Container, Divider, IconButton, Link, List, ListItemButton, Stack, SwipeableDrawer, Typography, useMediaQuery, useTheme } from "@mui/material";
 import CustomLink from "../UI/CustomLink";
-import { useResize } from "@/hooks/useResize";
 import { headerLinks } from "@/data/headerLinks";
 import logo from "@/assets/footykids-logo.svg";
 import menu from "@/assets/menu icon.svg";
+import { useResize } from "@/hooks/useResize";
 
 interface Props {
 
@@ -13,8 +13,7 @@ interface Props {
 
 const Header: FC<Props> = ({ }) => {
 
-  // const isTablet = useResize(1024);
-  const isTablet = useMediaQuery("(max-width: 1023px)");
+  const isTablet = useResize("laptop");
 
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
 
