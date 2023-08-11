@@ -25,8 +25,13 @@ const Footer: FC<Props> = ({ ...restProps }) => {
     >
       <Container maxWidth={false} disableGutters sx={{
         display: "grid",
-        gridTemplateColumns: "repeat(3, 1fr)",
-        alignItems: "center"
+        gridTemplateColumns: {
+          smallPhone: "1fr",
+          largePhone: "repeat(3, 1fr)"
+        },
+        alignItems: "center",
+        justifyItems: "center",
+        gap: 1,
       }}>
         <Box>
           <Link href="/">
@@ -55,7 +60,7 @@ const Footer: FC<Props> = ({ ...restProps }) => {
             </Link>
           </Stack>
         </Box>
-        <Box sx={{ justifySelf: "end" }}>
+        <Box sx={{ justifySelf: { smallPhone: "center", largePhone: "end" } }}>
           <Typography fontSize={16} fontWeight={300}>2023</Typography>
         </Box>
       </Container>
