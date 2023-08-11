@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react"
+import { useEffect, useLayoutEffect, useState } from "react"
 
 export const useResize = (width: number) => {
   const [isSmaller, setIsSmaller] = useState<boolean>(false);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const handleResize = () => {
       setIsSmaller(window.innerWidth < width);
     }

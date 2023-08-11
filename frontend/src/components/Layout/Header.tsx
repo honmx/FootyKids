@@ -1,6 +1,6 @@
 import { FC, useState } from "react";
 import Image from "next/image";
-import { AppBar, Box, Container, Drawer, IconButton, Link, List, ListItem, ListItemButton, Stack, SwipeableDrawer, Typography } from "@mui/material";
+import { AppBar, Box, Container, Divider, Drawer, IconButton, Link, List, ListItem, ListItemButton, Stack, SwipeableDrawer, Typography } from "@mui/material";
 import CustomLink from "../UI/CustomLink";
 import { useResize } from "@/hooks/useResize";
 import { headerLinks } from "@/data/headerLinks";
@@ -52,13 +52,21 @@ const Header: FC<Props> = ({ }) => {
                   onClose={handleOpenDrawerClick}
                   sx={{
                     "& .MuiDrawer-paper": {
-                      width: "min(calc(100% - 60px), 300px)",
-                      paddingTop: 5
-                      // justifyContent: "center"
+                      minWidth: "min(calc(100% - 60px), 300px)",
                     }
                   }}
                 >
-                  <List>
+                  <Typography
+                    component="h1"
+                    textAlign="center"
+                    fontSize={30}
+                    color="typography.dark"
+                    padding="20px 0"
+                  >
+                    Меню
+                  </Typography>
+                  <Divider />
+                  <List component="nav" onClick={handleOpenDrawerClick}>
                     {
                       headerLinks.map(link => (
                         <ListItemButton key={link.href} sx={{ justifyContent: "center" }}>
