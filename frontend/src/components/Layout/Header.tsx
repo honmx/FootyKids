@@ -1,6 +1,6 @@
 import { FC, useState } from "react";
 import Image from "next/image";
-import { AppBar, Box, Container, Divider, IconButton, Link, List, ListItemButton, Stack, SwipeableDrawer, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { AppBar, Box, Container, Divider, IconButton, Link, List, ListItemButton, Stack, SwipeableDrawer, Typography } from "@mui/material";
 import CustomLink from "../UI/CustomLink";
 import { headerLinks } from "@/data/headerLinks";
 import logo from "@/assets/footykids-logo.svg";

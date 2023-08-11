@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Box, Stack, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import banner from "@/assets/photo-bg.jpg";
 import DarkForeground from "@/components/UI/DarkForeground";
@@ -23,18 +23,52 @@ const MainBanner: FC<Props> = ({ }) => {
           filter: "grayscale(100%)",
         }} />
       </DarkForeground>
-      <Box position="absolute" sx={{
-        top: "50%",
-        left: "15px",
-        transform: "translateY(-50%)",
-        color: "typography.light"
-      }}>
+      <Box
+        position="absolute"
+        sx={{
+          top: "50%",
+          left: "15px",
+          transform: "translateY(-50%)",
+          color: "typography.light"
+        }}>
         <Stack direction="column" spacing={3}>
           <Title type="main">
-            <Typography fontSize={80} fontWeight={700} component="h1">FootyKids</Typography>
+            <Typography
+              fontSize={{
+                smallPhone: 50,
+                largePhone: 60,
+                tablet: 70,
+                laptop: 80,
+                desktop: 90
+              }}
+              fontWeight={700}
+              component="h1"
+            >
+              FootyKids
+            </Typography>
           </Title>
-          <Typography lineHeight={1.2} fontSize={22} fontWeight={600}>Футбольная школа <br /> для детей от 4 лет</Typography>
-          <Typography lineHeight={1.2} fontSize={22} fontWeight={600}>Мы учим детей любить спорт!</Typography>
+          <Typography
+            lineHeight={1.2}
+            fontSize={{
+              smallPhone: 16,
+              tablet: 22,
+              desktop: 28,
+            }}
+            fontWeight={600}
+          >
+            Футбольная школа <br /> для детей от 4 лет
+          </Typography>
+          <Typography
+            lineHeight={1.2}
+            fontSize={{
+              smallPhone: 16,
+              tablet: 22,
+              desktop: 28,
+            }}
+            fontWeight={600}
+          >
+            Мы учим детей любить спорт!
+          </Typography>
         </Stack>
       </Box>
     </SectionWrapper>

@@ -1,7 +1,7 @@
 import { INews } from "@/types/INews";
 import { FC } from "react";
 import SectionWrapper from "../Wrappers/SectionWrapper";
-import { Box, Container, useMediaQuery, useTheme } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import NewsCard from "../Cards/NewsCard";
 import Carousel from "../UI/Carousel";
 import { useResize } from "@/hooks/useResize";

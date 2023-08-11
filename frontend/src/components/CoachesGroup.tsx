@@ -1,9 +1,9 @@
-import { ICoach } from "@/types/ICoach";
-import { Box, Container, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { FC } from "react";
+import { Box, Container, Typography } from "@mui/material";
 import CoachCard from "./Cards/CoachCard";
 import Carousel from "./UI/Carousel";
 import { useResize } from "@/hooks/useResize";
+import { ICoach } from "@/types/ICoach";
 
 interface Props {
   title: string;

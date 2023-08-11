@@ -49,6 +49,7 @@ declare module "@mui/material/styles" {
     tablet: true,
     laptop: true,
     desktop: true,
+    largeDesktop: true,
     container: true,
   }
 }
@@ -91,6 +92,7 @@ export const createCustomTheme = ({ deviceType }: ICreateThemeProps) => {
         tablet: 768,
         laptop: 1024,
         desktop: 1440,
+        largeDesktop: 1920,
         container: 900
       }
     },
