@@ -19,6 +19,7 @@ const AboutCard: FC<Props> = ({ icon, children, ...restProps }) => {
           position: "absolute",
           top: "-15px",
           left: {
+            smallPhone: "-8px",
             laptop: "-15px"
           }
         }}>

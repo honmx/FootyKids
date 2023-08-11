@@ -12,7 +12,7 @@ const SectionWrapper: FC<Props> = ({ title, children, ...restProps }) => {
       {
         title &&
         <Title textAlign="center">
-          <Typography component="h3" fontSize={30} fontWeight={700}>{title}</Typography>
+          <Typography component="h3" fontWeight={700}>{title}</Typography>
         </Title>
       }
       {children}

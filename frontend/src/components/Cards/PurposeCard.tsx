@@ -21,7 +21,7 @@ const PurposeCard: FC<Props> = ({ count, children, ...restProps }) => {
           position: "relative",
           top: "30px",
           right: {
-            smallPhone: "15px",
+            smallPhone: "13px",
             laptop: "25px"
           }
         }}>
