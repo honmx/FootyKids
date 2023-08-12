@@ -22,7 +22,8 @@ const GetInTouchTemporary: FC<Props> = ({ }) => {
               priority
               style={{
                 height: "min(700px, 60vh)",
-                objectFit: "cover"
+                objectFit: "cover",
+                filter: "grayscale(100%)"
               }}
             />
           </DarkForeground>

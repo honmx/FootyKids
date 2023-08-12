@@ -24,7 +24,8 @@ const AdvantagesCard: FC<Props> = ({ accentText, usualText }) => {
           smallPhone: "10px",
           largePhone: "10px 20px"
         }
-      }}>
+      }}
+    >
       <Typography
         textAlign="center"
         color="typography.light"

@@ -16,7 +16,6 @@ import { INews } from "@/types/INews";
 import GetInTouch from "@/components/Sections/GetInTouch";
 import GetInTouchTemporary from "@/components/Sections/GetInTouchTemporary";
 
-
 interface Props {
   coaches: ICoach[] | undefined;
   news: INews[] | undefined;
