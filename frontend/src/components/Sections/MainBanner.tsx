@@ -11,6 +11,7 @@ interface Props {
 }
 
 const MainBanner: FC<Props> = ({ }) => {
+
   return (
     <SectionWrapper sx={{ position: "relative" }}>
       <DarkForeground>
@@ -22,18 +23,53 @@ const MainBanner: FC<Props> = ({ }) => {
           filter: "grayscale(100%)",
         }} />
       </DarkForeground>
-      <Box position="absolute" sx={{
-        top: "50%",
-        left: "15px",
-        transform: "translateY(-50%)",
-        color: "typography.light"
-      }}>
+      <Box
+        position="absolute"
+        sx={{
+          top: "50%",
+          left: "15px",
+          transform: "translateY(-50%)",
+          color: "typography.light"
+        }}>
         <Stack direction="column" spacing={3}>
           <Title type="main">
-            <Typography fontSize={80} fontWeight={700} component="h1">FootyKids</Typography>
+            <Typography
+              fontSize={{
+                smallPhone: "50px !important",
+                middlePhone: "65px !important",
+                largePhone: "80px !important",
+                tablet: "85px !important",
+                laptop: "90px !important",
+                desktop: "100px !important"
+              }}
+              fontWeight={700}
+              component="h1"
+            >
+              FootyKids
+            </Typography>
           </Title>
-          <Typography lineHeight={1.2} fontSize={22} fontWeight={600}>Футбольная школа <br /> для детей от 4 лет</Typography>
-          <Typography lineHeight={1.2} fontSize={22} fontWeight={600}>Мы учим детей любить спорт!</Typography>
+          <Typography
+            lineHeight={1.2}
+            fontSize={{
+              smallPhone: 16,
+              tablet: 22,
+              desktop: 28,
+            }}
+            fontWeight={600}
+          >
+            Футбольная школа <br /> для детей от 4 лет
+          </Typography>
+          <Typography
+            lineHeight={1.2}
+            fontSize={{
+              smallPhone: 16,
+              tablet: 22,
+              desktop: 28,
+            }}
+            fontWeight={600}
+          >
+            Мы учим детей любить спорт!
+          </Typography>
         </Stack>
       </Box>
     </SectionWrapper>

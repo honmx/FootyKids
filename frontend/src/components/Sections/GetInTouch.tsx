@@ -19,7 +19,7 @@ const applicationSchema = yup
   })
   .required();
 
-interface IFormInput extends InferType<typeof applicationSchema> {}
+interface IFormInput extends InferType<typeof applicationSchema> { }
 
 interface Props {
 
@@ -48,13 +48,37 @@ const GetInTouch: FC<Props> = ({ }) => {
           <Stack spacing={2}>
             <Typography>Запишитесь на бесплатное пробное занятие</Typography>
             <Typography>Оставьте заявку и мы добавим Вас в группу в Viber</Typography>
-            <Paper sx={{ display: "flex" }}>
-              <Box sx={{ width: "50%" }}>
+            <Paper sx={{
+              display: "flex",
+              flexDirection: {
+                smallPhone: "column",
+                tablet: "row"
+              }
+            }}
+            >
+              <Box sx={{
+                width: {
+                  smallPhone: "100%",
+                  tablet: "50%"
+                }
+              }}
+              >
                 <DarkForeground>
-                  <Image src={photo} alt="child photo" />
+                  <Image
+                    src={photo}
+                    alt="child photo"
+                    style={{ width: "100%", objectFit: "cover" }}
+                  />
                 </DarkForeground>
               </Box>
-              <Box sx={{ width: "50%", padding: 3 }}>
+              <Box sx={{
+                width: {
+                  smallPhone: "100%",
+                  tablet: "50%"
+                },
+                padding: 3
+              }}
+              >
                 <form
                   style={{ display: "flex", flexDirection: "column", height: "100%" }}
                   onSubmit={handleSubmit(onSubmit)}
@@ -85,7 +109,7 @@ const GetInTouch: FC<Props> = ({ }) => {
                       fullWidth
                     />
                   </Stack>
-                  <Button type="submit" variant="contained">Записаться</Button>
+                  <Button type="submit" variant="contained" sx={{ marginTop: 2 }}>Записаться</Button>
                 </form>
               </Box>
             </Paper>

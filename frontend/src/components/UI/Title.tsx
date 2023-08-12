@@ -22,6 +22,13 @@ const Title: FC<Props> = ({ type = "regular", children, ...restProps }) => {
           padding: "10px 0",
           color: "typography.light",
           zIndex: 10,
+          "&>*": {
+            fontSize: {
+              smallPhone: "24px !important",
+              largePhone: "26px !important",
+              tablet: "30px !important",
+            }
+          }
         }}>
           {children}
         </Box>

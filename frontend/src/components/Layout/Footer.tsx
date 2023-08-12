@@ -25,37 +25,46 @@ const Footer: FC<Props> = ({ ...restProps }) => {
     >
       <Container maxWidth={false} disableGutters sx={{
         display: "grid",
-        gridTemplateColumns: "repeat(3, 1fr)",
-        alignItems: "center"
+        gridTemplateAreas: {
+          smallPhone: `
+            "a d"
+            "b c"
+          `,
+          largePhone: `
+            "a b c"
+          `
+        },
+        alignItems: "center",
+        gap: 2,
       }}>
-        <Box>
+        <Box sx={{ gridArea: "a" }}>
           <Link href="/">
             <Image src={logo} alt="logo" style={{ filter: "brightness(0) invert(1)" }} />
           </Link>
         </Box>
-        <Box sx={{ justifySelf: "center" }}>
+        <Box sx={{ gridArea: "b", justifySelf: { smallPhone: "start", tablet: "auto" } }}>
           <Stack direction="row" spacing={1} sx={{
             justifyContent: "center",
             alignItems: "center"
           }}>
             <Link href="https://vk.com/footykids_miass" target="_blank">
-              <IconButton size="medium" >
+              <IconButton size="medium" color="white">
                 <Image src={vk} alt="vk" />
               </IconButton>
             </Link>
             <Link href="https://instagram.com/footykids_miass" target="_blank">
-              <IconButton size="medium">
+              <IconButton size="medium" color="white">
                 <Image src={inst} alt="instagram" />
               </IconButton>
             </Link>
             <Link href="https://www.youtube.com/@footykids-1526" target="_blank">
-              <IconButton size="medium">
+              <IconButton size="medium" color="white">
                 <Image src={youtube} alt="youtube" />
               </IconButton>
             </Link>
           </Stack>
         </Box>
-        <Box sx={{ justifySelf: "end" }}>
+        <Box sx={{ gridArea: "c", justifySelf: "end" }}>
           <Typography fontSize={16} fontWeight={300}>2023</Typography>
         </Box>
       </Container>

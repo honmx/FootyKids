@@ -3,8 +3,8 @@ import { FC } from "react";
 import SectionWrapper from "../Wrappers/SectionWrapper";
 import { Box, Container } from "@mui/material";
 import NewsCard from "../Cards/NewsCard";
-import { useResize } from "@/hooks/useResize";
 import Carousel from "../UI/Carousel";
+import { useResize } from "@/hooks/useResize";
 
 interface Props {
   news: INews[];
@@ -12,30 +12,32 @@ interface Props {
 
 const News: FC<Props> = ({ news }) => {
 
-  const isTablet = useResize(1024);
+  const isTablet = useResize("laptop");
 
   return (
     <SectionWrapper title="Новости">
       <Box>
         <Container>
-          <Box sx={{
-            display: "grid",
-            gridTemplateColumns: "repeat(5, 1fr)",
-            gridTemplateRows: "repeat(2, 1fr)",
-            gap: 2
-          }}>
-            {
-              !isTablet &&
-              new Array(7).fill(news[0]).map((news, i) => (
-                <NewsCard
-                  key={i}
-                  news={news}
-                  gridRow={i === 0 ? "span 2" : ""}
-                  gridColumn={i === 0 ? "span 2" : ""}
-                />
-              ))
-            }
-          </Box>
+          {
+            !isTablet &&
+            <Box sx={{
+              display: "grid",
+              gridTemplateColumns: "repeat(5, 1fr)",
+              gridTemplateRows: "repeat(2, 1fr)",
+              gap: 2
+            }}>
+              {
+                new Array(7).fill(news[0]).map((news, i) => (
+                  <NewsCard
+                    key={i}
+                    news={news}
+                    gridRow={i === 0 ? "span 2" : ""}
+                    gridColumn={i === 0 ? "span 2" : ""}
+                  />
+                ))
+              }
+            </Box>
+          }
         </Container>
         {
           isTablet &&

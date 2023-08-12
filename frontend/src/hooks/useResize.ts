@@ -1,18 +1,8 @@
-import { useEffect, useState } from "react"
+import { Breakpoint, useMediaQuery, useTheme } from "@mui/material";
 
-export const useResize = (width: number) => {
-  const [isSmaller, setIsSmaller] = useState<boolean>(false);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsSmaller(window.innerWidth < width);
-    }
-
-    window.addEventListener("resize", handleResize);
-    handleResize();
-
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+export const useResize = (breakpoint: Breakpoint) => {
+  const theme = useTheme();
+  const isSmaller = useMediaQuery(theme.breakpoints.down(breakpoint));
 
   return isSmaller;
 }

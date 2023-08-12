@@ -1,6 +1,6 @@
-import { FC, PropsWithChildren, useEffect, useRef } from "react";
+import { FC, PropsWithChildren } from "react";
 import Image from "next/image";
-import { Box, Button, Stack } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { useCarouselScroll } from "@/hooks/useCarouselScroll";
 import leftArrow from "@/assets/left arrow.svg";
 import rightArrow from "@/assets/right arrow.svg";
@@ -13,7 +13,7 @@ interface Props extends PropsWithChildren {
 
 const Carousel: FC<Props> = ({ children }) => {
 
-  const isTablet = useResize(1024);
+  const isTablet = useResize("laptop");
 
   const { carouselRef, isAbleToScrollLeft, isAbleToScrollRight } = useCarouselScroll();
   const { hoverRef, isHover } = useHover();

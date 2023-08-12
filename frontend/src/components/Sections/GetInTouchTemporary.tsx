@@ -13,15 +13,20 @@ interface Props {
 const GetInTouchTemporary: FC<Props> = ({ }) => {
   return (
     <SectionWrapper title="Записаться">
-      <Box sx={{ maxHeight: "min(700px, 100vh)", overflow: "hidden", position: "relative" }}>
-        <DarkForeground>
-          <Image
-            src={bg}
-            alt="background photo"
-            priority
-            style={{ height: "100%", aspectRatio: 2, objectFit: "cover" }}
-          />
-        </DarkForeground>
+      <Box sx={{ overflow: "hidden", position: "relative" }}>
+        <Box sx={{ height: "100%" }}>
+          <DarkForeground>
+            <Image
+              src={bg}
+              alt="background photo"
+              priority
+              style={{
+                height: "min(700px, 60vh)",
+                objectFit: "cover"
+              }}
+            />
+          </DarkForeground>
+        </Box>
         <Container sx={{
           display: "flex",
           justifyContent: "center",
@@ -33,14 +38,32 @@ const GetInTouchTemporary: FC<Props> = ({ }) => {
           bottom: 0,
         }}>
           <Stack spacing={2}>
-            <Typography color="typography.light" fontSize={50} fontWeight={500} textAlign="center">Запишитесь на бесплатное пробное занятие</Typography>
-            <Typography color="typography.light" fontSize={26} fontWeight={500} textAlign="center">
+            <Typography
+              color="typography.light"
+              fontSize={{
+                smallPhone: 30,
+                tablet: 50,
+              }}
+              fontWeight={500}
+              textAlign="center"
+            >
+              Запишитесь на бесплатное пробное занятие
+            </Typography>
+            <Typography
+              color="typography.light"
+              fontSize={{
+                smallPhone: 20,
+                tablet: 26,
+              }}
+              fontWeight={500}
+              textAlign="center"
+            >
               <Link href="tel:+79000000000" style={{ color: "#FFFFFF" }}>+7-900-000-00-00</Link>
             </Typography>
           </Stack>
         </Container>
       </Box>
-    </SectionWrapper>
+    </SectionWrapper >
   )
 };
 

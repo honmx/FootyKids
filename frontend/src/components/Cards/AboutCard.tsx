@@ -18,7 +18,10 @@ const AboutCard: FC<Props> = ({ icon, children, ...restProps }) => {
         <Box sx={{
           position: "absolute",
           top: "-15px",
-          left: "-15px"
+          left: {
+            smallPhone: "-8px",
+            laptop: "-15px"
+          }
         }}>
           <Image src={icon} alt="icon" />
         </Box>
@@ -27,11 +30,17 @@ const AboutCard: FC<Props> = ({ icon, children, ...restProps }) => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        padding: "15px 40px",
+        padding: {
+          smallPhone: "15px 50px",
+          laptop: "15px 40px"
+        },
         height: "100%"
       }}>
         <Typography
-          fontSize={20}
+          fontSize={{
+            middlePhone: 16,
+            tablet: 20,
+          }}
           fontWeight={300}
           textAlign="center"
         >

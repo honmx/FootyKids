@@ -10,17 +10,26 @@ const PurposeCard: FC<Props> = ({ count, children, ...restProps }) => {
   return (
     <Box {...restProps} sx={{
       position: "relative",
-      maxWidth: "250px"
+      maxWidth: {
+        smallPhone: "none",
+        smallTablet: "250px"
+      }
     }}>
       {
         count &&
         <Box sx={{
           position: "relative",
           top: "30px",
-          right: "25px"
+          right: {
+            smallPhone: "13px",
+            laptop: "25px"
+          }
         }}>
           <Typography
-            fontSize={50}
+            fontSize={{
+              smallPhone: 40,
+              tablet: 50,
+            }}
             fontWeight={700}
             color="sheet.main"
             sx={{
@@ -35,7 +44,10 @@ const PurposeCard: FC<Props> = ({ count, children, ...restProps }) => {
         padding: "15px 40px"
       }}>
         <Typography
-          fontSize={20}
+          fontSize={{
+            middlePhone: 16,
+            tablet: 20,
+          }}
           fontWeight={300}
           lineHeight={1}
           textAlign="center"
