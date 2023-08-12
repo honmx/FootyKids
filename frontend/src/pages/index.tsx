@@ -42,8 +42,8 @@ const HomePage: INextPageWithLayout<Props> = ({ coaches, news }) => {
         <Coaches coaches={coaches} />
         <News news={news} />
         <Faq />
-        {/* <GetInTouchTemporary /> */}
-        <GetInTouch />
+        <GetInTouchTemporary />
+        {/* <GetInTouch /> */}
       </Stack>
     </>
   )
@@ -53,7 +53,7 @@ HomePage.getLayout = (page) => {
   return (
     <Layout
       renderHeader={() => <Header />}
-      renderFooter={() => <Footer marginTop={7.5} />}
+      renderFooter={() => <Footer />}
     >
       {page}
     </Layout>

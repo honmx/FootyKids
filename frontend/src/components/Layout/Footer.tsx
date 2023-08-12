@@ -25,20 +25,24 @@ const Footer: FC<Props> = ({ ...restProps }) => {
     >
       <Container maxWidth={false} disableGutters sx={{
         display: "grid",
-        gridTemplateColumns: {
-          smallPhone: "1fr",
-          largePhone: "repeat(3, 1fr)"
+        gridTemplateAreas: {
+          smallPhone: `
+            "a d"
+            "b c"
+          `,
+          largePhone: `
+            "a b c"
+          `
         },
         alignItems: "center",
-        justifyItems: "center",
-        gap: 1,
+        gap: 2,
       }}>
-        <Box>
+        <Box sx={{ gridArea: "a" }}>
           <Link href="/">
             <Image src={logo} alt="logo" style={{ filter: "brightness(0) invert(1)" }} />
           </Link>
         </Box>
-        <Box sx={{ justifySelf: "center" }}>
+        <Box sx={{ gridArea: "b", justifySelf: { smallPhone: "start", tablet: "auto" } }}>
           <Stack direction="row" spacing={1} sx={{
             justifyContent: "center",
             alignItems: "center"
@@ -60,7 +64,7 @@ const Footer: FC<Props> = ({ ...restProps }) => {
             </Link>
           </Stack>
         </Box>
-        <Box sx={{ justifySelf: { smallPhone: "center", largePhone: "end" } }}>
+        <Box sx={{ gridArea: "c", justifySelf: "end" }}>
           <Typography fontSize={16} fontWeight={300}>2023</Typography>
         </Box>
       </Container>
