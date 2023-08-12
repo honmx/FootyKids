@@ -118,12 +118,20 @@ export const createCustomTheme = ({ deviceType }: ICreateThemeProps) => {
       },
       // WIDGETS
       MuiContainer: {
+        variants: [
+          {
+            props: { disableGutters: true },
+            style: {
+              paddingInline: 0
+            }
+          }
+        ],
         defaultProps: {
           maxWidth: "container"
         },
         styleOverrides: {
           root: {
-            paddingInline: "15px"
+            paddingInline: 15,
           }
         }
       },
@@ -239,22 +247,15 @@ export const createCustomTheme = ({ deviceType }: ICreateThemeProps) => {
         styleOverrides: {
           root: {
             aspectRatio: 1,
+            filter: "brightness(10%) invert(1)",
             transition: "all 0.15s ease",
             "&:hover": {
-              backgroundColor: "transparent"
+              backgroundColor: "transparent",
+              filter: "brightness(0) invert(1)"
             }
           }
         },
         variants: [
-          {
-            props: { color: "white" },
-            style: {
-              filter: "brightness(10%) invert(1)",
-              "&:hover": {
-                filter: "brightness(0) invert(1)"
-              }
-            }
-          },
           {
             props: { color: "black" },
             style: {

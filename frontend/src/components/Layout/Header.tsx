@@ -25,7 +25,6 @@ const Header: FC<Props> = ({ }) => {
     <AppBar sx={{ paddingTop: 2, paddingBottom: 2 }}>
       <Container
         maxWidth={false}
-        disableGutters
         sx={{
           display: "flex",
           flexDirection: "row",
