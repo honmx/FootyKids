@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
 import Image from "next/image";
 import { Box, Container, IconButton } from "@mui/material";
-import DarkForeground from "./UI/DarkForeground";
+import DarkForeground from "../UI/DarkForeground";
 import videoPreviewPhoto from "@/assets/video-preview.jpg";
 import playVideoBtn from "@/assets/play-video-btn.svg";
 import { useResize } from "@/hooks/useResize";

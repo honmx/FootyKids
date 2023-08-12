@@ -1,8 +1,8 @@
 import { Box, Container, Grid } from "@mui/material";
 import { FC } from "react";
-import Subtitle from "./UI/Subtitle";
+import Subtitle from "../UI/Subtitle";
 import { infoAboutSchool } from "@/data/infoAboutSchool";
-import AboutCard from "./Cards/AboutCard";
+import AboutCard from "../Cards/AboutCard";
 import { useResize } from "@/hooks/useResize";
 
 interface Props {

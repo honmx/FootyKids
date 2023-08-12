@@ -1,8 +1,8 @@
 import { purposes } from "@/data/purposes";
 import { Box, Container } from "@mui/material";
 import { FC } from "react";
-import PurposeCard from "./Cards/PurposeCard";
-import Subtitle from "./UI/Subtitle";
+import PurposeCard from "../Cards/PurposeCard";
+import Subtitle from "../UI/Subtitle";
 
 interface Props {
 

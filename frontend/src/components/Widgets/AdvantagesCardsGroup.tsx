@@ -1,6 +1,6 @@
 import { Box, Container, Stack } from "@mui/material";
 import { FC } from "react";
-import AdvantagesCard from "./Cards/AdvantagesCard";
+import AdvantagesCard from "../Cards/AdvantagesCard";
 import { incline } from "@/helpers/incline";
 
 interface Props {
