@@ -32,7 +32,7 @@ const MainBanner: FC<Props> = ({ }) => {
           color: "typography.light"
         }}>
         <Stack direction="column" spacing={3}>
-          <Title type="main">
+          <Title type="main" data-aos="zoom-in">
             <Typography
               fontSize={{
                 smallPhone: "50px !important",
@@ -56,6 +56,8 @@ const MainBanner: FC<Props> = ({ }) => {
               desktop: 28,
             }}
             fontWeight={600}
+            data-aos="zoom-in"
+            data-aos-delay="100"
           >
             Футбольная школа <br /> для детей от 4 лет
           </Typography>
@@ -67,6 +69,8 @@ const MainBanner: FC<Props> = ({ }) => {
               desktop: 28,
             }}
             fontWeight={600}
+            data-aos="zoom-in"
+            data-aos-delay="200"
           >
             Мы учим детей любить спорт!
           </Typography>

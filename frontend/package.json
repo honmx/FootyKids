@@ -18,10 +18,12 @@
     "@types/node": "20.4.2",
     "@types/react": "18.2.15",
     "@types/react-dom": "18.2.7",
+    "aos": "^2.3.4",
     "axios": "^1.4.0",
     "css-mediaquery": "^0.1.2",
     "next": "13.4.10",
     "react": "18.2.0",
+    "react-countup": "^6.4.2",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.45.4",
     "typescript": "5.1.6",
@@ -29,6 +31,7 @@
     "yup": "^1.2.0"
   },
   "devDependencies": {
+    "@types/aos": "^3.0.4",
     "@types/css-mediaquery": "^0.1.1",
     "@types/ua-parser-js": "^0.7.36",
     "@typescript-eslint/parser": "^6.1.0",

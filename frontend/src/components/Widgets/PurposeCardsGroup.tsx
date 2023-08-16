@@ -32,7 +32,7 @@ const PurposeCardsGroup: FC<Props> = ({ }) => {
         },
       }}>
         {
-          purposes.map(purpose => (
+          purposes.map((purpose, i) => (
             <PurposeCard
               key={purpose.text}
               count={purpose.count}
@@ -41,6 +41,7 @@ const PurposeCardsGroup: FC<Props> = ({ }) => {
                 smallPhone: "none",
                 smallTablet: purpose.justifySelf
               }}
+              data-aos={i % 2 === 0 ? "slide-right" : "slide-left"}
             >
               {purpose.text}
             </PurposeCard>

@@ -21,7 +21,7 @@ const AboutUsVideo: FC<Props> = ({  }) => {
   }
   
   return (
-    <Box>
+    <Box data-aos="zoom-in" data-aos-duration="500">
         <Container maxWidth="desktop" disableGutters={isSmallerTablet}>
           {
             isVideoActive

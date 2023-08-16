@@ -33,6 +33,8 @@ const News: FC<Props> = ({ news }) => {
                     news={news}
                     gridRow={i === 0 ? "span 2" : ""}
                     gridColumn={i === 0 ? "span 2" : ""}
+                    data-aos="zoom-in"
+                    data-aos-delay={i * 50}
                   />
                 ))
               }

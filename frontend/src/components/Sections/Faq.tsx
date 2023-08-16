@@ -14,12 +14,12 @@ const Faq: FC<Props> = ({ }) => {
       <Box>
         <Container>
           <Stack spacing={3}>
-            <Typography>Мы собрали все часто задаваемые вопросы и постарались подробно на них ответить</Typography>
+            <Typography data-aos="fade-up">Мы собрали все часто задаваемые вопросы и постарались подробно на них ответить</Typography>
             <Box>
               {
                 new Array(5).fill("").map((a, i) => (
-                  <Accordion key={i} disableGutters>
-                    <AccordionSummary expandIcon={<Image src={plusIcon} alt="plus icon" style={{ width: 15, height: 15 }} />}>
+                  <Accordion key={i} disableGutters data-aos="zoom-in" data-aos-delay={i * 50}>
+                    <AccordionSummary expandIcon={<Image src={plusIcon} alt="plus icon" />}>
                       <Typography>Вопрос..?</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
