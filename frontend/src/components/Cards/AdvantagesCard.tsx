@@ -1,5 +1,6 @@
+import { FC, useEffect } from "react";
 import { Paper, Typography } from "@mui/material";
-import { FC } from "react";
+import CountUp from "react-countup";
 
 interface Props {
   accentText: string;
@@ -36,7 +37,8 @@ const AdvantagesCard: FC<Props> = ({ accentText, usualText, ...restProps }) => {
         }}
         fontWeight={700}
       >
-        {accentText}
+        <CountUp start={0} end={parseFloat(accentText)} enableScrollSpy duration={4} scrollSpyOnce />
+        {accentText.slice(parseFloat(accentText).toString().length)}
       </Typography>
       <Typography
         textAlign="center"

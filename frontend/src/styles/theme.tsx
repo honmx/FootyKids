@@ -176,8 +176,14 @@ export const createCustomTheme = ({ deviceType }: ICreateThemeProps) => {
             margin: "20px 0",
           },
           expandIconWrapper: {
+            marginLeft: "10px",
+            minWidth: "15px",
             "&.Mui-expanded": {
               transform: "rotate(-45deg)"
+            },
+            "& img": {
+              width: "15px",
+              height: "15px",
             }
           }
         }
