@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
 import { Paper, Typography } from "@mui/material";
 import CountUp from "react-countup";
 
@@ -8,6 +8,7 @@ interface Props {
 }
 
 const AdvantagesCard: FC<Props> = ({ accentText, usualText, ...restProps }) => {
+
   return (
     <Paper
       sx={{
@@ -37,7 +38,11 @@ const AdvantagesCard: FC<Props> = ({ accentText, usualText, ...restProps }) => {
         }}
         fontWeight={700}
       >
-        <CountUp start={0} end={parseFloat(accentText)} enableScrollSpy duration={4} scrollSpyOnce />
+        <CountUp start={0} end={parseFloat(accentText)} enableScrollSpy duration={4} scrollSpyOnce>
+          {
+            ({ countUpRef }) => <span ref={countUpRef} />
+          }
+        </CountUp>
         {accentText.slice(parseFloat(accentText).toString().length)}
       </Typography>
       <Typography
