@@ -25,10 +25,22 @@ const AdvantagesCardsGroup: FC<Props> = ({ coachesCount }) => {
           columnGap={5}
           rowGap={2}
         >
-          <AdvantagesCard accentText="5+" usualText="лет опыта" />
-          <AdvantagesCard accentText={coachesCount.toString()} usualText={incline(coachesCount, "тренер", "тренера", "тренеров")} />
-          <AdvantagesCard accentText="250+" usualText="детей" />
-          <AdvantagesCard accentText="5+" usualText="лет опыта" />
+          <AdvantagesCard
+            accentText="5+" usualText="лет опыта"
+            data-aos="zoom-in" data-aos-delay="0"
+          />
+          <AdvantagesCard
+            accentText={coachesCount.toString()} usualText={incline(coachesCount, "тренер", "тренера", "тренеров")}
+            data-aos="zoom-in" data-aos-delay="50"
+          />
+          <AdvantagesCard
+            accentText="250+" usualText="детей"
+            data-aos="zoom-in" data-aos-delay="100"
+          />
+          <AdvantagesCard
+            accentText="5+" usualText="лет опыта"
+            data-aos="zoom-in" data-aos-delay="150"
+          />
         </Stack>
       </Container>
     </Box>

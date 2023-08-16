@@ -15,6 +15,7 @@ const Subtitle: FC<Props> = ({ children, ...restProps }) => {
         tablet: 26
       }}
       fontWeight={300}
+      data-aos="fade-up"
       {...restProps}
     >
       {children}

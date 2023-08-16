@@ -6,7 +6,7 @@ interface Props {
   usualText: string;
 }
 
-const AdvantagesCard: FC<Props> = ({ accentText, usualText }) => {
+const AdvantagesCard: FC<Props> = ({ accentText, usualText, ...restProps }) => {
   return (
     <Paper
       sx={{
@@ -25,6 +25,7 @@ const AdvantagesCard: FC<Props> = ({ accentText, usualText }) => {
           largePhone: "10px 20px"
         }
       }}
+      {...restProps}
     >
       <Typography
         textAlign="center"

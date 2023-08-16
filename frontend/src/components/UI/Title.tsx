@@ -11,7 +11,7 @@ interface Props extends BoxProps {
 
 const Title: FC<Props> = ({ type = "regular", children, ...restProps }) => {
   return (
-    <Box  {...restProps} data-aos="slide-right" data-aos-duration="300">
+    <Box  {...restProps} data-aos="zoom-in" data-aos-duration="300">
       <Box
         sx={{
           display: "inline-grid",

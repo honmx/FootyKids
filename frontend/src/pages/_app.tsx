@@ -21,7 +21,7 @@ const App = ({ Component, pageProps, deviceType }: IAppPropsWithLayout & CustomA
   useEffect(() => {
     AOS.init({
       disable: "phone",
-      duration: 150,
+      duration: 300,
       initClassName: "aos-init", // class applied after initialization
       animatedClassName: "aos-animate", // class applied on animation
       useClassNames: false, // if true, will add content of `data-aos` as classes on scroll

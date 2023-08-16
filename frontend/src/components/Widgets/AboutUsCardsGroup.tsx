@@ -19,13 +19,13 @@ const AboutUsCardsGroup: FC<Props> = ({ }) => {
         <Subtitle sx={{ marginBottom: "50px" }}>Футбольная школа FootyKids - это</Subtitle>
         <Grid container spacing={4}>
           {
-            infoAboutSchool.map(info => (
+            infoAboutSchool.map((info, i) => (
               <Grid
                 key={info.text}
                 item
                 xs={isSmallerTablet ? 12 : info.xs}
               >
-                <AboutCard icon={info.icon}>{info.text}</AboutCard>
+                <AboutCard icon={info.icon} data-aos="zoom-in" data-aos-delay={i * 50}>{info.text}</AboutCard>
               </Grid>
             ))
           }
