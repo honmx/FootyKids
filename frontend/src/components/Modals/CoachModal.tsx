@@ -4,7 +4,7 @@ import { Box, ModalProps, Stack } from "@mui/material";
 import ModalWrapper from "../Wrappers/ModalWrapper";
 import { ICoach } from "@/types/ICoach";
 import coachIcon from "@/assets/coach icon.svg";
-import CoachInfo from "../CoachInfo";
+import CoachInfo from "../Widgets/CoachInfo";
 import { IModalProps } from "@/types/IModalProps";
 import ModalItemWithScrollingContentWrapper from "../Wrappers/ModalItemWithScrollingContentWrapper";
 import ModalItemHeightDeterminantWrapper from "../Wrappers/ModalItemHeightDeterminantWrapper";

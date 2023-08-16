@@ -17,9 +17,9 @@ const CoachInfo: FC<Props> = ({ coach }) => {
       sx={{
         "& *": {
           fontSize: {
-            smallPhone: 13,
-            middlePhone: 14,
-            largePhone: 16,
+            smallPhone: "13px !important",
+            middlePhone: "14px !important",
+            largePhone: "16px !important",
           }
         }
       }}

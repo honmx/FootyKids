@@ -3,7 +3,7 @@ import { Typography } from "@mui/material";
 import SectionWrapper from "../Wrappers/SectionWrapper";
 import Title from "../UI/Title";
 import { ICoach } from "@/types/ICoach";
-import CoachesGroup from "../CoachesGroup";
+import CoachesGroup from "../Widgets/CoachesGroup";
 
 interface Props {
   coaches: ICoach[];

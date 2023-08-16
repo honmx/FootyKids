@@ -67,7 +67,11 @@ const GetInTouch: FC<Props> = ({ }) => {
                   <Image
                     src={photo}
                     alt="child photo"
-                    style={{ width: "100%", objectFit: "cover" }}
+                    style={{
+                      width: "100%",
+                      objectFit: "cover",
+                      filter: "grayscale(100%)"
+                    }}
                   />
                 </DarkForeground>
               </Box>

@@ -3,9 +3,7 @@ import { Box, BoxProps, Container, IconButton, Stack, Typography } from "@mui/ma
 import Image from "next/image";
 import Link from "next/link";
 import logo from "@/assets/footykids-logo.svg";
-import vk from "@/assets/vk.svg";
-import inst from "@/assets/inst.svg";
-import youtube from "@/assets/youtube.svg";
+import { footerLinks } from "@/data/footerLinks";
 
 interface Props extends BoxProps {
 
@@ -23,7 +21,7 @@ const Footer: FC<Props> = ({ ...restProps }) => {
       }}
       {...restProps}
     >
-      <Container maxWidth={false} disableGutters sx={{
+      <Container maxWidth={false} sx={{
         display: "grid",
         gridTemplateAreas: {
           smallPhone: `
@@ -47,21 +45,15 @@ const Footer: FC<Props> = ({ ...restProps }) => {
             justifyContent: "center",
             alignItems: "center"
           }}>
-            <Link href="https://vk.com/footykids_miass" target="_blank">
-              <IconButton size="medium" color="white">
-                <Image src={vk} alt="vk" />
-              </IconButton>
-            </Link>
-            <Link href="https://instagram.com/footykids_miass" target="_blank">
-              <IconButton size="medium" color="white">
-                <Image src={inst} alt="instagram" />
-              </IconButton>
-            </Link>
-            <Link href="https://www.youtube.com/@footykids-1526" target="_blank">
-              <IconButton size="medium" color="white">
-                <Image src={youtube} alt="youtube" />
-              </IconButton>
-            </Link>
+            {
+              footerLinks.map(link => (
+                <Link key={link.alt} href={link.href} target="_blank">
+                  <IconButton size="medium" color="white">
+                    <Image src={link.src} alt={link.alt} />
+                  </IconButton>
+                </Link>
+              ))
+            }
           </Stack>
         </Box>
         <Box sx={{ gridArea: "c", justifySelf: "end" }}>
