@@ -1,16 +1,16 @@
 import { FC, useState } from "react";
 import { ICoach } from "@/types/ICoach";
-import { Box, Button, Paper, Typography } from "@mui/material";
+import { Box, Button, Paper, PaperProps, Typography } from "@mui/material";
 import Image from "next/image";
 import coachIcon from "@/assets/coach icon.svg";
 import { createPortal } from "react-dom";
 import CoachModal from "../Modals/CoachModal";
 
-interface Props {
+interface Props extends PaperProps {
   coach: ICoach;
 }
 
-const CoachCard: FC<Props> = ({ coach }) => {
+const CoachCard: FC<Props> = ({ coach, ...restProps }) => {
 
   const [isModalActive, setIsModalActive] = useState<boolean>(false);
 
@@ -30,6 +30,7 @@ const CoachCard: FC<Props> = ({ coach }) => {
           position: "relative",
           overflow: "hidden"
         }}
+        {...restProps}
       >
         <Box sx={{ height: "330px" }}>
           <Image

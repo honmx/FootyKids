@@ -28,14 +28,32 @@ const CoachesGroup: FC<Props> = ({ title, coaches }) => {
               gap: 3,
             }}
           >
-            {coaches.map(coach => <CoachCard key={coach.id} coach={coach} />)}
+            {
+              coaches.map((coach, i) => (
+                <CoachCard
+                  key={coach.id}
+                  coach={coach}
+                  data-aos="zoom-in"
+                  data-aos-delay={i * 50}
+                />
+              ))
+            }
           </Box>
         }
       </Container>
       {
         isTablet &&
         <Carousel>
-          {coaches.map(coach => <CoachCard key={coach.id} coach={coach} />)}
+          {
+            coaches.map((coach, i) => (
+              <CoachCard
+                key={coach.id}
+                coach={coach}
+                data-aos="zoom-in"
+                data-aos-delay={i * 50}
+              />
+            ))
+          }
         </Carousel>
       }
     </Box>
