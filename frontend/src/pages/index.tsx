@@ -15,6 +15,7 @@ import News from "@/components/Sections/News";
 import { INews } from "@/types/INews";
 import GetInTouch from "@/components/Sections/GetInTouch";
 import GetInTouchTemporary from "@/components/Sections/GetInTouchTemporary";
+import Places from "@/components/Sections/Places";
 
 interface Props {
   coaches: ICoach[] | undefined;
@@ -40,6 +41,7 @@ const HomePage: INextPageWithLayout<Props> = ({ coaches, news }) => {
         <AboutUs coachesCount={coaches.length} />
         <Coaches coaches={coaches} />
         <News news={news} />
+        <Places />
         <Faq />
         <GetInTouchTemporary />
         {/* <GetInTouch /> */}
