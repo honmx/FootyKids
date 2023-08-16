@@ -15,7 +15,7 @@ const Places: FC<Props> = ({ }) => {
       <Box>
         <Container>
           <Stack spacing={3}>
-            <Typography>Мы создаём условия, при которых футбол становится
+            <Typography data-aos="fade-up">Мы создаём условия, при которых футбол становится
               доступнее и ближе к каждому ребёнку, <br /> поэтому проводим
               занятия на лучших площадках в разных районах города.</Typography>
             <Stack
@@ -31,8 +31,8 @@ const Places: FC<Props> = ({ }) => {
               }}
             >
               {
-                places.map(place => (
-                  <PlaceCard key={place.name} place={place} />
+                places.map((place, i) => (
+                  <PlaceCard key={place.name} place={place} data-aos="zoom-in" data-aos-delay={i * 50} />
                 ))
               }
             </Stack>

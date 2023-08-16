@@ -1,16 +1,16 @@
 import { IPlace } from "@/types/IPlace";
-import { Box, Paper, Typography } from "@mui/material";
+import { Box, Paper, PaperProps, Typography } from "@mui/material";
 import Image from "next/image";
 import { FC } from "react";
 import DarkForeground from "../UI/DarkForeground";
 
-interface Props {
+interface Props extends PaperProps {
   place: IPlace;
 }
 
-const PlaceCard: FC<Props> = ({ place }) => {
+const PlaceCard: FC<Props> = ({ place, ...restProps }) => {
   return (
-    <Paper>
+    <Paper {...restProps}>
       <Image
         src={place.photo}
         alt={place.name}
