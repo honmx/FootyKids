@@ -28,12 +28,16 @@ const ModalWrapper: FC<Props> = ({ open, handleCloseClick, children, ...restProp
       sx={{ overflowY: "auto", paddingInline: 5 }}
       {...restProps}
     >
-      <Box sx={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: isOverflowing ? "stretch" : "center",
-        minHeight: "100%",
-      }}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: isOverflowing ? "stretch" : "center",
+          minHeight: "100%",
+        }}
+        data-aos="zoom-in"
+        data-aos-duration="150"
+      >
         <Box sx={{ position: "relative", margin: isOverflowing ? "50px 0" : "0" }}>
           <Paper ref={ref} sx={{ maxWidth: "1000px", overflow: "hidden" }}>
             {children}

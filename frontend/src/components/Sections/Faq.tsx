@@ -18,9 +18,9 @@ const Faq: FC<Props> = ({ }) => {
             <Box>
               {
                 new Array(5).fill("").map((a, i) => (
-                  <Accordion key={i} disableGutters data-aos="zoom-in" data-aos-delay={i * 50}>
+                  <Accordion key={i} disableGutters>
                     <AccordionSummary expandIcon={<Image src={plusIcon} alt="plus icon" />}>
-                      <Typography>Вопрос..?</Typography>
+                      <Typography data-aos="zoom-in">Вопрос..?</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
                       <Typography fontWeight={200}>Ответ...</Typography>
