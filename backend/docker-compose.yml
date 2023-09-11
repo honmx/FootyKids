@@ -14,15 +14,15 @@ services:
     restart: always
     env_file:
       - ./.env
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=footykids
+    # environment:
+    #   - POSTGRES_USER=postgres
+    #   - POSTGRES_PASSWORD=postgres
+    #   - POSTGRES_DB=footykids
     ports:
       - "5432:5432"
     volumes:
       - ./apps/content/dumps/dump.sql:/docker-entrypoint-initdb.d/dump.sql
-      # - db:/var/lib/postgresql/data
+      - db:/var/lib/postgresql/data
 
   api-gateway:
     container_name: api-gateway
@@ -41,9 +41,10 @@ services:
       context: .
       dockerfile: ./apps/content/Dockerfile
     restart: always
+    tty: true
     depends_on:
       - rabbitmq
       - database
 
-# volumes:
-#   db:
+volumes:
+  db:

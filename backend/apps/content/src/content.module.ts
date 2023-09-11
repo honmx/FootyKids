@@ -15,11 +15,11 @@ import { News } from './news/news.model';
     }),
     SequelizeModule.forRoot({
       dialect: "postgres",
-      host: process.env.POSTGRES_HOST, // database
-      port: 5432,
-      username: process.env.POSTGRES_USER, // postgres
-      password: process.env.POSTGRES_PASSWORD, // postgres
-      database: process.env.POSTGRES_DATABASE, // footykids
+      host: process.env.POSTGRES_HOST,
+      port: Number(process.env.POSTGRES_PORT),
+      username: process.env.POSTGRES_USER,
+      password: process.env.POSTGRES_PASSWORD,
+      database: process.env.POSTGRES_DB,
       models: [Coach, News],
       autoLoadModels: true
     }),

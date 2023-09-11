@@ -1,6 +1,6 @@
 FROM node:20-alpine3.17
 
-WORKDIR /app/backend/content-microservice
+WORKDIR /app
 
 COPY package*.json .
 
@@ -8,4 +8,6 @@ RUN npm install
 
 COPY . .
 
-CMD [ "npm", "run", "start:dev" ]
+RUN npm run build content
+
+CMD [ "node", "dist/apps/content/main" ]
