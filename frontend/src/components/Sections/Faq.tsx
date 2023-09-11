@@ -10,7 +10,7 @@ interface Props {
 
 const Faq: FC<Props> = ({ }) => {
   return (
-    <SectionWrapper title="Частые вопросы">
+    <SectionWrapper id="faq" title="Частые вопросы">
       <Box>
         <Container>
           <Stack spacing={3}>

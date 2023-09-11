@@ -81,7 +81,7 @@ const Header: FC<Props> = ({ }) => {
                 <Stack direction="row" spacing={2}>
                   {
                     headerLinks.map(link => (
-                      <CustomLink key={link.href} href={link.href}>{link.text}</CustomLink>
+                      <CustomLink key={link.href} href={link.href} sx={{ whiteSpace: "nowrap" }}>{link.text}</CustomLink>
                     ))
                   }
                 </Stack>

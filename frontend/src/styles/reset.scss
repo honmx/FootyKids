@@ -87,6 +87,12 @@ legend {
 	display: block;
 }
 
+// custom styles
+
+html {
+  scroll-behavior: smooth !important;
+}
+
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;

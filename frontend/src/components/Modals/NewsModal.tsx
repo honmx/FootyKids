@@ -20,7 +20,15 @@ const NewsModal: FC<Props> = ({ open, handleCloseClick, news, ...restProps }) =>
       <ModalContentDirectionDeterminant>
         <ModalItemWithScrollingContentWrapper>
           <Stack spacing={2}>
-            <Typography fontSize={20} fontWeight={400}>{news.title}</Typography>
+            <Typography
+              fontSize={{
+                smallPhone: 18,
+                tablet: 20
+              }}
+              fontWeight={400}
+            >
+              {news.title}
+            </Typography>
             <Typography>{news.text}</Typography>
           </Stack>
         </ModalItemWithScrollingContentWrapper>

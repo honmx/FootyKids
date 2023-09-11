@@ -15,7 +15,7 @@ const News: FC<Props> = ({ news }) => {
   const isTablet = useResize("laptop");
 
   return (
-    <SectionWrapper title="Новости">
+    <SectionWrapper id="news" title="Новости">
       <Box>
         <Container>
           {

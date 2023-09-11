@@ -12,7 +12,7 @@ interface Props {
 const Coaches: FC<Props> = ({ coaches }) => {
 
   return (
-    <SectionWrapper title="Тренерский состав">
+    <SectionWrapper id="coaches" title="Тренерский состав">
       <CoachesGroup
         title="Руководитель и главный тренер"
         coaches={coaches.filter(coach => coach.type !== "Тренер")}

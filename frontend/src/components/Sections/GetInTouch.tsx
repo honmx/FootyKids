@@ -42,7 +42,7 @@ const GetInTouch: FC<Props> = ({ }) => {
   }
 
   return (
-    <SectionWrapper title="Записаться">
+    <SectionWrapper id="contact" title="Записаться">
       <Box>
         <Container>
           <Stack spacing={2}>

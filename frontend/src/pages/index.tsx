@@ -16,6 +16,10 @@ import { INews } from "@/types/INews";
 import GetInTouch from "@/components/Sections/GetInTouch";
 import GetInTouchTemporary from "@/components/Sections/GetInTouchTemporary";
 import Places from "@/components/Sections/Places";
+import { useEffect, useState } from "react";
+import { $contentAPI } from "@/http/contentAxios";
+import ecotime from "@/assets/ecotime.jpg";
+import Image from "next/image";
 
 interface Props {
   coaches: ICoach[] | undefined;
