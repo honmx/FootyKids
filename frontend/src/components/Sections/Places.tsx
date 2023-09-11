@@ -11,7 +11,7 @@ interface Props {
 const Places: FC<Props> = ({ }) => {
 
   return (
-    <SectionWrapper title="Филиалы">
+    <SectionWrapper id="places" title="Площадки">
       <Box>
         <Container>
           <Stack spacing={3}>

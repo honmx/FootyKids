@@ -6,16 +6,16 @@ interface Props extends LinkProps {
 
 }
 
-const CustomLink: FC<Props> = (props) => {
+const CustomLink: FC<Props> = ({ href, ...restProps }) => {
 
   const router = useRouter();
 
   return (
     <Link
-      color={router.pathname === "/" && props.href === "/"
-        || props.href !== "/" && router.pathname.includes(props.href as string)
-          ? "typography.main"
-          : "typography.dark"} {...props}
+      color={router.pathname === "/" && href === "/"
+        || href !== "/" && router.pathname.includes(href as string)
+        ? "typography.main"
+        : "typography.dark"} href={href} {...restProps}
     />
   )
 };

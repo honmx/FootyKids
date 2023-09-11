@@ -12,7 +12,7 @@ interface Props {
 
 const GetInTouchTemporary: FC<Props> = ({ }) => {
   return (
-    <SectionWrapper title="Записаться">
+    <SectionWrapper id="contact" title="Записаться">
       <Box sx={{ overflow: "hidden", position: "relative" }}>
         <Box sx={{ height: "100%" }}>
           <DarkForeground>

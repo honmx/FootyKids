@@ -11,7 +11,7 @@ interface Props {
 
 const AboutUs: FC<Props> = ({ coachesCount }) => {
   return (
-    <SectionWrapper title="О нас">
+    <SectionWrapper id="about" title="О нас">
       <AboutUsVideo />
       <AdvantagesCardsGroup coachesCount={coachesCount} />
       <PurposeCardsGroup />

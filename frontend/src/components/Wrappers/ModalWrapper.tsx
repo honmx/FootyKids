@@ -35,8 +35,6 @@ const ModalWrapper: FC<Props> = ({ open, handleCloseClick, children, ...restProp
           alignItems: isOverflowing ? "stretch" : "center",
           minHeight: "100%",
         }}
-        data-aos="zoom-in"
-        data-aos-duration="150"
       >
         <Box sx={{ position: "relative", margin: isOverflowing ? "50px 0" : "0" }}>
           <Paper ref={ref} sx={{ maxWidth: "1000px", overflow: "hidden" }}>
