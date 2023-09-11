@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, Button, Link, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import banner from "@/assets/photo-bg.jpg";
 import DarkForeground from "@/components/UI/DarkForeground";
@@ -74,6 +74,16 @@ const MainBanner: FC<Props> = ({ }) => {
           >
             Мы учим детей любить спорт!
           </Typography>
+          <Button
+            component={Link}
+            href="#contact"
+            color="secondary"
+            sx={{ alignSelf: "flex-start" }}
+            data-aos="zoom-in"
+            data-aos-delay="200"
+          >
+            Бесплатное занятие
+          </Button>
         </Stack>
       </Box>
     </SectionWrapper>

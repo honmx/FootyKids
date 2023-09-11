@@ -59,18 +59,18 @@ interface ICreateThemeProps {
 }
 
 export const createCustomTheme = ({ deviceType }: ICreateThemeProps) => {
-  const theme = createTheme({
+
+  const paletteTheme = createTheme({
     palette: {
       primary: {
         main: "#478DE0",
-        // dark: "#276FC5",
         dark: "#4483CD",
         light: "#ff0000",
         contrastText: "#FFFFFF",
       },
       secondary: {
         main: "#CCCCCC",
-        dark: "#AFAFAF",
+        dark: "#BFBFBF",
         light: "#EFEFEF",
         contrastText: "#FFFFFF",
       },
@@ -83,7 +83,11 @@ export const createCustomTheme = ({ deviceType }: ICreateThemeProps) => {
         main: "#F8F8F8",
         dark: ""
       }
-    },
+    }
+  });
+
+  const theme = createTheme({
+    ...paletteTheme,
     breakpoints: {
       values: {
         xs: 0,
@@ -243,11 +247,41 @@ export const createCustomTheme = ({ deviceType }: ICreateThemeProps) => {
         styleOverrides: {
           root: {
             boxShadow: "none",
+            backgroundColor: paletteTheme.palette.primary.main,
+            color: paletteTheme.palette.typography.light,
+            padding: "10px 30px",
+            transition: "all 0.15s ease",
             "&:hover": {
-              boxShadow: "none"
+              boxShadow: "none",
+              backgroundColor: paletteTheme.palette.primary.dark,
+              color: paletteTheme.palette.typography.light
             }
           }
-        }
+        },
+        variants: [
+          {
+            props: { color: "primary" },
+            style: {
+              backgroundColor: paletteTheme.palette.primary.main,
+              color: paletteTheme.palette.typography.light,
+              "&:hover": {
+                backgroundColor: paletteTheme.palette.primary.dark,
+                color: paletteTheme.palette.typography.light
+              }
+            }
+          },
+          {
+            props: { color: "secondary" },
+            style: {
+              backgroundColor: paletteTheme.palette.secondary.main,
+              color: paletteTheme.palette.typography.light,
+              "&:hover": {
+                backgroundColor: paletteTheme.palette.secondary.dark,
+                color: paletteTheme.palette.typography.light
+              }
+            }
+          }
+        ]
       },
       MuiIconButton: {
         styleOverrides: {
