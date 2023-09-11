@@ -77,8 +77,13 @@ const MainBanner: FC<Props> = ({ }) => {
           <Button
             component={Link}
             href="#contact"
-            color="secondary"
-            sx={{ alignSelf: "flex-start" }}
+            sx={{
+              alignSelf: "flex-start",
+              backgroundColor: "#F8F8F888",
+              "&:hover": {
+                backgroundColor: "#CFCFCF88"
+              }
+            }}
             data-aos="zoom-in"
             data-aos-delay="200"
           >

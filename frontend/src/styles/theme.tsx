@@ -86,8 +86,7 @@ export const createCustomTheme = ({ deviceType }: ICreateThemeProps) => {
     }
   });
 
-  const theme = createTheme({
-    ...paletteTheme,
+  const breakpointsTheme = createTheme({
     breakpoints: {
       values: {
         xs: 0,
@@ -102,6 +101,11 @@ export const createCustomTheme = ({ deviceType }: ICreateThemeProps) => {
         container: 900
       }
     },
+  });
+
+  const theme = createTheme({
+    palette: paletteTheme.palette,
+    breakpoints: breakpointsTheme.breakpoints,
     typography: {
       fontFamily: font.style.fontFamily,
     },
@@ -247,14 +251,10 @@ export const createCustomTheme = ({ deviceType }: ICreateThemeProps) => {
         styleOverrides: {
           root: {
             boxShadow: "none",
-            backgroundColor: paletteTheme.palette.primary.main,
-            color: paletteTheme.palette.typography.light,
             padding: "10px 30px",
             transition: "all 0.15s ease",
             "&:hover": {
               boxShadow: "none",
-              backgroundColor: paletteTheme.palette.primary.dark,
-              color: paletteTheme.palette.typography.light
             }
           }
         },
