@@ -1,6 +1,6 @@
 import { FC, useState } from "react";
 import { ICoach } from "@/types/ICoach";
-import { Box, Button, Paper, PaperProps, Typography } from "@mui/material";
+import { Box, Button, Paper, PaperProps, Typography, useTheme } from "@mui/material";
 import Image from "next/image";
 import coachIcon from "@/assets/coach icon.svg";
 import { createPortal } from "react-dom";
@@ -11,6 +11,8 @@ interface Props extends PaperProps {
 }
 
 const CoachCard: FC<Props> = ({ coach, ...restProps }) => {
+
+  const theme = useTheme()
 
   const [isModalActive, setIsModalActive] = useState<boolean>(false);
 
@@ -61,12 +63,14 @@ const CoachCard: FC<Props> = ({ coach, ...restProps }) => {
         </Typography>
         <Button
           fullWidth
+          color="info"
           sx={{
             borderRadius: "0px",
             textTransform: "capitalize",
             fontWeight: 300,
+            padding: "6px 8px",
             "&:hover": {
-              backgroundColor: "secondary.light"
+              backgroundColor: "#EFEFEF"
             }
           }}
           onClick={handleOpenModalClick}

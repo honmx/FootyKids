@@ -12,20 +12,36 @@ const font = Noto_Sans({
 });
 
 declare module "@mui/material/styles" {
+
+  interface PaletteColor {
+    background?: string;
+    borderHover?: string;
+  }
+  
+  interface SimplePaletteColorOptions {
+    background?: string;
+    borderHover?: string;
+  }
+
   interface Palette {
     typography: Palette["primary"];
+    glassy: Palette["primary"];
     sheet: Palette["primary"];
+    input: Palette["primary"];
   }
 
   interface PaletteOptions {
     typography: PaletteOptions["primary"];
+    glassy: PaletteOptions["primary"];
     sheet: PaletteOptions["primary"];
+    input: PaletteOptions["primary"];
   }
 }
 
 declare module "@mui/material/Button" {
   interface ButtonPropsColorOverrides {
     typography: true;
+    glassy: true;
   }
 }
 
@@ -59,20 +75,39 @@ interface ICreateThemeProps {
 }
 
 export const createCustomTheme = ({ deviceType }: ICreateThemeProps) => {
-  const theme = createTheme({
+
+  const globalTheme = createTheme({
+    typography: {
+      fontFamily: font.style.fontFamily,
+    },
+    shape: {
+      borderRadius: 5
+    },
+  });
+
+  const paletteTheme = createTheme({
     palette: {
+      // general colors
       primary: {
         main: "#478DE0",
-        // dark: "#276FC5",
         dark: "#4483CD",
         light: "#ff0000",
         contrastText: "#FFFFFF",
       },
       secondary: {
         main: "#CCCCCC",
-        dark: "#AFAFAF",
+        dark: "#BFBFBF",
         light: "#EFEFEF",
         contrastText: "#FFFFFF",
+      },
+      error: {
+        main: "#FF0000"
+      },
+      // custom colors
+      glassy: {
+        main: "#F8F8F888",
+        dark: "#CFCFCF88",
+        contrastText: "#FFFFFF"
       },
       typography: {
         main: "#0075FF",
@@ -81,9 +116,17 @@ export const createCustomTheme = ({ deviceType }: ICreateThemeProps) => {
       },
       sheet: {
         main: "#F8F8F8",
-        dark: ""
-      }
-    },
+        dark: "",
+      },
+      input: {
+        main: "",
+        background: "#F0F0F0",
+        borderHover: "#CCCCCC"
+      },
+    }
+  });
+
+  const breakpointsTheme = createTheme({
     breakpoints: {
       values: {
         xs: 0,
@@ -98,12 +141,12 @@ export const createCustomTheme = ({ deviceType }: ICreateThemeProps) => {
         container: 900
       }
     },
-    typography: {
-      fontFamily: font.style.fontFamily,
-    },
-    shape: {
-      borderRadius: 5
-    },
+  });
+
+  const theme = createTheme({
+    ...globalTheme,
+    palette: paletteTheme.palette,
+    breakpoints: breakpointsTheme.breakpoints,
     components: {
       // HOOKS
       MuiUseMediaQuery: {
@@ -211,7 +254,7 @@ export const createCustomTheme = ({ deviceType }: ICreateThemeProps) => {
           root: {
             "& .MuiOutlinedInput-root": {
               "& fieldset": {
-                backgroundColor: "#F0F0F0",
+                backgroundColor: paletteTheme.palette.input.background,
                 borderColor: "transparent",
                 transition: "all 0.15s ease"
               },
@@ -220,13 +263,13 @@ export const createCustomTheme = ({ deviceType }: ICreateThemeProps) => {
                 zIndex: 2,
               },
               "&:hover fieldset": {
-                borderColor: "#CCCCCC",
+                borderColor: paletteTheme.palette.input.borderHover,
               },
               "&.Mui-focused fieldset": {
-                borderColor: "#0075FF",
+                borderColor: paletteTheme.palette.typography.main,
               },
               "&.Mui-error fieldset": {
-                borderColor: "#FF0000"
+                borderColor: paletteTheme.palette.error.main
               }
             },
           }
@@ -243,11 +286,48 @@ export const createCustomTheme = ({ deviceType }: ICreateThemeProps) => {
         styleOverrides: {
           root: {
             boxShadow: "none",
+            padding: "10px 30px",
+            transition: "all 0.15s ease",
             "&:hover": {
-              boxShadow: "none"
+              boxShadow: "none",
             }
           }
-        }
+        },
+        variants: [
+          {
+            props: { color: "primary" },
+            style: {
+              backgroundColor: paletteTheme.palette.primary.main,
+              color: paletteTheme.palette.typography.light,
+              "&:hover": {
+                backgroundColor: paletteTheme.palette.primary.dark,
+                color: paletteTheme.palette.typography.light
+              }
+            }
+          },
+          {
+            props: { color: "secondary" },
+            style: {
+              backgroundColor: paletteTheme.palette.secondary.main,
+              color: paletteTheme.palette.typography.light,
+              "&:hover": {
+                backgroundColor: paletteTheme.palette.secondary.dark,
+                color: paletteTheme.palette.typography.light
+              }
+            }
+          },
+          {
+            props: { color: "glassy" },
+            style: {
+              backgroundColor: paletteTheme.palette.glassy.main,
+              color: paletteTheme.palette.typography.light,
+              "&:hover": {
+                backgroundColor: paletteTheme.palette.glassy.dark,
+                color: paletteTheme.palette.typography.light
+              }
+            }
+          }
+        ]
       },
       MuiIconButton: {
         styleOverrides: {
@@ -282,11 +362,11 @@ export const createCustomTheme = ({ deviceType }: ICreateThemeProps) => {
         styleOverrides: {
           root: {
             fontFamily: font.style.fontFamily,
-            fontWeight: "300",
-            color: "#000000",
+            fontWeight: 300,
+            color: paletteTheme.palette.typography.dark,
             transition: "all 0.15s ease",
             "&:hover": {
-              color: "#0075FF"
+              color: paletteTheme.palette.typography.main
             }
           }
         }
