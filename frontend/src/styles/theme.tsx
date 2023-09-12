@@ -12,16 +12,29 @@ const font = Noto_Sans({
 });
 
 declare module "@mui/material/styles" {
+
+  interface PaletteColor {
+    background?: string;
+    borderHover?: string;
+  }
+  
+  interface SimplePaletteColorOptions {
+    background?: string;
+    borderHover?: string;
+  }
+
   interface Palette {
     typography: Palette["primary"];
     glassy: Palette["primary"];
     sheet: Palette["primary"];
+    input: Palette["primary"];
   }
 
   interface PaletteOptions {
     typography: PaletteOptions["primary"];
     glassy: PaletteOptions["primary"];
     sheet: PaletteOptions["primary"];
+    input: PaletteOptions["primary"];
   }
 }
 
@@ -63,8 +76,18 @@ interface ICreateThemeProps {
 
 export const createCustomTheme = ({ deviceType }: ICreateThemeProps) => {
 
+  const globalTheme = createTheme({
+    typography: {
+      fontFamily: font.style.fontFamily,
+    },
+    shape: {
+      borderRadius: 5
+    },
+  });
+
   const paletteTheme = createTheme({
     palette: {
+      // general colors
       primary: {
         main: "#478DE0",
         dark: "#4483CD",
@@ -77,6 +100,10 @@ export const createCustomTheme = ({ deviceType }: ICreateThemeProps) => {
         light: "#EFEFEF",
         contrastText: "#FFFFFF",
       },
+      error: {
+        main: "#FF0000"
+      },
+      // custom colors
       glassy: {
         main: "#F8F8F888",
         dark: "#CFCFCF88",
@@ -89,7 +116,12 @@ export const createCustomTheme = ({ deviceType }: ICreateThemeProps) => {
       },
       sheet: {
         main: "#F8F8F8",
-        dark: ""
+        dark: "",
+      },
+      input: {
+        main: "",
+        background: "#F0F0F0",
+        borderHover: "#CCCCCC"
       },
     }
   });
@@ -112,14 +144,9 @@ export const createCustomTheme = ({ deviceType }: ICreateThemeProps) => {
   });
 
   const theme = createTheme({
+    ...globalTheme,
     palette: paletteTheme.palette,
     breakpoints: breakpointsTheme.breakpoints,
-    typography: {
-      fontFamily: font.style.fontFamily,
-    },
-    shape: {
-      borderRadius: 5
-    },
     components: {
       // HOOKS
       MuiUseMediaQuery: {
@@ -227,7 +254,7 @@ export const createCustomTheme = ({ deviceType }: ICreateThemeProps) => {
           root: {
             "& .MuiOutlinedInput-root": {
               "& fieldset": {
-                backgroundColor: "#F0F0F0",
+                backgroundColor: paletteTheme.palette.input.background,
                 borderColor: "transparent",
                 transition: "all 0.15s ease"
               },
@@ -236,13 +263,13 @@ export const createCustomTheme = ({ deviceType }: ICreateThemeProps) => {
                 zIndex: 2,
               },
               "&:hover fieldset": {
-                borderColor: "#CCCCCC",
+                borderColor: paletteTheme.palette.input.borderHover,
               },
               "&.Mui-focused fieldset": {
-                borderColor: "#0075FF",
+                borderColor: paletteTheme.palette.typography.main,
               },
               "&.Mui-error fieldset": {
-                borderColor: "#FF0000"
+                borderColor: paletteTheme.palette.error.main
               }
             },
           }
@@ -335,11 +362,11 @@ export const createCustomTheme = ({ deviceType }: ICreateThemeProps) => {
         styleOverrides: {
           root: {
             fontFamily: font.style.fontFamily,
-            fontWeight: "300",
-            color: "#000000",
+            fontWeight: 300,
+            color: paletteTheme.palette.typography.dark,
             transition: "all 0.15s ease",
             "&:hover": {
-              color: "#0075FF"
+              color: paletteTheme.palette.typography.main
             }
           }
         }
