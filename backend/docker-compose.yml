@@ -6,7 +6,6 @@ services:
     image: rabbitmq:3.12.4-alpine
     ports:
       - "5672:5672"
-      - "15672:15672"
 
   database:
     container_name: database
@@ -14,34 +13,68 @@ services:
     restart: always
     env_file:
       - ./.env
-    # environment:
-    #   - POSTGRES_USER=postgres
-    #   - POSTGRES_PASSWORD=postgres
-    #   - POSTGRES_DB=footykids
     ports:
       - "5432:5432"
     volumes:
       - ./apps/content/dumps/dump.sql:/docker-entrypoint-initdb.d/dump.sql
       - db:/var/lib/postgresql/data
 
+  # api-gateway:
+  #   container_name: api-gateway
+  #   build:
+  #     context: .
+  #     dockerfile: ./apps/backend/Dockerfile
+  #     target: production
+  #   restart: always
+  #   depends_on:
+  #     - rabbitmq
+  #     - database
+  #     - content
+  #   ports:
+  #     - "5000:5000"
+  #   volumes:
+  #     - .:/usr/src/app
+  #     - /usr/src/app/node_modules
+
+  # content:
+  #   container_name: content-microservice
+  #   build:
+  #     context: .
+  #     dockerfile: ./apps/content/Dockerfile
+  #     target: production
+  #   restart: always
+  #   depends_on:
+  #     - rabbitmq
+  #     - database
+  #   volumes:
+  #     - .:/usr/src/app
+  #     - /usr/src/app/node_modules
+
   api-gateway:
     container_name: api-gateway
     build:
       context: .
       dockerfile: ./apps/backend/Dockerfile
-    restart: always
+      target: production
+    # command: npm run start:dev backend
+    env_file:
+      - ./.env
     depends_on:
+      - rabbitmq
+      - database
       - content
     ports:
-      - "5000:5000"
+      - '5000:5000'
 
   content:
     container_name: content-microservice
     build:
       context: .
       dockerfile: ./apps/content/Dockerfile
-    restart: always
-    tty: true
+      target: production
+    # command: npm run start:dev content
+    env_file:
+      - ./.env
     depends_on:
       - rabbitmq
       - database

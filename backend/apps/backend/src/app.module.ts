@@ -3,6 +3,7 @@ import { ConfigModule } from "@nestjs/config";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { ContentProducerModule } from './content/content.module';
+import { RmqModule } from "@app/common";
 
 @Module({
   imports: [
