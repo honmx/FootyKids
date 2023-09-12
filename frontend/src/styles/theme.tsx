@@ -14,11 +14,13 @@ const font = Noto_Sans({
 declare module "@mui/material/styles" {
   interface Palette {
     typography: Palette["primary"];
+    glassy: Palette["primary"];
     sheet: Palette["primary"];
   }
 
   interface PaletteOptions {
     typography: PaletteOptions["primary"];
+    glassy: PaletteOptions["primary"];
     sheet: PaletteOptions["primary"];
   }
 }
@@ -26,6 +28,7 @@ declare module "@mui/material/styles" {
 declare module "@mui/material/Button" {
   interface ButtonPropsColorOverrides {
     typography: true;
+    glassy: true;
   }
 }
 
@@ -74,6 +77,11 @@ export const createCustomTheme = ({ deviceType }: ICreateThemeProps) => {
         light: "#EFEFEF",
         contrastText: "#FFFFFF",
       },
+      glassy: {
+        main: "#F8F8F888",
+        dark: "#CFCFCF88",
+        contrastText: "#FFFFFF"
+      },
       typography: {
         main: "#0075FF",
         dark: "#000000",
@@ -82,7 +90,7 @@ export const createCustomTheme = ({ deviceType }: ICreateThemeProps) => {
       sheet: {
         main: "#F8F8F8",
         dark: ""
-      }
+      },
     }
   });
 
@@ -277,6 +285,17 @@ export const createCustomTheme = ({ deviceType }: ICreateThemeProps) => {
               color: paletteTheme.palette.typography.light,
               "&:hover": {
                 backgroundColor: paletteTheme.palette.secondary.dark,
+                color: paletteTheme.palette.typography.light
+              }
+            }
+          },
+          {
+            props: { color: "glassy" },
+            style: {
+              backgroundColor: paletteTheme.palette.glassy.main,
+              color: paletteTheme.palette.typography.light,
+              "&:hover": {
+                backgroundColor: paletteTheme.palette.glassy.dark,
                 color: paletteTheme.palette.typography.light
               }
             }

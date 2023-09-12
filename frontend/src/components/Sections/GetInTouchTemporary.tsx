@@ -1,7 +1,7 @@
 import { FC } from "react";
 import SectionWrapper from "../Wrappers/SectionWrapper";
 import bg from "@/assets/get-in-touch-bg.jpg";
-import { Box, Container, Stack, Typography } from "@mui/material";
+import { Box, Button, Container, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import DarkForeground from "../UI/DarkForeground";
 import Link from "next/link";
@@ -59,8 +59,16 @@ const GetInTouchTemporary: FC<Props> = ({ }) => {
               fontWeight={500}
               textAlign="center"
             >
-              <Link href="tel:+79000000000" style={{ color: "#FFFFFF" }}>+7-900-000-00-00</Link>
+              +7-900-000-00-00
             </Typography>
+            <Button
+              component={Link}
+              href="tel:+79000000000"
+              color="glassy"
+              sx={{ alignSelf: "center" }}
+            >
+              Позвонить
+            </Button>
           </Stack>
         </Container>
       </Box>

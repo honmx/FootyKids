@@ -74,21 +74,16 @@ const MainBanner: FC<Props> = ({ }) => {
           >
             Мы учим детей любить спорт!
           </Typography>
-          <Button
-            component={Link}
-            href="#contact"
-            sx={{
-              alignSelf: "flex-start",
-              backgroundColor: "#F8F8F888",
-              "&:hover": {
-                backgroundColor: "#CFCFCF88"
-              }
-            }}
-            data-aos="zoom-in"
-            data-aos-delay="200"
-          >
-            Бесплатное занятие
-          </Button>
+          <Box data-aos="zoom-in" data-aos-delay="200">
+            <Button
+              component={Link}
+              href="#contact"
+              color="glassy"
+              sx={{ alignSelf: "flex-start" }}
+            >
+              Бесплатное занятие
+            </Button>
+          </Box>
         </Stack>
       </Box>
     </SectionWrapper>
