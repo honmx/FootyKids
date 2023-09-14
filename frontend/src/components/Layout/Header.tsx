@@ -3,8 +3,10 @@ import Image from "next/image";
 import { AppBar, Box, Container, Divider, IconButton, Link, List, ListItemButton, Stack, SwipeableDrawer, Typography } from "@mui/material";
 import CustomLink from "../UI/CustomLink";
 import { headerLinks } from "@/data/headerLinks";
-import logo from "@/assets/footykids-logo.svg";
+// import logo from "@/assets/footykids-logo.svg";
+import logo from "@/assets/logo-1.svg";
 import menu from "@/assets/menu icon.svg";
+import cross from "@/assets/cross icon.svg";
 import { useResize } from "@/hooks/useResize";
 
 interface Props {
@@ -58,26 +60,64 @@ const Header: FC<Props> = ({ }) => {
                   <Typography
                     component="h1"
                     textAlign="center"
-                    fontSize={30}
+                    fontSize={{
+                      smallPhone: 40,
+                      largePhone: 50,
+                      tablet: 60
+                    }}
                     color="typography.dark"
                     padding="20px 0"
                   >
                     Меню
                   </Typography>
                   <Divider />
-                  <List component="nav" onClick={handleOpenDrawerClick}>
+                  <List component="nav" onClick={handleOpenDrawerClick} sx={{ height: "100%" }}>
                     {
                       headerLinks.map(link => (
-                        <ListItemButton key={link.href} sx={{ justifyContent: "center" }}>
-                          <CustomLink href={link.href}>{link.text}</CustomLink>
+                        <ListItemButton key={link.href} sx={{ justifyContent: "center", padding: "10px 0" }}>
+                          <CustomLink
+                            href={link.href}
+                            fontSize={{
+                              smallPhone: 22,
+                              largePhone: 26,
+                              tablet: 30
+                            }}
+                          >
+                            {link.text}
+                          </CustomLink>
                         </ListItemButton>
                       ))
                     }
+                    <Box
+                      sx={{
+                        position: "absolute",
+                        top: "40%",
+                        translate: "0 -50%",
+                        padding: "5px",
+                      }}
+                    >
+                      <Box
+                        sx={{
+                          width: "5px",
+                          height: "30px",
+                          backgroundColor: "secondary.main",
+                          borderRadius: "100vw",
+                          cursor: "pointer"
+                        }}
+                      />
+                    </Box>
                   </List>
                 </SwipeableDrawer>
               </Box>
             ) : (
-              <Box sx={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }}>
+              <Box
+                sx={{
+                  position: "absolute",
+                  top: "50%",
+                  left: "50%",
+                  transform: "translate(-50%, -50%)"
+                }}
+              >
                 <Stack direction="row" spacing={2}>
                   {
                     headerLinks.map(link => (

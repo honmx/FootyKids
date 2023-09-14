@@ -12,8 +12,6 @@ interface Props extends PaperProps {
 
 const CoachCard: FC<Props> = ({ coach, ...restProps }) => {
 
-  const theme = useTheme()
-
   const [isModalActive, setIsModalActive] = useState<boolean>(false);
 
   const handleOpenModalClick = () => {
@@ -70,7 +68,7 @@ const CoachCard: FC<Props> = ({ coach, ...restProps }) => {
             fontWeight: 300,
             padding: "6px 8px",
             "&:hover": {
-              backgroundColor: "#EFEFEF"
+              backgroundColor: "secondary.light"
             }
           }}
           onClick={handleOpenModalClick}
