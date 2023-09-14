@@ -7,7 +7,7 @@ import MainBanner from "@/components/Sections/MainBanner";
 import AboutUs from "@/components/Sections/AboutUs";
 import Coaches from "@/components/Sections/Coaches";
 import Faq from "@/components/Sections/Faq";
-import { Stack } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import contentService from "@/services/contentService";
 import { INextPageWithLayout } from "@/types/INextPageWithLayout";
 import { ICoach } from "@/types/ICoach";
@@ -40,16 +40,26 @@ const HomePage: INextPageWithLayout<Props> = ({ coaches, news }) => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Stack direction="column" spacing={7.5}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          "&>*:not(:first-child)": {
+            paddingTop: "60px",
+          }
+        }}
+      >
+        {/* <Stack direction="column" spacing={7.5}> */}
         <MainBanner />
         <AboutUs coachesCount={coaches.length} />
         <Coaches coaches={coaches} />
         <News news={news} />
         <Places />
         <Faq />
-        {/* <GetInTouchTemporary /> */}
-        <GetInTouch />
-      </Stack>
+        <GetInTouchTemporary />
+        {/* <GetInTouch /> */}
+        {/* </Stack> */}
+      </Box>
     </>
   )
 }
@@ -58,7 +68,7 @@ HomePage.getLayout = (page) => {
   return (
     <Layout
       renderHeader={() => <Header />}
-      renderFooter={() => <Footer marginTop={7.5} />}
+      renderFooter={() => <Footer />}
     >
       {page}
     </Layout>
