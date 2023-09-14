@@ -20,6 +20,7 @@ import { useEffect, useState } from "react";
 import { $contentAPI } from "@/http/contentAxios";
 import ecotime from "@/assets/ecotime.jpg";
 import Image from "next/image";
+import ErrorPage from "./404";
 
 interface Props {
   coaches: ICoach[] | undefined;
@@ -28,9 +29,7 @@ interface Props {
 
 const HomePage: INextPageWithLayout<Props> = ({ coaches, news }) => {
 
-  // todo: return error page
-  if (!coaches) return "error with coaches";
-  if (!news) return "error with news";
+  if (!coaches || !news) return <ErrorPage />;
 
   return (
     <>
@@ -49,7 +48,6 @@ const HomePage: INextPageWithLayout<Props> = ({ coaches, news }) => {
           }
         }}
       >
-        {/* <Stack direction="column" spacing={7.5}> */}
         <MainBanner />
         <AboutUs coachesCount={coaches.length} />
         <Coaches coaches={coaches} />
@@ -58,7 +56,6 @@ const HomePage: INextPageWithLayout<Props> = ({ coaches, news }) => {
         <Faq />
         <GetInTouchTemporary />
         {/* <GetInTouch /> */}
-        {/* </Stack> */}
       </Box>
     </>
   )
