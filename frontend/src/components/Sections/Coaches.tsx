@@ -11,6 +11,8 @@ interface Props {
 
 const Coaches: FC<Props> = ({ coaches }) => {
 
+  if (coaches.length === 0) return;
+
   return (
     <SectionWrapper id="coaches" title="Тренерский состав">
       <CoachesGroup

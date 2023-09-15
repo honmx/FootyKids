@@ -17,7 +17,7 @@ declare module "@mui/material/styles" {
     background?: string;
     borderHover?: string;
   }
-  
+
   interface SimplePaletteColorOptions {
     background?: string;
     borderHover?: string;
@@ -334,10 +334,18 @@ export const createCustomTheme = ({ deviceType }: ICreateThemeProps) => {
           root: {
             aspectRatio: 1,
             filter: "brightness(10%) invert(1)",
-            transition: "all 0.15s ease",
-            "&:hover": {
-              backgroundColor: "transparent",
-              filter: "brightness(0) invert(1)"
+            "img": {
+              transition: "all 0.15s ease",
+            },
+            // "&:hover": {
+            //   backgroundColor: "transparent",
+            //   filter: "brightness(0) invert(1)"
+            // }
+            "@media (hover: hover)": {
+              "&:hover": {
+                backgroundColor: "transparent",
+                filter: "brightness(0) invert(1)"
+              }
             }
           }
         },
@@ -346,9 +354,14 @@ export const createCustomTheme = ({ deviceType }: ICreateThemeProps) => {
             props: { color: "black" },
             style: {
               filter: "brightness(0) invert(0)",
-              "&:hover": {
-                filter: "invert(35%) sepia(78%) saturate(4713%) hue-rotate(203deg) brightness(102%) contrast(109%)"
+              "@media (hover: hover)": {
+                "&:hover": {
+                  filter: "invert(35%) sepia(78%) saturate(4713%) hue-rotate(203deg) brightness(102%) contrast(109%)"
+                }
               }
+              // "&:hover": {
+              //   filter: "invert(35%) sepia(78%) saturate(4713%) hue-rotate(203deg) brightness(102%) contrast(109%)"
+              // }
             }
           },
         ]

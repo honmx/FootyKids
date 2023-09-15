@@ -14,6 +14,8 @@ const News: FC<Props> = ({ news }) => {
 
   const isTablet = useResize("laptop");
 
+  if (news.length === 0) return;
+
   return (
     <SectionWrapper id="news" title="Новости">
       <Box>

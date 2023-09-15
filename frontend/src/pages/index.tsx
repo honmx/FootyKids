@@ -7,7 +7,7 @@ import MainBanner from "@/components/Sections/MainBanner";
 import AboutUs from "@/components/Sections/AboutUs";
 import Coaches from "@/components/Sections/Coaches";
 import Faq from "@/components/Sections/Faq";
-import { Stack } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import contentService from "@/services/contentService";
 import { INextPageWithLayout } from "@/types/INextPageWithLayout";
 import { ICoach } from "@/types/ICoach";
@@ -20,6 +20,7 @@ import { useEffect, useState } from "react";
 import { $contentAPI } from "@/http/contentAxios";
 import ecotime from "@/assets/ecotime.jpg";
 import Image from "next/image";
+import ErrorPage from "./404";
 
 interface Props {
   coaches: ICoach[] | undefined;
@@ -28,9 +29,7 @@ interface Props {
 
 const HomePage: INextPageWithLayout<Props> = ({ coaches, news }) => {
 
-  // todo: return error page
-  if (!coaches) return "error with coaches";
-  if (!news) return "error with news";
+  if (!coaches || !news) return <ErrorPage />;
 
   return (
     <>
@@ -38,18 +37,26 @@ const HomePage: INextPageWithLayout<Props> = ({ coaches, news }) => {
         <title>FootyKids</title>
         <meta name="description" content="FootyKids - футбольная школа для детей от 4 лет" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/footykids-icon.png" />
       </Head>
-      <Stack direction="column" spacing={7.5}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          "&>*:not(:first-child)": {
+            paddingTop: "60px",
+          }
+        }}
+      >
         <MainBanner />
         <AboutUs coachesCount={coaches.length} />
         <Coaches coaches={coaches} />
         <News news={news} />
         <Places />
         <Faq />
-        {/* <GetInTouchTemporary /> */}
-        <GetInTouch />
-      </Stack>
+        <GetInTouchTemporary />
+        {/* <GetInTouch /> */}
+      </Box>
     </>
   )
 }
@@ -58,7 +65,7 @@ HomePage.getLayout = (page) => {
   return (
     <Layout
       renderHeader={() => <Header />}
-      renderFooter={() => <Footer marginTop={7.5} />}
+      renderFooter={() => <Footer />}
     >
       {page}
     </Layout>
