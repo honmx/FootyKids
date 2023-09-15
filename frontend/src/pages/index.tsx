@@ -37,7 +37,7 @@ const HomePage: INextPageWithLayout<Props> = ({ coaches, news }) => {
         <title>FootyKids</title>
         <meta name="description" content="FootyKids - футбольная школа для детей от 4 лет" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/footykids-icon.png" />
       </Head>
       <Box
         sx={{
