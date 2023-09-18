@@ -26,6 +26,7 @@
     "react-countup": "^6.4.2",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.45.4",
+    "sass": "^1.67.0",
     "typescript": "5.1.6",
     "ua-parser-js": "^1.0.35",
     "yup": "^1.2.0"

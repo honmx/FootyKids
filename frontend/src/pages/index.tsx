@@ -21,6 +21,7 @@ import { $contentAPI } from "@/http/contentAxios";
 import ecotime from "@/assets/ecotime.jpg";
 import Image from "next/image";
 import ErrorPage from "./404";
+import axios from "axios";
 
 interface Props {
   coaches: ICoach[] | undefined;
@@ -30,6 +31,21 @@ interface Props {
 const HomePage: INextPageWithLayout<Props> = ({ coaches, news }) => {
 
   if (!coaches || !news) return <ErrorPage />;
+
+  useEffect(() => {
+    const a = async () => {
+      const { data } = await axios.get<ICoach[]>("http://localhost:5000/content/news");
+      console.log(data);
+    }
+
+    a();
+  }, []);
+
+useEffect(() => {
+  console.log(coaches);
+  console.log(news);
+}, []);
+
 
   return (
     <>
@@ -74,8 +90,8 @@ HomePage.getLayout = (page) => {
 
 export const getStaticProps: GetStaticProps = async () => {
 
-  const coaches = await contentService.getCoaches();
-  const news = await contentService.getNews();
+  const coaches = await contentService.getCoaches() || [];
+  const news = await contentService.getNews() || [];
 
   return {
     props: {

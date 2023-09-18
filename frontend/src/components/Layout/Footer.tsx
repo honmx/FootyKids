@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Box, BoxProps, Container, IconButton, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
-import logo from "@/assets/footykids-logo.svg";
+import logo from "@/assets/footykids-logo-1.svg";
 import { footerLinks } from "@/data/footerLinks";
 
 interface Props extends BoxProps {

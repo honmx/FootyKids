@@ -1,13 +1,12 @@
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { AppModule } from './app.module';
-import { RmqService } from '@app/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   app.enableCors({
-    origin: "http://localhost:3000",
+    origin: ["http://frontend:3000", "http://localhost:80"],
   });
     
   app.useGlobalPipes(new ValidationPipe());

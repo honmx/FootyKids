@@ -3,10 +3,8 @@ import Image from "next/image";
 import { AppBar, Box, Container, Divider, IconButton, Link, List, ListItemButton, Stack, SwipeableDrawer, Typography } from "@mui/material";
 import CustomLink from "../UI/CustomLink";
 import { headerLinks } from "@/data/headerLinks";
-// import logo from "@/assets/footykids-logo.svg";
 import logo from "@/assets/footykids-logo-1.svg";
 import menu from "@/assets/menu icon.svg";
-import cross from "@/assets/cross icon.svg";
 import { useResize } from "@/hooks/useResize";
 
 interface Props {

@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Accordion, AccordionDetails, AccordionSummary, Box, Container, Stack, Typography } from "@mui/material";
 import SectionWrapper from "../Wrappers/SectionWrapper";
-import plusIcon from "@/assets/Plus icon.svg";
+import plusIcon from "@/assets/plus icon.svg";
 import Image from "next/image";
 
 interface Props {
