@@ -104,3 +104,17 @@ html {
   background-color: #AAAAAA;
   border-radius: 100vw;
 }
+
+@media screen and (max-width: 768px) {
+  [data-aos] {
+    pointer-events: auto !important;
+  }
+
+  html:not(.no-js) [data-aos^=fade][data-aos^=fade] {
+    opacity: 1 !important;
+  }
+
+  html:not(.no-js) [data-aos=fade-up] {
+    transform: none !important;
+  }
+}
