@@ -110,11 +110,11 @@ html {
     pointer-events: auto !important;
   }
 
-  html:not(.no-js) [data-aos^=fade][data-aos^=fade] {
+  html:not(.no-js) [data-aos^=zoom][data-aos^=zoom] {
     opacity: 1 !important;
   }
 
-  html:not(.no-js) [data-aos=fade-up] {
+  html:not(.no-js) [data-aos=zoom-in] {
     transform: none !important;
   }
 }
