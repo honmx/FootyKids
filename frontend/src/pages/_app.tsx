@@ -20,7 +20,7 @@ const App = ({ Component, pageProps, deviceType }: IAppPropsWithLayout & CustomA
 
   useEffect(() => {
     AOS.init({
-      disable: "phone",
+      disable: window.innerWidth < 1023,
       duration: 300,
       initClassName: "aos-init", // class applied after initialization
       animatedClassName: "aos-animate", // class applied on animation
