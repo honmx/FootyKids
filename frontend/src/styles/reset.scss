@@ -86,3 +86,35 @@ label {
 legend {
 	display: block;
 }
+
+// custom styles
+
+html {
+  scroll-behavior: smooth !important;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+  background-color: #DEDEDE;
+}
+
+::-webkit-scrollbar-thumb {
+  // background-color: #478DE0;
+  background-color: #AAAAAA;
+  border-radius: 100vw;
+}
+
+@media screen and (max-width: 1023px) {
+  [data-aos] {
+    pointer-events: auto !important;
+  }
+
+  html:not(.no-js) [data-aos^=zoom][data-aos^=zoom] {
+    opacity: 1 !important;
+  }
+
+  html:not(.no-js) [data-aos=zoom-in] {
+    transform: none !important;
+  }
+}

@@ -4,9 +4,9 @@
     "es2021": true
   },
   "extends": [
-    "next/core-web-vitals",
-    "eslint:recommended",
-    "plugin:react/recommended"
+    // "next/core-web-vitals",
+    // "eslint:recommended",
+    // "plugin:react/recommended"
   ],
   "parser": "@typescript-eslint/parser",
   "overrides": [],
@@ -16,14 +16,17 @@
   },
   "plugins": ["react"],
   "rules": {
-    "no-var": "error",
-    "quotes": ["error", "double"],
-    "no-unused-vars": "warn",
-    "no-empty-pattern": "off",
-    "object-curly-spacing": ["error", "always"],
-    "eqeqeq": "error",
-    "no-console": "warn",
-    "react/react-in-jsx-scope": "off",
-    "react/self-closing-comp": "warn"
+    // "no-var": "error",
+    // "quotes": ["error", "double"],
+    // "no-unused-vars": "warn",
+    // "no-empty-pattern": "off",
+    // "object-curly-spacing": ["error", "always"],
+    // "eqeqeq": "error",
+    // "no-console": "warn",
+    // "react/react-in-jsx-scope": "off",
+    // "react/self-closing-comp": "warn",
+    // "react-hooks/exhaustive-deps": "off",
+    // "react/prop-types": "off",
+    // "import/no-anonymous-default-export": "off"
   }
 }
