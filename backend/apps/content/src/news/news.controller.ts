@@ -12,7 +12,7 @@ export class NewsController {
   ) {}
 
   @MessagePattern("get-news")
-  async getNews(@Payload() data: any, @Ctx() context: RmqContext) {
+  async getNews(@Ctx() context: RmqContext) {
     const response = this.newsService.getNews();
     this.rmqService.ack(context);
     return response;

@@ -4,6 +4,8 @@ import { UsersService } from './users.service';
 import { ConfigModule } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { RmqModule } from '@app/common';
+import { User } from './users.model';
+import { Role } from './role.model';
 
 @Module({
   imports: [
@@ -18,9 +20,10 @@ import { RmqModule } from '@app/common';
       username: process.env.POSTGRES_USERS_USER,
       password: process.env.POSTGRES_USERS_PASSWORD,
       database: process.env.POSTGRES_USERS_DB,
-      // models: [Coach, News],
+      models: [User, Role],
       autoLoadModels: true
     }),
+    SequelizeModule.forFeature([User, Role]),
     RmqModule,
   ],
   controllers: [UsersController],

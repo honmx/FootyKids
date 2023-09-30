@@ -4,6 +4,7 @@ import { AuthService } from './auth.service';
 import { RmqModule, RmqService } from '@app/common';
 import { ConfigModule } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
+import { Auth } from './auth.model';
 
 @Module({
   imports: [
@@ -18,10 +19,12 @@ import { SequelizeModule } from '@nestjs/sequelize';
       username: process.env.POSTGRES_AUTH_USER,
       password: process.env.POSTGRES_AUTH_PASSWORD,
       database: process.env.POSTGRES_AUTH_DB,
-      models: [],
+      models: [Auth],
       autoLoadModels: true
     }),
-    RmqModule
+    SequelizeModule.forFeature([Auth]),
+    RmqModule,
+    RmqModule.register({ name: "USERS" }),
   ],
   controllers: [AuthController],
   providers: [AuthService],
