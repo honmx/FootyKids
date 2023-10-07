@@ -10,7 +10,6 @@ import { FileModule, FileService, HelpersModule, HelpersService, RmqModule } fro
     HelpersModule
   ],
   controllers: [ContentController],
-  providers: [ContentService, FileService, HelpersService],
-  exports: []
+  providers: [ContentService]
 })
 export class ContentModule { }

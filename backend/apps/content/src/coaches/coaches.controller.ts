@@ -13,7 +13,7 @@ export class CoachesController {
 
   @MessagePattern("get-coaches")
   async getCoaches(@Ctx() context: RmqContext) {
-    const coaches = this.coachesService.getCoaches();
+    const coaches = await this.coachesService.getCoaches();
     this.rmqService.ack(context);
     return coaches;
   }

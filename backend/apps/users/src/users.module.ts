@@ -4,8 +4,8 @@ import { UsersService } from './users.service';
 import { ConfigModule } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { RmqModule } from '@app/common';
-import { User } from './users.model';
-import { Role } from './role.model';
+import { User } from './models/user.model';
+import { Role } from './models/role.model';
 
 @Module({
   imports: [

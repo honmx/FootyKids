@@ -1,10 +1,12 @@
 import { Module } from '@nestjs/common';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
-import { RmqModule, RmqService } from '@app/common';
+import { HelpersModule, RmqModule, RmqService } from '@app/common';
 import { ConfigModule } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { Auth } from './auth.model';
+import { JwtModule } from '@nestjs/jwt';
+import { MailerModule } from '@nestjs-modules/mailer';
 
 @Module({
   imports: [
@@ -25,8 +27,21 @@ import { Auth } from './auth.model';
     SequelizeModule.forFeature([Auth]),
     RmqModule,
     RmqModule.register({ name: "USERS" }),
+    MailerModule.forRoot({
+      transport: {
+        host: process.env.MAIL_SMTP_HOST,
+        port: process.env.MAIL_SMTP_PORT,
+        secure: false,
+        auth: {
+          user: process.env.MAIL_SMTP_USER,
+          pass: process.env.MAIL_SMTP_PASSWORD
+        }
+      }
+    }),
+    JwtModule,
+    HelpersModule,
   ],
   controllers: [AuthController],
   providers: [AuthService],
 })
-export class AuthModule {}
+export class AuthModule { }
