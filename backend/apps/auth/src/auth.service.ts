@@ -146,8 +146,8 @@ export class AuthService {
     const payload = this.helpersService.pick(["id", "email", "role"], user);
 
     return {
-      accessToken: this.jwtService.sign(payload, { secret: this.configServce.get<string>("JWT_PRIVATE_ACCESS_KEY"), expiresIn: "5s" }),
-      refreshToken: this.jwtService.sign(payload, { secret: this.configServce.get<string>("JWT_PRIVATE_REFRESH_KEY"), expiresIn: "1m" }),
+      accessToken: this.jwtService.sign(payload, { secret: this.configServce.get<string>("JWT_PRIVATE_ACCESS_KEY"), expiresIn: "1m" }),
+      refreshToken: this.jwtService.sign(payload, { secret: this.configServce.get<string>("JWT_PRIVATE_REFRESH_KEY"), expiresIn: "5m" }),
     }
   }
 

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Put, Req, Res } from '@nestjs/common';
+import { Body, Controller, Get, Post, Put, Req, Res, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/registerDto';
 import { Request, Response } from 'express';
@@ -6,6 +6,7 @@ import { LoginDto } from './dto/loginDto';
 import { SendCodeDto } from './dto/sendCodeDto';
 import { ValidateCodeDto } from './dto/validateCodeDto';
 import { RecoverPasswordDto } from './dto/recoverPasswordDto';
+import { JwtAuthGuard } from '@app/common';
 
 @Controller("auth")
 export class AuthController {
@@ -24,6 +25,7 @@ export class AuthController {
   }
 
   @Post("/logout")
+  @UseGuards(JwtAuthGuard)
   async logout(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
     const refreshToken = req.headers.cookie.split("=")[1];
 

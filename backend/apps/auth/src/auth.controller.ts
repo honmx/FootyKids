@@ -32,6 +32,7 @@ export class AuthController {
   }
 
   @MessagePattern("logout")
+  // @UseGuards(JwtAuthGuard)
   async logout(@Payload() dto: LogoutDto, @Ctx() context: RmqContext) {
     const response = await this.authService.logout(dto);
     this.rmqService.ack(context);
