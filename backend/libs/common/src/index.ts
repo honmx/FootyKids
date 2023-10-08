@@ -7,4 +7,6 @@ export * from "./file/file.service";
 export * from "./helpers/helpers.module";
 export * from "./helpers/helpers.service";
 
+export * from "./guards/jwtAuth.guard";
+
 export * from "./types/IUploadedFile";

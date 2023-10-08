@@ -27,7 +27,6 @@ export class ContentController {
     return this.contentService.getNews();
   }
 
-
   @Post("/news")
   @UseInterceptors(FilesInterceptor("photos"))
   createNews(

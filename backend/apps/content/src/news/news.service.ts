@@ -5,8 +5,9 @@ import { CreateNewsDto } from './dto/createNewsDto';
 
 @Injectable()
 export class NewsService {
-
-  constructor(@InjectModel(News) private newsRepository: typeof News) {}
+  constructor(
+    @InjectModel(News) private newsRepository: typeof News
+  ) { }
 
   async getNews() {
     const news = await this.newsRepository.findAll();

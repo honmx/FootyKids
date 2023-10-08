@@ -5,8 +5,9 @@ import { CreateCoachDto } from './dto/createCoachDto';
 
 @Injectable()
 export class CoachesService {
-
-  constructor(@InjectModel(Coach) private coachesRepository: typeof Coach) { }
+  constructor(
+    @InjectModel(Coach) private coachesRepository: typeof Coach
+  ) { }
 
   async getCoaches() {
     const coaches = await this.coachesRepository.findAll();
