@@ -1,4 +1,4 @@
-import { IsEmail, IsString } from "class-validator";
+import { IsEmail, IsString, Length } from "class-validator";
 
 export class RecoverPasswordDto {
   @IsString()
@@ -6,5 +6,6 @@ export class RecoverPasswordDto {
   email: string;
 
   @IsString()
+  @Length(8)
   password: string;
 }
