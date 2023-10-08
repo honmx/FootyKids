@@ -4,9 +4,10 @@ import { AuthService } from './auth.service';
 import { HelpersModule, RmqModule, RmqService } from '@app/common';
 import { ConfigModule } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { Auth } from './auth.model';
+import { Auth } from './models/auth.model';
 import { JwtModule } from '@nestjs/jwt';
 import { MailerModule } from '@nestjs-modules/mailer';
+import { Code } from './models/code.model';
 
 @Module({
   imports: [
@@ -21,17 +22,17 @@ import { MailerModule } from '@nestjs-modules/mailer';
       username: process.env.POSTGRES_AUTH_USER,
       password: process.env.POSTGRES_AUTH_PASSWORD,
       database: process.env.POSTGRES_AUTH_DB,
-      models: [Auth],
+      models: [Auth, Code],
       autoLoadModels: true
     }),
-    SequelizeModule.forFeature([Auth]),
+    SequelizeModule.forFeature([Auth, Code]),
     RmqModule,
     RmqModule.register({ name: "USERS" }),
     MailerModule.forRoot({
       transport: {
         host: process.env.MAIL_SMTP_HOST,
         port: process.env.MAIL_SMTP_PORT,
-        secure: false,
+        secure: true,
         auth: {
           user: process.env.MAIL_SMTP_USER,
           pass: process.env.MAIL_SMTP_PASSWORD

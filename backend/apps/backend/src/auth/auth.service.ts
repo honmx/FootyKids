@@ -7,6 +7,8 @@ import { LoginDto } from './dto/loginDto';
 import { LogoutDto } from './dto/logoutDto';
 import { RefreshDto } from './dto/refreshDto';
 import { SendCodeDto } from './dto/sendCodeDto';
+import { ValidateCodeDto } from './dto/validateCodeDto';
+import { RecoverPasswordDto } from './dto/recoverPasswordDto';
 
 @Injectable()
 export class AuthService {
@@ -62,6 +64,26 @@ export class AuthService {
   async sendVerificationCode(sendCodeDto: SendCodeDto) {
     const response = await lastValueFrom(this.authClient.send("send-verification-code", sendCodeDto));
 
+    if (response?.status >= 400 || !response) {
+      throw new HttpException(response?.message || "Some error", response?.status || HttpStatus.BAD_REQUEST);
+    }
+
+    return response;
+  }
+
+  async validateVerificationCode(validateCodeDto: ValidateCodeDto) {
+    const response = await lastValueFrom(this.authClient.send("validate-verification-code", validateCodeDto));
+
+    if (response?.status >= 400 || !response) {
+      throw new HttpException(response?.message || "Some error", response?.status || HttpStatus.BAD_REQUEST);
+    }
+
+    return response;
+  }
+
+  async recoverPassword(recoverPasswordDto: RecoverPasswordDto) {
+    const response = await lastValueFrom(this.authClient.send("recover-password", recoverPasswordDto));
+  
     if (response?.status >= 400 || !response) {
       throw new HttpException(response?.message || "Some error", response?.status || HttpStatus.BAD_REQUEST);
     }

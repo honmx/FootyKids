@@ -1,9 +1,11 @@
-import { Body, Controller, Get, Post, Req, Res } from '@nestjs/common';
+import { Body, Controller, Get, Post, Put, Req, Res } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/registerDto';
 import { Request, Response } from 'express';
 import { LoginDto } from './dto/loginDto';
 import { SendCodeDto } from './dto/sendCodeDto';
+import { ValidateCodeDto } from './dto/validateCodeDto';
+import { RecoverPasswordDto } from './dto/recoverPasswordDto';
 
 @Controller("auth")
 export class AuthController {
@@ -40,6 +42,18 @@ export class AuthController {
   @Get("/sendVerificationCode")
   async sendVerificationCode(@Body() sendCodeDto: SendCodeDto) {
     const response = await this.authService.sendVerificationCode(sendCodeDto);
+    return response;
+  }
+
+  @Get("/validateVerificationCode")
+  async validateVerificationCode(@Body() validateCodeDto: ValidateCodeDto) {
+    const response = await this.authService.validateVerificationCode(validateCodeDto);
+    return response;
+  }
+
+  @Put("/recoverPassword")
+  async recoverPassword(@Body() recoverPasswordDto: RecoverPasswordDto) {
+    const response = await this.authService.recoverPassword(recoverPasswordDto);
     return response;
   }
 }

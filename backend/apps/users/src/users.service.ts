@@ -5,6 +5,7 @@ import { User } from './models/user.model';
 import { GetUserByEmailDto } from './dto/getUserByEmailDto';
 import { Role } from './models/role.model';
 import { GetUserByIdDto } from './dto/getUserByIdDto';
+import { ChangePasswordDto } from './dto/changePasswordDto';
 // import { createRoleDto } from 'apps/backend/src/users/dto/createRoleDto';
 
 @Injectable()
@@ -45,10 +46,16 @@ export class UsersService {
     return user;
   }
 
-  async getRoleByValue(value: string) {
-    const role = await this.rolesRepository.findOne({ where: { value } });
-    return role;
+
+  async changePassword(dto: ChangePasswordDto) {
+    const user = await this.usersRepository.update({ password: dto.password }, { where: { email: dto.email } });
+    return user;
   }
+
+  // async getRoleByValue(value: string) {
+  //   const role = await this.rolesRepository.findOne({ where: { value } });
+  //   return role;
+  // }
 
   // async createRole(dto: createRoleDto) {
   //   const user = await this.rolesRepository.create(dto);

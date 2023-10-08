@@ -7,6 +7,8 @@ import { LoginDto } from './dto/loginDto';
 import { LogoutDto } from './dto/logoutDto';
 import { RefreshDto } from './dto/refreshDto';
 import { SendCodeDto } from './dto/sendCodeDto';
+import { ValidateCodeDto } from './dto/validateCodeDto';
+import { RecoverPasswordDto } from './dto/recoverPasswordDto';
 
 @Controller()
 export class AuthController {
@@ -50,5 +52,17 @@ export class AuthController {
     return response;
   }
 
-  
+  @MessagePattern("validate-verification-code")
+  async validateVerificationCode(@Payload() dto: ValidateCodeDto, @Ctx() context: RmqContext) {
+    const response = await this.authService.validateVerificationCode(dto);
+    this.rmqService.ack(context);
+    return response;
+  }
+
+  @MessagePattern("recover-password")
+  async recoverPassword(@Payload() dto: RecoverPasswordDto, @Ctx() context: RmqContext) {
+    const response = await this.authService.recoverPassword(dto);
+    this.rmqService.ack(context);
+    return response;
+  }
 }

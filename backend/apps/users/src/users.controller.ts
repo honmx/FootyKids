@@ -5,6 +5,7 @@ import { RmqService } from '@app/common';
 import { CreateUserDto } from './dto/createUserDto';
 import { GetUserByEmailDto } from './dto/getUserByEmailDto';
 import { GetUserByIdDto } from './dto/getUserByIdDto';
+import { ChangePasswordDto } from './dto/changePasswordDto';
 // import { createRoleDto } from 'apps/backend/src/users/dto/createRoleDto';
 
 @Controller()
@@ -38,6 +39,13 @@ export class UsersController {
   @MessagePattern("get-user-by-id")
   async getUserById(@Payload() dto: GetUserByIdDto, @Ctx() context: RmqContext) {
     const response = await this.usersService.getUserById(dto);
+    this.rmqService.ack(context);
+    return response;
+  }
+
+  @MessagePattern("change-user-password")
+  async changeUserPassword(@Payload() dto: ChangePasswordDto, @Ctx() context: RmqContext) {
+    const response = await this.usersService.changePassword(dto);
     this.rmqService.ack(context);
     return response;
   }
