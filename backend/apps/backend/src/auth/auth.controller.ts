@@ -25,7 +25,7 @@ export class AuthController {
   }
 
   @Post("/logout")
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   async logout(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
     const refreshToken = req.headers.cookie.split("=")[1];
 
@@ -54,6 +54,7 @@ export class AuthController {
   }
 
   @Put("/recoverPassword")
+  // @UseGuards(JwtAuthGuard)
   async recoverPassword(@Body() recoverPasswordDto: RecoverPasswordDto) {
     const response = await this.authService.recoverPassword(recoverPasswordDto);
     return response;
