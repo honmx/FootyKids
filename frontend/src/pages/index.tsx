@@ -32,21 +32,6 @@ const HomePage: INextPageWithLayout<Props> = ({ coaches, news }) => {
 
   if (!coaches || !news) return <ErrorPage />;
 
-  useEffect(() => {
-    const a = async () => {
-      const { data } = await axios.get<ICoach[]>("http://localhost:5000/content/news");
-      console.log(data);
-    }
-
-    a();
-  }, []);
-
-useEffect(() => {
-  console.log(coaches);
-  console.log(news);
-}, []);
-
-
   return (
     <>
       <Head>
@@ -91,8 +76,8 @@ HomePage.getLayout = (page) => {
 
 export const getStaticProps: GetStaticProps = async () => {
 
-  const coaches = await contentService.getCoaches() || [];
-  const news = await contentService.getNews() || [];
+  const coaches = await contentService.getCoaches();
+  const news = await contentService.getNews();
 
   return {
     props: {

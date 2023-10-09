@@ -9,7 +9,7 @@ interface Props {
 
 const Layout: FC<Props> = ({ renderHeader, renderFooter, children }) => {
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", overflow: "hidden", minHeight: "200vh" }}>
+    <Box sx={{ display: "flex", flexDirection: "column", overflow: "hidden", minHeight: "100vh" }}>
       {renderHeader && renderHeader()}
       <Box component="main" sx={{ flex: "1 1 0", backgroundColor: "sheet.main" }}>
         {children}
