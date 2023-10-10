@@ -1,11 +1,11 @@
 import { Dispatch, SetStateAction, createContext } from "react";
 
-interface IDefaultProps {
+interface IPasswordRecoveryContext {
   email: string;
   setEmail: Dispatch<SetStateAction<string>>;
 }
 
-export const PasswordRecoveryContext = createContext<IDefaultProps>({
+export const PasswordRecoveryContext = createContext<IPasswordRecoveryContext>({
   email: "",
   setEmail: () => {}
-}); 
+});

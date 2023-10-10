@@ -1,26 +1,23 @@
-import { FC, useEffect } from "react";
+import { FC, useContext, useEffect } from "react";
 import { INextPageWithLayout } from "@/types/INextPageWithLayout";
-import { GetServerSideProps, GetStaticProps } from "next";
 import Layout from "@/components/Layout/Layout";
 import Header from "@/components/Layout/Header";
 import Footer from "@/components/Layout/Footer";
 import { Box } from "@mui/material";
 import authService from "../services/authService";
-import { IUser } from "@/types/IUser";
-import { useRouter } from "next/router";
 import Head from "next/head";
+import { AuthContext } from "@/contexts/authContext";
+import { useCheckAuth } from "@/hooks/useCheckAuth";
+
 
 interface Props {
-  // user: IUser
+
 }
 
 const AccountPage: INextPageWithLayout<Props> = ({ }) => {
 
-  // const router = useRouter();
-
-  // useEffect(() => {
-  //   if (!user) router.push("/auth");
-  // }, [])
+  const { user } = useContext(AuthContext);
+  const { isLoading } = useCheckAuth({ routeToPushIfNoAuth: "/auth" });
 
   return (
     <>
@@ -31,9 +28,12 @@ const AccountPage: INextPageWithLayout<Props> = ({ }) => {
         <meta name="format-detection" content="telephone=no" />
         <link rel="icon" href="/footykids-icon.png" />
       </Head>
-      <div>
-        account
-      </div>
+      {
+        !isLoading && user &&
+        <div>
+          account
+        </div>
+      }
     </>
   )
 };
@@ -49,25 +49,6 @@ AccountPage.getLayout = (page) => {
       </Box>
     </Layout>
   )
-}
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-
-  const refreshToken = context.req?.headers.cookie?.split("=")[1] || "";
-  const user = await authService.validateRefreshToken(refreshToken);
-  
-  if (!user) {
-    return {
-      redirect: {
-        destination: "/auth",
-        permanent: false
-      }
-    }
-  }
-
-  return {
-    props: {}
-  }
 }
 
 export default AccountPage;

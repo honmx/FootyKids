@@ -1,11 +1,14 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Box, Button, Paper, Stack, Tab, Tabs, Typography } from "@mui/material";
-import { FC, SyntheticEvent, useEffect, useState } from "react";
+import { Box, Button, Paper, Stack, Typography } from "@mui/material";
+import { FC, useContext, useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { InferType } from "yup";
 import ControlledTextField from "../UI/ControlledTextField";
 import CustomLink from "../UI/CustomLink";
+import authService from "@/services/authService";
+import { useRouter } from "next/router";
+import { AuthContext } from "@/contexts/authContext";
 
 const userLoginSchema = yup
   .object({
@@ -23,7 +26,11 @@ interface Props {
 
 const LoginForm: FC<Props> = ({ onRegistrationClick, onResetPasswordClick }) => {
 
-  const { control, handleSubmit } = useForm<IUserLoginFormInput>({
+  const router = useRouter();
+
+  const { setUser } = useContext(AuthContext);
+
+  const { control, handleSubmit, setError, formState } = useForm<IUserLoginFormInput>({
     defaultValues: {
       email: "",
       password: "",
@@ -31,9 +38,14 @@ const LoginForm: FC<Props> = ({ onRegistrationClick, onResetPasswordClick }) => 
     resolver: yupResolver(userLoginSchema)
   });
 
-  const onSubmit: SubmitHandler<IUserLoginFormInput> = (data) => {
-    console.log(data);
-    // send request
+  const onSubmit: SubmitHandler<IUserLoginFormInput> = async (data) => {
+    try {
+      const userData = await authService.login(data.email, data.password);
+      setUser(userData.user);
+      router.push("/account");
+    } catch (error: any) {
+      setError("root", { message: error.response.data.message });
+    }
   }
 
   return (
@@ -55,6 +67,10 @@ const LoginForm: FC<Props> = ({ onRegistrationClick, onResetPasswordClick }) => 
             label="Пароль"
             fullWidth
           />
+          {
+            formState.errors.root?.message &&
+            <Typography color="error">{formState.errors.root?.message}</Typography>
+          }
           <CustomLink
             component={"button" as unknown as "a"}
             underline="none"
