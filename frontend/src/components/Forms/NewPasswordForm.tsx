@@ -1,11 +1,13 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Box, Button, Paper, Stack, Tab, Tabs, Typography } from "@mui/material";
-import { FC, SyntheticEvent, useEffect, useState } from "react";
+import { FC, SyntheticEvent, useContext, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { InferType } from "yup";
 import ControlledTextField from "../UI/ControlledTextField";
 import CustomLink from "../UI/CustomLink";
+import authService from "@/services/authService";
+import { PasswordRecoveryContext } from "@/contexts/passwordRecoveryContext";
 
 const newPasswordSchema = yup
   .object({
@@ -22,6 +24,8 @@ interface Props {
 
 const NewPasswordForm: FC<Props> = ({ onContinueClick }) => {
 
+  const { passwordRecoveryData } = useContext(PasswordRecoveryContext);
+
   const { control, handleSubmit, setError } = useForm<IUserNewPasswordFormInput>({
     defaultValues: {
       password: "",
@@ -30,16 +34,23 @@ const NewPasswordForm: FC<Props> = ({ onContinueClick }) => {
     resolver: yupResolver(newPasswordSchema)
   });
 
-  const onSubmit: SubmitHandler<IUserNewPasswordFormInput> = (data) => {
+  const onSubmit: SubmitHandler<IUserNewPasswordFormInput> = async (data) => {
     if (data.password !== data.passwordAgain) {
       setError("password", { type: "value", message: "Пароли не совпадают" });
       setError("passwordAgain", { type: "value", message: "Пароли не совпадают" });
       return;
     }
 
-    console.log(data);
-    onContinueClick();
-    // send request
+    try {
+      await authService.recoverPassword({
+        email: passwordRecoveryData.email,
+        password: data.password
+      });
+
+      onContinueClick();
+    } catch (error: any) {
+      setError("root", { message: error.response.data.message });
+    }
   }
 
   return (
@@ -62,7 +73,7 @@ const NewPasswordForm: FC<Props> = ({ onContinueClick }) => {
             fullWidth
           />
         </Stack>
-        <Button type="submit" variant="contained" sx={{ marginTop: 2 }}>Войти</Button>
+        <Button type="submit" variant="contained" sx={{ marginTop: 2 }}>Сменить пароль</Button>
       </form>
     </Paper>
   )

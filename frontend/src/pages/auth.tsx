@@ -73,15 +73,17 @@ const AuthPage: INextPageWithLayout<Props> = ({ }) => {
                     <PasswordRecoveryContext.Provider key={4} value={{ passwordRecoveryData, setPasswordRecoveryData }}>
                       <Typography fontSize={30}>Восстановление пароля</Typography>
                       <Typography fontSize={14}>Мы выслали код Вам на почту, введите его в поле ниже, чтобы продолжить</Typography>
-                      <ValidateCodeForm onContinueClick={() => setFormIndex(5)} />
+                      <ValidateCodeForm onContinueClick={() => setFormIndex(4)} />
                     </PasswordRecoveryContext.Provider>
                   ],
                   [
-                    <Typography key={5} fontSize={30}>Восстановление пароля</Typography>,
-                    <NewPasswordForm key={6} onContinueClick={() => setFormIndex(0)} />
+                    <PasswordRecoveryContext.Provider key={5} value={{ passwordRecoveryData, setPasswordRecoveryData }}>
+                      <Typography fontSize={30}>Восстановление пароля</Typography>
+                      <NewPasswordForm onContinueClick={() => setFormIndex(0)} />
+                    </PasswordRecoveryContext.Provider>
                   ],
                   [
-                    <RegistrationContext.Provider key={7} value={{ registrationData, setRegistrationData }}>
+                    <RegistrationContext.Provider key={6} value={{ registrationData, setRegistrationData }}>
                       <Typography fontSize={30}>Регистрация</Typography>
                       <Typography fontSize={14}>Мы выслали код Вам на почту, введите его в поле ниже, чтобы продолжить</Typography>
                       <ValidateCodeForm onContinueClick={() => router.push("/account")} />

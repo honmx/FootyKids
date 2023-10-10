@@ -40,19 +40,14 @@ const ValidateCodeForm: FC<Props> = ({ onContinueClick }) => {
 
   const onSubmit: SubmitHandler<ValidateCodeFormInput> = async (data) => {
     try {
-      await authService.validateCode(passwordRecoveryData.email || registrationData.email, Number(data.code));
-
-      // if (registrationData.email) {
-      //   console.log("registration");
-      // } else {
-      //   console.log("password recovery");
-      // }
+      await authService.validateCode({
+        email: passwordRecoveryData.email || registrationData.email,
+        code: Number(data.code)
+      });
 
       if (registrationData.email) {
         const userData = await authService.register(registrationData);
         setUser(userData.user);
-      } else {
-        // send password recovery request
       }
 
       onContinueClick();

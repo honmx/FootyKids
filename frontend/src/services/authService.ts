@@ -22,11 +22,25 @@ const register = async (registerProps: RegisterProps): Promise<IAuthResponse> =>
   return user;
 }
 
+interface RecoverPasswordProps {
+  email: string;
+  password: string;
+}
+
+const recoverPassword = async (recoverPasswordProps: RecoverPasswordProps): Promise<IUser> => {
+  const { data: user } = await $authAPI.put<IUser>("/recoverPassword", recoverPasswordProps)
+  return user;
+}
+
 const sendCode = async (email: string) => {
   await $authAPI.post("/sendVerificationCode", { email });
 }
+interface ValidateCodeProps {
+  email: string;
+  code: number;
+}
 
-const validateCode = async (email: string, code: number) => {
+const validateCode = async ({ email, code }: ValidateCodeProps) => {
   await $authAPI.post("/validateVerificationCode", { email, code });
 }
 
@@ -40,6 +54,7 @@ const validateRefreshToken = async (): Promise<IUser | undefined> => {
 export default {
   login,
   register,
+  recoverPassword,
   sendCode,
   validateCode,
   validateRefreshToken
