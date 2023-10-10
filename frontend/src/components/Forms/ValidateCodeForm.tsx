@@ -7,7 +7,6 @@ import { InferType } from "yup";
 import ControlledTextField from "../UI/ControlledTextField";
 import { PasswordRecoveryContext } from "@/contexts/passwordRecoveryContext";
 import { RegistrationContext } from "@/contexts/registrationContext";
-import { isArray } from "util";
 import authService from "@/services/authService";
 import { AuthContext } from "@/contexts/authContext";
 
@@ -45,8 +44,11 @@ const ValidateCodeForm: FC<Props> = ({ onContinueClick }) => {
         code: Number(data.code)
       });
 
-      if (registrationData.email) {
+      if (registrationData.parentName) {
         const userData = await authService.register(registrationData);
+        setUser(userData.user);
+      } else {
+        const userData = await authService.registerCoach(registrationData);
         setUser(userData.user);
       }
 

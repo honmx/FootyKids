@@ -33,7 +33,7 @@ const RegistrationForm: FC<Props> = ({ onLoginClick, onRegistrationClick }) => {
       {
         tabsIndex === 0
           ? <UserRegistrationForm onRegistrationClick={onRegistrationClick} />
-          : <>coach register</>
+          : <CoachRegistrationForm onRegistrationClick={onRegistrationClick} />
       }
       <Box sx={{
         display: "flex",
@@ -56,11 +56,17 @@ const RegistrationForm: FC<Props> = ({ onLoginClick, onRegistrationClick }) => {
   )
 };
 
-// ==========================
+// ======================
+// USER REGISTRATION FORM
+// ======================
 
 const userRegistrationSchema = yup
   .object({
+    name: yup.string().required(),
+    parentName: yup.string().required(),
+    birth: yup.string().matches(/^\d\d.\d\d.\d\d\d\d$/).required(),
     email: yup.string().email().required(),
+    phone: yup.string().min(11).max(12).required(),
     password: yup.string().min(8).required(),
     passwordAgain: yup.string().min(8).required(),
   })
@@ -78,7 +84,11 @@ const UserRegistrationForm: FC<IUserRegitrationFormProps> = ({ onRegistrationCli
 
   const { control, handleSubmit, setError, formState } = useForm<IUserRegistrationFormInput>({
     defaultValues: {
+      name: "",
+      parentName: "",
+      birth: "",
       email: "",
+      phone: "",
       password: "",
       passwordAgain: "",
     },
@@ -109,6 +119,128 @@ const UserRegistrationForm: FC<IUserRegitrationFormProps> = ({ onRegistrationCli
       onSubmit={handleSubmit(onSubmit)}
     >
       <Stack spacing={1.5}>
+        <ControlledTextField
+          control={control}
+          name="name"
+          label="ФИО ребенка"
+          fullWidth
+        />
+        <ControlledTextField
+          control={control}
+          name="parentName"
+          label="ФИО родителя"
+          fullWidth
+        />
+        <ControlledTextField
+          control={control}
+          name="birth"
+          label="Дата рождения ребенка (ДД.ММ.ГГГГ)"
+          fullWidth
+        />
+        <ControlledTextField
+          control={control}
+          name="email"
+          label="Почта"
+          fullWidth
+        />
+        <ControlledTextField
+          control={control}
+          name="phone"
+          label="Номер телефона"
+          fullWidth
+        />
+        <ControlledTextField
+          control={control}
+          name="password"
+          label="Пароль"
+          fullWidth
+        />
+        <ControlledTextField
+          control={control}
+          name="passwordAgain"
+          label="Повторите пароль"
+          fullWidth
+        />
+        {
+          formState.errors.root?.message &&
+          <Typography color="error">
+            {
+              Array.isArray(formState.errors.root.message)
+                ? formState.errors.root?.message[0]
+                : formState.errors.root?.message
+            }
+          </Typography>
+        }
+      </Stack>
+      <Button type="submit" variant="contained" sx={{ marginTop: 2 }}>Зарегистрироваться</Button>
+    </form>
+  );
+}
+
+
+// =======================
+// COACH REGISTRATION FORM
+// =======================
+
+const coachRegistrationSchema = yup
+  .object({
+    name: yup.string().required(),
+    email: yup.string().email().required(),
+    password: yup.string().min(8).required(),
+    passwordAgain: yup.string().min(8).required(),
+  })
+  .required();
+
+interface ICoachRegistrationFormInput extends InferType<typeof coachRegistrationSchema> { }
+
+interface ICoachRegitrationFormProps {
+  onRegistrationClick: () => void;
+}
+
+const CoachRegistrationForm: FC<ICoachRegitrationFormProps> = ({ onRegistrationClick }) => {
+
+  const { setRegistrationData } = useContext(RegistrationContext);
+
+  const { control, handleSubmit, setError, formState } = useForm<ICoachRegistrationFormInput>({
+    defaultValues: {
+      name: "",
+      email: "",
+      password: "",
+      passwordAgain: "",
+    },
+    resolver: yupResolver(coachRegistrationSchema)
+  });
+
+  const onSubmit: SubmitHandler<ICoachRegistrationFormInput> = async (data) => {
+    if (data.password !== data.passwordAgain) {
+      setError("password", { type: "value", message: "Пароли не совпадают" });
+      setError("passwordAgain", { type: "value", message: "Пароли не совпадают" });
+      return;
+    }
+
+    const { passwordAgain, ...restData } = data;
+    setRegistrationData(restData);
+
+    try {
+      await authService.sendCode(data.email);
+      onRegistrationClick();
+    } catch (error: any) {
+      setError("root", { message: error.response.data.message });
+    }
+  }
+
+  return (
+    <form
+      style={{ display: "flex", flexDirection: "column" }}
+      onSubmit={handleSubmit(onSubmit)}
+    >
+      <Stack spacing={1.5}>
+        <ControlledTextField
+          control={control}
+          name="name"
+          label="ФИО"
+          fullWidth
+        />
         <ControlledTextField
           control={control}
           name="email"

@@ -44,7 +44,7 @@ const LoginForm: FC<Props> = ({ onRegistrationClick, onResetPasswordClick }) => 
 
   useEffect(() => {
     setPasswordRecoveryData({ email: "" });
-    setRegistrationData({ email: "", password: "" });
+    setRegistrationData({ name: "", parentName: "", birth: "", email: "", phone: "", password: "", });
   }, []);
 
   const onSubmit: SubmitHandler<IUserLoginFormInput> = async (data) => {

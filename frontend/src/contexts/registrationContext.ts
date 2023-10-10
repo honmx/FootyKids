@@ -1,7 +1,11 @@
 import { Dispatch, SetStateAction, createContext } from "react";
 
 export interface IRegistrationData {
+  name: string;
+  parentName?: string | null;
+  birth?: string | null;
   email: string;
+  phone?: string | null;
   password: string;
 }
 
@@ -12,8 +16,12 @@ interface IRegistrationContext {
 
 export const RegistrationContext = createContext<IRegistrationContext>({
   registrationData: {
+    name: "",
+    parentName: null,
+    birth: null,
     email: "",
-    password: ""
+    phone: null,
+    password: "",
   },
   setRegistrationData: () => {}
 });

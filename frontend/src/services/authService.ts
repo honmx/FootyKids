@@ -13,12 +13,21 @@ const login = async (loginProps: LoginProps): Promise<IAuthResponse> => {
 }
 
 interface RegisterProps {
+  name?: string;
+  parentName?: string | null;
+  birth?: string | null;
   email: string;
+  phone?: string | null;
   password: string;
 }
 
 const register = async (registerProps: RegisterProps): Promise<IAuthResponse> => {
   const { data: user } = await $authAPI.post<IAuthResponse>("/register", registerProps);
+  return user;
+}
+
+const registerCoach = async (registerProps: RegisterProps): Promise<IAuthResponse> => {
+  const { data: user } = await $authAPI.post<IAuthResponse>("/registerCoach", registerProps);
   return user;
 }
 
@@ -54,6 +63,7 @@ const validateRefreshToken = async (): Promise<IUser | undefined> => {
 export default {
   login,
   register,
+  registerCoach,
   recoverPassword,
   sendCode,
   validateCode,
