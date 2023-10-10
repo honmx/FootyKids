@@ -12,6 +12,7 @@ const CustomLink: FC<Props> = ({ href, ...restProps }) => {
 
   return (
     <Link
+      sx={{ cursor: "pointer" }}
       color={router.pathname === "/" && href === "/"
         || href !== "/" && router.pathname.includes(href as string)
         ? "typography.main"

@@ -1,11 +1,17 @@
 import { Dispatch, SetStateAction, createContext } from "react";
 
-interface IPasswordRecoveryContext {
+export interface IPasswordRecoveryData {
   email: string;
-  setEmail: Dispatch<SetStateAction<string>>;
+}
+
+interface IPasswordRecoveryContext {
+  passwordRecoveryData: IPasswordRecoveryData;
+  setPasswordRecoveryData: Dispatch<SetStateAction<IPasswordRecoveryData>>;
 }
 
 export const PasswordRecoveryContext = createContext<IPasswordRecoveryContext>({
-  email: "",
-  setEmail: () => {}
+  passwordRecoveryData: {
+    email: ""
+  },
+  setPasswordRecoveryData: () => { }
 });

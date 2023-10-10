@@ -29,12 +29,17 @@ const SendCodeToEmailForm: FC<Props> = ({ onContinueClick }) => {
     resolver: yupResolver(sendCodeToEmailSchema)
   });
 
-  const { setEmail } = useContext(PasswordRecoveryContext);
+  const { setPasswordRecoveryData } = useContext(PasswordRecoveryContext);
 
-  const onSubmit: SubmitHandler<ISendCodeToEmailFormInput> = (data) => {
-    // send request
-    setEmail(data.email);
-    onContinueClick();
+  const onSubmit: SubmitHandler<ISendCodeToEmailFormInput> = async (data) => {
+    setPasswordRecoveryData(data);
+
+    try {
+      
+      onContinueClick();
+    } catch (error) {
+
+    }
   }
 
   return (

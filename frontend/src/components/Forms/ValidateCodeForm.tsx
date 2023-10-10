@@ -1,11 +1,15 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Button, Paper, Stack } from "@mui/material";
+import { Button, Paper, Stack, Typography } from "@mui/material";
 import { FC, useContext } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { InferType } from "yup";
 import ControlledTextField from "../UI/ControlledTextField";
 import { PasswordRecoveryContext } from "@/contexts/passwordRecoveryContext";
+import { RegistrationContext } from "@/contexts/registrationContext";
+import { isArray } from "util";
+import authService from "@/services/authService";
+import { AuthContext } from "@/contexts/authContext";
 
 const validateCodeSchema = yup
   .object({
@@ -22,22 +26,39 @@ interface Props {
 
 const ValidateCodeForm: FC<Props> = ({ onContinueClick }) => {
 
-  const { control, handleSubmit } = useForm<ValidateCodeFormInput>({
+  const { setUser } = useContext(AuthContext);
+  const { registrationData } = useContext(RegistrationContext);
+  const { passwordRecoveryData } = useContext(PasswordRecoveryContext);
+
+  const { control, handleSubmit, setError, formState } = useForm<ValidateCodeFormInput>({
     defaultValues: {
       code: ""
     },
     resolver: yupResolver(validateCodeSchema)
   });
 
-  const { email } = useContext(PasswordRecoveryContext);
 
-  const onSubmit: SubmitHandler<ValidateCodeFormInput> = (data) => {
-    // send request
-    console.log({
-      email,
-      code: data.code
-    });
-    onContinueClick();
+  const onSubmit: SubmitHandler<ValidateCodeFormInput> = async (data) => {
+    try {
+      await authService.validateCode(passwordRecoveryData.email || registrationData.email, Number(data.code));
+
+      // if (registrationData.email) {
+      //   console.log("registration");
+      // } else {
+      //   console.log("password recovery");
+      // }
+
+      if (registrationData.email) {
+        const userData = await authService.register(registrationData);
+        setUser(userData.user);
+      } else {
+        // send password recovery request
+      }
+
+      onContinueClick();
+    } catch (error: any) {
+      setError("root", { message: error.response.data.message });
+    }
   }
 
   return (
@@ -53,6 +74,16 @@ const ValidateCodeForm: FC<Props> = ({ onContinueClick }) => {
             label="Код"
             fullWidth
           />
+          {
+            formState.errors.root?.message &&
+            <Typography color="error">
+              {
+                Array.isArray(formState.errors.root.message)
+                  ? formState.errors.root?.message[0]
+                  : formState.errors.root?.message
+              }
+            </Typography>
+          }
         </Stack>
         <Button type="submit" variant="contained" sx={{ marginTop: 2 }}>Продолжить</Button>
       </form>

@@ -1,5 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Box, Button, Paper, Stack, Typography } from "@mui/material";
+import { Box, Button, Input, Paper, Stack, Typography } from "@mui/material";
 import { FC, useContext, useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as yup from "yup";
@@ -9,6 +9,8 @@ import CustomLink from "../UI/CustomLink";
 import authService from "@/services/authService";
 import { useRouter } from "next/router";
 import { AuthContext } from "@/contexts/authContext";
+import { PasswordRecoveryContext } from "@/contexts/passwordRecoveryContext";
+import { RegistrationContext } from "@/contexts/registrationContext";
 
 const userLoginSchema = yup
   .object({
@@ -29,6 +31,8 @@ const LoginForm: FC<Props> = ({ onRegistrationClick, onResetPasswordClick }) => 
   const router = useRouter();
 
   const { setUser } = useContext(AuthContext);
+  const { setPasswordRecoveryData } = useContext(PasswordRecoveryContext);
+  const { setRegistrationData } = useContext(RegistrationContext);
 
   const { control, handleSubmit, setError, formState } = useForm<IUserLoginFormInput>({
     defaultValues: {
@@ -38,11 +42,15 @@ const LoginForm: FC<Props> = ({ onRegistrationClick, onResetPasswordClick }) => 
     resolver: yupResolver(userLoginSchema)
   });
 
+  useEffect(() => {
+    setPasswordRecoveryData({ email: "" });
+    setRegistrationData({ email: "", password: "" });
+  }, []);
+
   const onSubmit: SubmitHandler<IUserLoginFormInput> = async (data) => {
     try {
-      const userData = await authService.login(data.email, data.password);
+      const userData = await authService.login({ email: data.email, password: data.password });
       setUser(userData.user);
-      router.push("/account");
     } catch (error: any) {
       setError("root", { message: error.response.data.message });
     }
@@ -69,13 +77,19 @@ const LoginForm: FC<Props> = ({ onRegistrationClick, onResetPasswordClick }) => 
           />
           {
             formState.errors.root?.message &&
-            <Typography color="error">{formState.errors.root?.message}</Typography>
+            <Typography color="error">
+              {
+                Array.isArray(formState.errors.root.message)
+                  ? formState.errors.root?.message[0]
+                  : formState.errors.root?.message
+              }
+            </Typography>
           }
           <CustomLink
-            component={"button" as unknown as "a"}
+            component={"a" as unknown as "a"}
             underline="none"
             fontSize={14}
-            sx={{ alignSelf: "flex-end" }}
+            sx={{ alignSelf: "flex-end", cursor: "pointer" }}
             onClick={onResetPasswordClick}
           >
             Забыли пароль?

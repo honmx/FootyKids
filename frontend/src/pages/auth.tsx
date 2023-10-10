@@ -10,10 +10,12 @@ import RegistrationForm from "@/components/Forms/RegistrationForm";
 import LoginForm from "@/components/Forms/LoginForm";
 import SendCodeToEmailForm from "@/components/Forms/SendCodeToEmailForm";
 import ValidateCodeForm from "@/components/Forms/ValidateCodeForm";
-import { PasswordRecoveryContext } from "@/contexts/passwordRecoveryContext";
+import { IPasswordRecoveryData, PasswordRecoveryContext } from "@/contexts/passwordRecoveryContext";
 import NewPasswordForm from "@/components/Forms/NewPasswordForm";
 import { AuthContext } from "@/contexts/authContext";
 import { useCheckAuth } from "@/hooks/useCheckAuth";
+import { useRouter } from "next/router";
+import { IRegistrationData, RegistrationContext } from "@/contexts/registrationContext";
 
 interface Props {
 
@@ -21,8 +23,12 @@ interface Props {
 
 const AuthPage: INextPageWithLayout<Props> = ({ }) => {
 
+  const router = useRouter();
+
   const [formIndex, setFormIndex] = useState<number>(0);
-  const [email, setEmail] = useState<string>("");
+
+  const [passwordRecoveryData, setPasswordRecoveryData] = useState<IPasswordRecoveryData>({} as IPasswordRecoveryData);
+  const [registrationData, setRegistrationData] = useState<IRegistrationData>({} as IRegistrationData);
 
   const { user, isLoading } = useCheckAuth({ routeToPushIfAuth: "/account" });
 
@@ -52,26 +58,35 @@ const AuthPage: INextPageWithLayout<Props> = ({ }) => {
                     <LoginForm key={1} onRegistrationClick={() => setFormIndex(1)} onResetPasswordClick={() => setFormIndex(2)} />
                   ],
                   [
-                    <Typography key={2} fontSize={30}>Регистрация</Typography>,
-                    <RegistrationForm key={3} onLoginClick={() => setFormIndex(0)} />
+                    <RegistrationContext.Provider key={2} value={{ registrationData, setRegistrationData }}>
+                      <Typography fontSize={30}>Регистрация</Typography>
+                      <RegistrationForm onLoginClick={() => setFormIndex(0)} onRegistrationClick={() => setFormIndex(5)} />
+                    </RegistrationContext.Provider>
                   ],
                   [
-                    <PasswordRecoveryContext.Provider key={4} value={{ email, setEmail }}>
-                      <Typography key={5} fontSize={30}>Восстановление пароля</Typography>
-                      <SendCodeToEmailForm key={6} onContinueClick={() => setFormIndex(3)} />
+                    <PasswordRecoveryContext.Provider key={3} value={{ passwordRecoveryData, setPasswordRecoveryData }}>
+                      <Typography fontSize={30}>Восстановление пароля</Typography>
+                      <SendCodeToEmailForm onContinueClick={() => setFormIndex(3)} />
                     </PasswordRecoveryContext.Provider>
                   ],
                   [
-                    <PasswordRecoveryContext.Provider key={7} value={{ email, setEmail }}>
-                      <Typography key={8} fontSize={30}>Восстановление пароля</Typography>
-                      <Typography key={9} fontSize={14}>Мы выслали код Вам на почту, введите его в поле ниже, чтобы продолжить</Typography>
-                      <ValidateCodeForm key={10} onContinueClick={() => setFormIndex(4)} />
+                    <PasswordRecoveryContext.Provider key={4} value={{ passwordRecoveryData, setPasswordRecoveryData }}>
+                      <Typography fontSize={30}>Восстановление пароля</Typography>
+                      <Typography fontSize={14}>Мы выслали код Вам на почту, введите его в поле ниже, чтобы продолжить</Typography>
+                      <ValidateCodeForm onContinueClick={() => setFormIndex(5)} />
                     </PasswordRecoveryContext.Provider>
                   ],
                   [
-                    <Typography key={11} fontSize={30}>Восстановление пароля</Typography>,
-                    <NewPasswordForm key={12} onContinueClick={() => setFormIndex(0)} />
-                  ]
+                    <Typography key={5} fontSize={30}>Восстановление пароля</Typography>,
+                    <NewPasswordForm key={6} onContinueClick={() => setFormIndex(0)} />
+                  ],
+                  [
+                    <RegistrationContext.Provider key={7} value={{ registrationData, setRegistrationData }}>
+                      <Typography fontSize={30}>Регистрация</Typography>
+                      <Typography fontSize={14}>Мы выслали код Вам на почту, введите его в поле ниже, чтобы продолжить</Typography>
+                      <ValidateCodeForm onContinueClick={() => router.push("/account")} />
+                    </RegistrationContext.Provider>
+                  ],
                 ][formIndex]
               }
             </Box>

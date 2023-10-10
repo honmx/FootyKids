@@ -1,17 +1,22 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Box, Button, Paper, Stack, Tab, Tabs, Typography } from "@mui/material";
-import { FC, SyntheticEvent, useEffect, useState } from "react";
+import { FC, SyntheticEvent, useContext, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { InferType } from "yup";
 import ControlledTextField from "../UI/ControlledTextField";
 import CustomLink from "../UI/CustomLink";
+import authService from "@/services/authService";
+import { AuthContext } from "@/contexts/authContext";
+import { useRouter } from "next/router";
+import { RegistrationContext } from "@/contexts/registrationContext";
 
 interface Props {
   onLoginClick: () => void;
+  onRegistrationClick: () => void;
 }
 
-const RegistrationForm: FC<Props> = ({ onLoginClick }) => {
+const RegistrationForm: FC<Props> = ({ onLoginClick, onRegistrationClick }) => {
 
   const [tabsIndex, setTabsIndex] = useState<number>(0);
 
@@ -27,7 +32,7 @@ const RegistrationForm: FC<Props> = ({ onLoginClick }) => {
       </Tabs>
       {
         tabsIndex === 0
-          ? <UserRegistrationForm />
+          ? <UserRegistrationForm onRegistrationClick={onRegistrationClick} />
           : <>coach register</>
       }
       <Box sx={{
@@ -63,9 +68,15 @@ const userRegistrationSchema = yup
 
 interface IUserRegistrationFormInput extends InferType<typeof userRegistrationSchema> { }
 
-const UserRegistrationForm: FC = ({ }) => {
+interface IUserRegitrationFormProps {
+  onRegistrationClick: () => void;
+}
 
-  const { control, handleSubmit, setError } = useForm<IUserRegistrationFormInput>({
+const UserRegistrationForm: FC<IUserRegitrationFormProps> = ({ onRegistrationClick }) => {
+
+  const { setRegistrationData } = useContext(RegistrationContext);
+
+  const { control, handleSubmit, setError, formState } = useForm<IUserRegistrationFormInput>({
     defaultValues: {
       email: "",
       password: "",
@@ -74,14 +85,22 @@ const UserRegistrationForm: FC = ({ }) => {
     resolver: yupResolver(userRegistrationSchema)
   });
 
-  const onSubmit: SubmitHandler<IUserRegistrationFormInput> = (data) => {
+  const onSubmit: SubmitHandler<IUserRegistrationFormInput> = async (data) => {
     if (data.password !== data.passwordAgain) {
       setError("password", { type: "value", message: "Пароли не совпадают" });
       setError("passwordAgain", { type: "value", message: "Пароли не совпадают" });
       return;
     }
 
-    // send request
+    const { passwordAgain, ...restData } = data;
+    setRegistrationData(restData);
+
+    try {
+      await authService.sendCode(data.email);
+      onRegistrationClick();
+    } catch (error: any) {
+      setError("root", { message: error.response.data.message });
+    }
   }
 
   return (
@@ -108,6 +127,16 @@ const UserRegistrationForm: FC = ({ }) => {
           label="Повторите пароль"
           fullWidth
         />
+        {
+          formState.errors.root?.message &&
+          <Typography color="error">
+            {
+              Array.isArray(formState.errors.root.message)
+                ? formState.errors.root?.message[0]
+                : formState.errors.root?.message
+            }
+          </Typography>
+        }
       </Stack>
       <Button type="submit" variant="contained" sx={{ marginTop: 2 }}>Зарегистрироваться</Button>
     </form>
