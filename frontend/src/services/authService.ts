@@ -9,6 +9,7 @@ interface LoginProps {
 
 const login = async (loginProps: LoginProps): Promise<IAuthResponse> => {
   const { data: user } = await $authAPI.post<IAuthResponse>("/login", loginProps);
+  localStorage.setItem("token", user.accessToken);
   return user;
 }
 
@@ -23,11 +24,13 @@ interface RegisterProps {
 
 const register = async (registerProps: RegisterProps): Promise<IAuthResponse> => {
   const { data: user } = await $authAPI.post<IAuthResponse>("/register", registerProps);
+  localStorage.setItem("token", user.accessToken);
   return user;
 }
 
 const registerCoach = async (registerProps: RegisterProps): Promise<IAuthResponse> => {
   const { data: user } = await $authAPI.post<IAuthResponse>("/registerCoach", registerProps);
+  localStorage.setItem("token", user.accessToken);
   return user;
 }
 
@@ -37,7 +40,7 @@ interface RecoverPasswordProps {
 }
 
 const recoverPassword = async (recoverPasswordProps: RecoverPasswordProps): Promise<IUser> => {
-  const { data: user } = await $authAPI.put<IUser>("/recoverPassword", recoverPasswordProps)
+  const { data: user } = await $authAPI.put<IUser>("/recoverPassword", recoverPasswordProps);
   return user;
 }
 

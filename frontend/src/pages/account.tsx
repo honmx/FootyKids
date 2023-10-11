@@ -4,11 +4,9 @@ import Layout from "@/components/Layout/Layout";
 import Header from "@/components/Layout/Header";
 import Footer from "@/components/Layout/Footer";
 import { Box } from "@mui/material";
-import authService from "../services/authService";
 import Head from "next/head";
 import { AuthContext } from "@/contexts/authContext";
 import { useCheckAuth } from "@/hooks/useCheckAuth";
-
 
 interface Props {
 
