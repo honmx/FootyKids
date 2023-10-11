@@ -6,6 +6,7 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { RmqModule } from '@app/common';
 import { User } from './models/user.model';
 import { Role } from './models/role.model';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [

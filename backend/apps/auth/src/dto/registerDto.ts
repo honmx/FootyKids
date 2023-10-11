@@ -1,4 +1,4 @@
-import { IsString, IsEmail, Length } from "class-validator";
+import { IsString, IsEmail, Length, Matches } from "class-validator";
 
 export class RegisterDto {
   @IsString()
@@ -8,4 +8,18 @@ export class RegisterDto {
   @IsString()
   @Length(8)
   password: string;
+  
+  @IsString()
+  name: string;
+
+  @IsString()
+  parentName: string;
+
+  @IsString()
+  @Matches(/^\d\d.\d\d.\d\d\d\d$/)
+  birth: string;
+
+  @IsString()
+  @Length(11, 12)
+  phone: string;
 }

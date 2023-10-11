@@ -17,6 +17,8 @@ import { Code } from './models/code.model';
 import { MailerService } from '@nestjs-modules/mailer';
 import { ValidateCodeDto } from './dto/validateCodeDto';
 import { RecoverPasswordDto } from './dto/recoverPasswordDto';
+import { RegisterCoachDto } from './dto/registerCoachDto';
+import { IUserCoach } from './types/IUserCoach';
 
 @Injectable()
 export class AuthService {
@@ -41,6 +43,19 @@ export class AuthService {
     const newUser = await lastValueFrom(this.usersClient.send("create-user", { ...dto, password: hashPassword })) as IUser;
 
     return await this.generateAndSaveToken(newUser);
+  }
+
+  async registerCoach(dto: RegisterCoachDto) {
+    const coach = await lastValueFrom(this.usersClient.send("get-user-by-email", { email: dto.email }));
+
+    if (coach) {
+      return new BadRequestException("This user already exists");
+    }
+
+    const hashPassword = await bcrypt.hash(dto.password, 5);
+    const newCoach = await lastValueFrom(this.usersClient.send("create-coach", { ...dto, password: hashPassword })) as IUserCoach;
+
+    return await this.generateAndSaveToken(newCoach);
   }
 
   async login(dto: LoginDto) {
@@ -77,6 +92,15 @@ export class AuthService {
     return await this.generateAndSaveToken(userFromDb);
   }
 
+  validateRefreshToken(refreshToken: string) {
+    try {
+      const user = this.jwtService.verify(refreshToken, { secret: this.configServce.get<string>("JWT_PRIVATE_REFRESH_KEY") });
+      return user;
+    } catch (error) {
+      return null;
+    }
+  }
+
   async recoverPassword(dto: RecoverPasswordDto) {
     const hashPassword = await bcrypt.hash(dto.password, 5);
 
@@ -86,20 +110,34 @@ export class AuthService {
   }
 
   async sendVerificationCode(dto: SendCodeDto) {
+
+    const userFromDb = await lastValueFrom(this.usersClient.send("get-user-by-email", { email: dto.email }));
+
+    if (!userFromDb) {
+      return new BadRequestException("Пользователя с таким email не существует");
+    }
+
     const code = this.generateCode();
 
     await this.saveCode(dto.email, code);
 
-    return await this.mailerServce.sendMail({
-      from: this.configServce.get<string>("MAIL_SMTP_USER"),
-      to: dto.email,
-      subject: "Код для подтверждения аккаунта",
-      html: `
-        <p>Ваш код для подтверждения аккаунта</p>
-        <p>Код будет действителен 2 минуты</p>
-        <h1>${code}</h1>
-      `
-    });
+    return await this.mailerServce
+      .sendMail({
+        from: this.configServce.get<string>("MAIL_SMTP_USER"),
+        to: dto.email,
+        subject: "Код подтверждения",
+        html: `
+          <p>Ваш код подтверждения</p>
+          <p>Код будет действителен 2 минуты</p>
+          <h1>${code}</h1>
+        `
+      }).catch((error) => {
+        if (error?.response?.includes("invalid mailbox") || error?.response?.includes("non-local recipient verification failed")) {
+          return new BadRequestException("Некорректный email")
+        }
+
+        throw error;
+      });
   }
 
   async validateVerificationCode(dto: ValidateCodeDto) {
@@ -132,7 +170,7 @@ export class AuthService {
     return Math.floor(1000 + Math.random() * 9000);
   }
 
-  private async generateAndSaveToken(user: IUser) {
+  private async generateAndSaveToken(user: IUser | IUserCoach) {
     const tokens = this.generateTokens(user);
     await this.saveToken(user.id, tokens.refreshToken);
 
@@ -142,12 +180,12 @@ export class AuthService {
     };
   }
 
-  private generateTokens(user: IUser) {
+  private generateTokens(user: IUser | IUserCoach) {
     const payload = this.helpersService.pick(["id", "email", "role"], user);
 
     return {
-      accessToken: this.jwtService.sign(payload, { secret: this.configServce.get<string>("JWT_PRIVATE_ACCESS_KEY"), expiresIn: "1m" }),
-      refreshToken: this.jwtService.sign(payload, { secret: this.configServce.get<string>("JWT_PRIVATE_REFRESH_KEY"), expiresIn: "5m" }),
+      accessToken: this.jwtService.sign(payload, { secret: this.configServce.get<string>("JWT_PRIVATE_ACCESS_KEY"), expiresIn: "30s" }),
+      refreshToken: this.jwtService.sign(payload, { secret: this.configServce.get<string>("JWT_PRIVATE_REFRESH_KEY"), expiresIn: "2m" }),
     }
   }
 
@@ -165,14 +203,5 @@ export class AuthService {
   private async findToken(refreshToken: string) {
     const token = await this.authRepository.findOne({ where: { refreshToken } });
     return token;
-  }
-
-  private validateRefreshToken(refreshToken: string) {
-    try {
-      const user = this.jwtService.verify(refreshToken, { secret: this.configServce.get<string>("JWT_PRIVATE_REFRESH_KEY") });
-      return user;
-    } catch (error) {
-      return null;
-    }
   }
 }

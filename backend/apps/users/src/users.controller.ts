@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { Ctx, MessagePattern, Payload, RmqContext } from '@nestjs/microservices';
 import { RmqService } from '@app/common';
@@ -6,6 +6,7 @@ import { CreateUserDto } from './dto/createUserDto';
 import { GetUserByEmailDto } from './dto/getUserByEmailDto';
 import { GetUserByIdDto } from './dto/getUserByIdDto';
 import { ChangePasswordDto } from './dto/changePasswordDto';
+import { CreateCoachDto } from './dto/createCoachDto';
 // import { createRoleDto } from 'apps/backend/src/users/dto/createRoleDto';
 
 @Controller()
@@ -25,6 +26,13 @@ export class UsersController {
   @MessagePattern("create-user")
   async createUser(@Payload() dto: CreateUserDto, @Ctx() context: RmqContext) {
     const response = await this.usersService.createUser(dto);
+    this.rmqService.ack(context);
+    return response;
+  }
+
+  @MessagePattern("create-coach")
+  async createCoach(@Payload() dto: CreateCoachDto, @Ctx() context: RmqContext) {
+    const response = await this.usersService.createCoach(dto);
     this.rmqService.ack(context);
     return response;
   }

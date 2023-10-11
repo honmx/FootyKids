@@ -9,6 +9,7 @@ import { RefreshDto } from './dto/refreshDto';
 import { SendCodeDto } from './dto/sendCodeDto';
 import { ValidateCodeDto } from './dto/validateCodeDto';
 import { RecoverPasswordDto } from './dto/recoverPasswordDto';
+import { RegisterCoachDto } from './dto/registerCoachDto';
 
 @Injectable()
 export class AuthService {
@@ -18,6 +19,17 @@ export class AuthService {
 
   async register(registerDto: RegisterDto, res: Response) {
     const response = await lastValueFrom(this.authClient.send("register", registerDto));
+
+    if (response?.status >= 400 || !response) {
+      throw new HttpException(response?.message || "Some error", response?.status || HttpStatus.BAD_REQUEST);
+    }
+
+    res.cookie("refreshToken", response.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true });
+    return response;
+  }
+
+  async registerCoach(registerCoachDto: RegisterCoachDto, res: Response) {
+    const response = await lastValueFrom(this.authClient.send("register-coach", registerCoachDto));
 
     if (response?.status >= 400 || !response) {
       throw new HttpException(response?.message || "Some error", response?.status || HttpStatus.BAD_REQUEST);
@@ -37,18 +49,18 @@ export class AuthService {
     res.cookie("refreshToken", response.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true });
     return response;
   }
-  
+
   async logout(logoutDto: LogoutDto, res: Response) {
     const response = await lastValueFrom(this.authClient.send("logout", logoutDto));
-    
+
     if (response?.status >= 400 || !response) {
       throw new HttpException(response?.message || "Some error", response?.status || HttpStatus.BAD_REQUEST);
     }
-    
+
     res.clearCookie("refreshToken");
     return response;
   }
-  
+
   async refresh(refreshDto: RefreshDto, res: Response) {
     const response = await lastValueFrom(this.authClient.send("refresh", refreshDto));
 
@@ -57,6 +69,16 @@ export class AuthService {
     }
 
     res.cookie("refreshToken", response.refreshToken, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true });
+
+    return response;
+  }
+
+  async validateRefreshToken(refreshToken: string) {
+    const response = await lastValueFrom(this.authClient.send("validate-refresh-token", { refreshToken }));
+
+    if (response?.status >= 400) {
+      throw new HttpException(response?.message || "Some error", response?.status || HttpStatus.BAD_REQUEST);
+    }
 
     return response;
   }
@@ -83,7 +105,7 @@ export class AuthService {
 
   async recoverPassword(recoverPasswordDto: RecoverPasswordDto) {
     const response = await lastValueFrom(this.authClient.send("recover-password", recoverPasswordDto));
-  
+
     if (response?.status >= 400 || !response) {
       throw new HttpException(response?.message || "Some error", response?.status || HttpStatus.BAD_REQUEST);
     }

@@ -1,7 +1,7 @@
-import { Controller } from '@nestjs/common';
+import { Controller, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { Ctx, MessagePattern, Payload, RmqContext } from '@nestjs/microservices';
-import { RmqService } from '@app/common';
+import { JwtAuthGuard, RmqService } from '@app/common';
 import { RegisterDto } from './dto/registerDto';
 import { LoginDto } from './dto/loginDto';
 import { LogoutDto } from './dto/logoutDto';
@@ -9,6 +9,8 @@ import { RefreshDto } from './dto/refreshDto';
 import { SendCodeDto } from './dto/sendCodeDto';
 import { ValidateCodeDto } from './dto/validateCodeDto';
 import { RecoverPasswordDto } from './dto/recoverPasswordDto';
+import { ValidateRefreshTokenDto } from './dto/validateRefreshTokenDto';
+import { RegisterCoachDto } from './dto/registerCoachDto';
 
 @Controller()
 export class AuthController {
@@ -20,6 +22,13 @@ export class AuthController {
   @MessagePattern("register")
   async register(@Payload() dto: RegisterDto, @Ctx() context: RmqContext) {
     const response = await this.authService.register(dto);
+    this.rmqService.ack(context);
+    return response;
+  }
+
+  @MessagePattern("register-coach")
+  async registerCoach(@Payload() dto: RegisterCoachDto, @Ctx() context: RmqContext) {
+    const response = await this.authService.registerCoach(dto);
     this.rmqService.ack(context);
     return response;
   }
@@ -42,6 +51,13 @@ export class AuthController {
   @MessagePattern("refresh")
   async refresh(@Payload() dto: RefreshDto, @Ctx() context: RmqContext) {
     const response = await this.authService.refresh(dto);
+    this.rmqService.ack(context);
+    return response;
+  }
+
+  @MessagePattern("validate-refresh-token")
+  async validateRefreshToken(@Payload() dto: ValidateRefreshTokenDto, @Ctx() context: RmqContext) {
+    const response = await this.authService.validateRefreshToken(dto.refreshToken);
     this.rmqService.ack(context);
     return response;
   }
