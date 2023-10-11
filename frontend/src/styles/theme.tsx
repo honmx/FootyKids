@@ -266,7 +266,7 @@ export const createCustomTheme = ({ deviceType }: ICreateThemeProps) => {
                 borderColor: paletteTheme.palette.input.borderHover,
               },
               "&.Mui-focused fieldset": {
-                borderColor: paletteTheme.palette.typography.main,
+                borderColor: paletteTheme.palette.primary.main,
               },
               "&.Mui-error fieldset": {
                 borderColor: paletteTheme.palette.error.main
