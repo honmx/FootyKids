@@ -73,6 +73,7 @@ const LoginForm: FC<Props> = ({ onRegistrationClick, onResetPasswordClick }) => 
             control={control}
             name="password"
             label="Пароль"
+            type="password"
             fullWidth
           />
           {

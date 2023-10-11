@@ -7,8 +7,6 @@ import { InferType } from "yup";
 import ControlledTextField from "../UI/ControlledTextField";
 import CustomLink from "../UI/CustomLink";
 import authService from "@/services/authService";
-import { AuthContext } from "@/contexts/authContext";
-import { useRouter } from "next/router";
 import { RegistrationContext } from "@/contexts/registrationContext";
 
 interface Props {
@@ -153,12 +151,14 @@ const UserRegistrationForm: FC<IUserRegitrationFormProps> = ({ onRegistrationCli
           control={control}
           name="password"
           label="Пароль"
+          type="password"
           fullWidth
         />
         <ControlledTextField
           control={control}
           name="passwordAgain"
           label="Повторите пароль"
+          type="password"
           fullWidth
         />
         {
@@ -251,12 +251,14 @@ const CoachRegistrationForm: FC<ICoachRegitrationFormProps> = ({ onRegistrationC
           control={control}
           name="password"
           label="Пароль"
+          type="password"
           fullWidth
         />
         <ControlledTextField
           control={control}
           name="passwordAgain"
           label="Повторите пароль"
+          type="password"
           fullWidth
         />
         {

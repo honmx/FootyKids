@@ -49,12 +49,13 @@ const AuthPage: INextPageWithLayout<Props> = ({ }) => {
               flexDirection: "column",
               justifyContent: "center",
               height: "100%",
-              gap: "20px"
+              gap: "20px",
+              padding: "40px 0"
             }}>
               {
                 ...[
                   [
-                    <Typography key={0} fontSize={30}>Вход или регистрация</Typography>,
+                    <Typography key={0} fontSize={{ smallPhone: 26, middlePhone:30}}>Вход или регистрация</Typography>,
                     <LoginForm key={1} onRegistrationClick={() => setFormIndex(1)} onResetPasswordClick={() => setFormIndex(2)} />
                   ],
                   [
@@ -65,20 +66,20 @@ const AuthPage: INextPageWithLayout<Props> = ({ }) => {
                   ],
                   [
                     <PasswordRecoveryContext.Provider key={3} value={{ passwordRecoveryData, setPasswordRecoveryData }}>
-                      <Typography fontSize={30}>Восстановление пароля</Typography>
+                      <Typography fontSize={{ smallPhone: 24, middlePhone:30}}>Восстановление пароля</Typography>
                       <SendCodeToEmailForm onContinueClick={() => setFormIndex(3)} />
                     </PasswordRecoveryContext.Provider>
                   ],
                   [
                     <PasswordRecoveryContext.Provider key={4} value={{ passwordRecoveryData, setPasswordRecoveryData }}>
-                      <Typography fontSize={30}>Восстановление пароля</Typography>
+                      <Typography fontSize={{ smallPhone: 24, middlePhone:30}}>Восстановление пароля</Typography>
                       <Typography fontSize={14}>Мы выслали код Вам на почту, введите его в поле ниже, чтобы продолжить</Typography>
                       <ValidateCodeForm onContinueClick={() => setFormIndex(4)} />
                     </PasswordRecoveryContext.Provider>
                   ],
                   [
                     <PasswordRecoveryContext.Provider key={5} value={{ passwordRecoveryData, setPasswordRecoveryData }}>
-                      <Typography fontSize={30}>Восстановление пароля</Typography>
+                      <Typography fontSize={{ smallPhone: 24, middlePhone:30}}>Восстановление пароля</Typography>
                       <NewPasswordForm onContinueClick={() => setFormIndex(0)} />
                     </PasswordRecoveryContext.Provider>
                   ],

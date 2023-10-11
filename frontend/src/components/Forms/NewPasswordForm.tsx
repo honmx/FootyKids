@@ -64,12 +64,14 @@ const NewPasswordForm: FC<Props> = ({ onContinueClick }) => {
             control={control}
             name="password"
             label="Пароль"
+            type="password"
             fullWidth
           />
           <ControlledTextField
             control={control}
             name="passwordAgain"
             label="Повторите пароль"
+            type="password"
             fullWidth
           />
         </Stack>

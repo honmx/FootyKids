@@ -15,7 +15,6 @@ $authAPI.interceptors.request.use(config => {
 $authAPI.interceptors.response.use(
   config => config,
   async error => {
-    console.log("error happened");
     const originalRequestConfig = error.config;
 
     if (error.response?.status === 401 && originalRequestConfig && !originalRequestConfig?._isRetry) {
