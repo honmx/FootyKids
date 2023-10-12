@@ -7,6 +7,7 @@ import { Box } from "@mui/material";
 import Head from "next/head";
 import { AuthContext } from "@/contexts/authContext";
 import { useCheckAuth } from "@/hooks/useCheckAuth";
+import Sidebar from "@/components/Layout/Sidebar";
 
 interface Props {
 
@@ -41,8 +42,9 @@ AccountPage.getLayout = (page) => {
     <Layout
       renderHeader={() => <Header />}
       renderFooter={() => <Footer />}
+      renderSidebar={() => <Sidebar />}
     >
-      <Box sx={{ marginTop: "69.8px" }}>
+      <Box>
         {page}
       </Box>
     </Layout>

@@ -374,6 +374,8 @@ export const createCustomTheme = ({ deviceType }: ICreateThemeProps) => {
         },
         styleOverrides: {
           root: {
+            display: "flex",
+            alignItems: "center",
             fontFamily: font.style.fontFamily,
             fontWeight: 300,
             color: paletteTheme.palette.typography.dark,

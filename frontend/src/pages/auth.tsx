@@ -42,7 +42,7 @@ const AuthPage: INextPageWithLayout<Props> = ({ }) => {
       </Head>
       {
         !isLoading && !user &&
-        <Box sx={{ height: "100%", }}>
+        <Box sx={{ height: "100%" }}>
           <Container maxWidth="largePhone" sx={{ height: "100%" }}>
             <Box sx={{
               display: "flex",
@@ -55,7 +55,7 @@ const AuthPage: INextPageWithLayout<Props> = ({ }) => {
               {
                 ...[
                   [
-                    <Typography key={0} fontSize={{ smallPhone: 26, middlePhone:30}}>Вход или регистрация</Typography>,
+                    <Typography key={0} fontSize={{ smallPhone: 26, middlePhone: 30 }}>Вход или регистрация</Typography>,
                     <LoginForm key={1} onRegistrationClick={() => setFormIndex(1)} onResetPasswordClick={() => setFormIndex(2)} />
                   ],
                   [
@@ -66,20 +66,20 @@ const AuthPage: INextPageWithLayout<Props> = ({ }) => {
                   ],
                   [
                     <PasswordRecoveryContext.Provider key={3} value={{ passwordRecoveryData, setPasswordRecoveryData }}>
-                      <Typography fontSize={{ smallPhone: 24, middlePhone:30}}>Восстановление пароля</Typography>
+                      <Typography fontSize={{ smallPhone: 24, middlePhone: 30 }}>Восстановление пароля</Typography>
                       <SendCodeToEmailForm onContinueClick={() => setFormIndex(3)} />
                     </PasswordRecoveryContext.Provider>
                   ],
                   [
                     <PasswordRecoveryContext.Provider key={4} value={{ passwordRecoveryData, setPasswordRecoveryData }}>
-                      <Typography fontSize={{ smallPhone: 24, middlePhone:30}}>Восстановление пароля</Typography>
+                      <Typography fontSize={{ smallPhone: 24, middlePhone: 30 }}>Восстановление пароля</Typography>
                       <Typography fontSize={14}>Мы выслали код Вам на почту, введите его в поле ниже, чтобы продолжить</Typography>
                       <ValidateCodeForm onContinueClick={() => setFormIndex(4)} />
                     </PasswordRecoveryContext.Provider>
                   ],
                   [
                     <PasswordRecoveryContext.Provider key={5} value={{ passwordRecoveryData, setPasswordRecoveryData }}>
-                      <Typography fontSize={{ smallPhone: 24, middlePhone:30}}>Восстановление пароля</Typography>
+                      <Typography fontSize={{ smallPhone: 24, middlePhone: 30 }}>Восстановление пароля</Typography>
                       <NewPasswordForm onContinueClick={() => setFormIndex(0)} />
                     </PasswordRecoveryContext.Provider>
                   ],
@@ -106,7 +106,7 @@ AuthPage.getLayout = (page) => {
       renderHeader={() => <Header />}
       renderFooter={() => <Footer />}
     >
-      <Box sx={{ height: "calc(100% - 69.8px)", margin: "69.8px 0 0 0" }}>
+      <Box sx={{ height: "100%" }}>
         {page}
       </Box>
     </Layout>
