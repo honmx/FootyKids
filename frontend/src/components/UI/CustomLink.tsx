@@ -10,10 +10,13 @@ const CustomLink: FC<Props> = ({ href, changeImgColorOnHover = false, ...restPro
 
   const router = useRouter();
 
+  const { sx, ...propsWithoutSx } = restProps;
+
   return (
     <Link
       sx={{
         cursor: "pointer",
+        ...sx,
         "& img": {
           transition: "all 0.15s ease",
         },
@@ -24,7 +27,7 @@ const CustomLink: FC<Props> = ({ href, changeImgColorOnHover = false, ...restPro
       color={router.pathname === "/" && href === "/"
         || href !== "/" && router.pathname.includes(href as string)
         ? "typography.main"
-        : "typography.dark"} href={href} {...restProps}
+        : "typography.dark"} href={href} {...propsWithoutSx}
     />
   )
 };
