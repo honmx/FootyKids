@@ -1,30 +1,30 @@
 export const headerLinks = [
   {
-    href: "#",
+    href: "/",
     text: "Главная"
   },
   {
-    href: "#about",
+    href: "/#about",
     text: "О нас"
   },
   {
-    href: "#coaches",
+    href: "/#coaches",
     text: "Тренеры"
   },
   {
-    href: "#news",
+    href: "/#news",
     text: "Новости"
   },
   {
-    href: "#places",
+    href: "/#places",
     text: "Площадки"
   },
   {
-    href: "#faq",
+    href: "/#faq",
     text: "Вопросы"
   },
   {
-    href: "#contact",
+    href: "/#contact",
     text: "Записаться"
   },
 ]

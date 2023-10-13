@@ -1,11 +1,15 @@
-import { FC, useState } from "react";
+import { FC, RefObject, useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { AppBar, Box, Container, Divider, IconButton, Link, List, ListItemButton, Stack, SwipeableDrawer, Typography } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, AppBar, Box, ClickAwayListener, Container, Divider, IconButton, Link, List, ListItem, ListItemButton, Menu, MenuItem, MenuList, Paper, Popper, Stack, SwipeableDrawer, Typography } from "@mui/material";
 import CustomLink from "../UI/CustomLink";
-import { headerLinks } from "@/data/headerLinks";
+import { headerLinks } from "@/data/mainPageLinks";
 import logo from "@/assets/footykids-logo-1.svg";
 import menu from "@/assets/menu icon.svg";
+import arrowDown from "@/assets/arrow down.svg";
 import { useResize } from "@/hooks/useResize";
+import { useHover } from "@/hooks/useHover";
+import Dropdown from "../UI/Dropdown";
+import { useRouter } from "next/router";
 
 interface Props {
 
@@ -13,7 +17,10 @@ interface Props {
 
 const Header: FC<Props> = ({ }) => {
 
+  const router = useRouter();
+
   const isTablet = useResize("laptop");
+  const { hoverRef, isHover } = useHover();
 
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
 
@@ -22,7 +29,7 @@ const Header: FC<Props> = ({ }) => {
   }
 
   return (
-    <AppBar sx={{ paddingTop: 2, paddingBottom: 2 }}>
+    <AppBar sx={{ paddingTop: 2, paddingBottom: 2, overflow: "visible" }}>
       <Container
         maxWidth={false}
         sx={{
@@ -56,13 +63,9 @@ const Header: FC<Props> = ({ }) => {
                   }}
                 >
                   <Typography
-                    component="h1"
+                    component="h3"
                     textAlign="center"
-                    fontSize={{
-                      smallPhone: 40,
-                      largePhone: 50,
-                      tablet: 60
-                    }}
+                    fontSize="40px"
                     color="typography.dark"
                     padding="20px 0"
                   >
@@ -75,17 +78,17 @@ const Header: FC<Props> = ({ }) => {
                         <ListItemButton key={link.href} sx={{ justifyContent: "center", padding: "10px 0" }}>
                           <CustomLink
                             href={link.href}
-                            fontSize={{
-                              smallPhone: 22,
-                              largePhone: 26,
-                              tablet: 30
-                            }}
+                            fontSize="20px"
                           >
                             {link.text}
                           </CustomLink>
                         </ListItemButton>
                       ))
                     }
+                    {/* <Accordion>
+                      <AccordionSummary onClick={(e) => e.stopPropagation()}>dfgsdfgsdfg</AccordionSummary>
+                      <AccordionDetails>dfgsdfgsdfg</AccordionDetails>
+                    </Accordion> */}
                     <Box
                       sx={{
                         position: "absolute",
@@ -116,12 +119,34 @@ const Header: FC<Props> = ({ }) => {
                   transform: "translate(-50%, -50%)"
                 }}
               >
-                <Stack direction="row" spacing={2}>
-                  {
-                    headerLinks.map(link => (
-                      <CustomLink key={link.href} href={link.href} sx={{ whiteSpace: "nowrap" }}>{link.text}</CustomLink>
-                    ))
-                  }
+                <Stack component="nav" direction="row" spacing={2}>
+                  <Box ref={hoverRef} sx={{ display: "flex", alignItems: "center", cursor: "pointer", position: "relative" }}>
+                    <CustomLink href="/" changeImgColorOnHover>
+                      <Typography>Главная</Typography>
+                      <Image
+                        src={arrowDown}
+                        alt="arrow"
+                        style={{
+                          transform: isHover ? "rotate(-180deg)" : "rotate(0deg)",
+                          filter: "brightness(0) invert(0)",
+                          transition: "all 0.2s ease !important",
+                          width: "9px",
+                          height: "9px",
+                          marginLeft: "7px"
+                        }}
+                      />
+                    </CustomLink>
+                    <Dropdown open={isHover}>
+                      {
+                        headerLinks.map(link => (
+                          <CustomLink key={link.href} href={link.href} sx={{ whiteSpace: "nowrap" }}>
+                            <ListItemButton>{link.text}</ListItemButton>
+                          </CustomLink>
+                        ))
+                      }
+                    </Dropdown>
+                  </Box>
+                  <CustomLink href="/account">Личный кабинет</CustomLink>
                 </Stack>
               </Box>
             )

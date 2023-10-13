@@ -51,7 +51,7 @@ const Sidebar: FC<Props> = ({ }) => {
               }
             }}>
               <ListItem>
-                <CustomLink href="/account">
+                <CustomLink href="/account" changeImgColorOnActiveLink={false}>
                   <Image
                     src={user?.photo || userPhoto}
                     alt="user"
@@ -75,7 +75,7 @@ const Sidebar: FC<Props> = ({ }) => {
               </ListItem>
               {
                 user?.type === "user" && sidebarUserLinks.map(item => (
-                  <ListItem>
+                  <ListItem key={item.alt}>
                     <Image
                       src={item.icon}
                       alt={item.alt}
@@ -90,7 +90,7 @@ const Sidebar: FC<Props> = ({ }) => {
               }
               {
                 user?.type === "coach" && sidebarCoachLinks.map(item => (
-                  <ListItem>
+                  <ListItem key={item.alt}>
                     <CustomLink href={item.href} changeImgColorOnHover sx={{ width: "100%" }}>
                       <Box sx={{
                         width: "47px",
@@ -122,36 +122,36 @@ const Sidebar: FC<Props> = ({ }) => {
             </List>
           </Box>
         </Drawer>
-      <button
-        ref={hoverRef as RefObject<HTMLButtonElement>}
-        onClick={handleOpenDrawerClick}
-        style={{
-          position: "absolute",
-          left: isTablet && !isOpen ? "9px" : "calc(100% - 15px)",
-          top: "40px",
-          transform: "translate(-50%, -50%)",
-          backgroundColor: isHover ? "#F8F8F8" : "#FFF",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: isOpen ? "30px" : "40px",
-          width: isOpen ? "30px" : "20px",
-          border: "1px solid #DDD",
-          borderRadius: "3px",
-          transition: "width 0.15s ease"
-        }}
-      >
-        <Image
-          src={isOpen ? leftArrow : rightArrow}
-          alt="arrow"
+        <button
+          ref={hoverRef as RefObject<HTMLButtonElement>}
+          onClick={handleOpenDrawerClick}
           style={{
-            filter: "invert(0.5)",
-            width: "9px",
-            height: "9px",
+            position: "absolute",
+            left: isTablet && !isOpen ? "9px" : "calc(100% - 15px)",
+            top: "40px",
+            transform: "translate(-50%, -50%)",
+            backgroundColor: isHover ? "#F8F8F8" : "#FFF",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: isOpen ? "30px" : "40px",
+            width: isOpen ? "30px" : "20px",
+            border: "1px solid #DDD",
+            borderRadius: "3px",
+            transition: "width 0.15s ease"
           }}
-        />
-      </button>
-          </Box>
+        >
+          <Image
+            src={isOpen ? leftArrow : rightArrow}
+            alt="arrow"
+            style={{
+              filter: "invert(0.5)",
+              width: "9px",
+              height: "9px",
+            }}
+          />
+        </button>
+      </Box>
     </Box>
   )
 };
