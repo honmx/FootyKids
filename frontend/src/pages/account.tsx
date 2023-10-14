@@ -7,6 +7,7 @@ import { Box } from "@mui/material";
 import Head from "next/head";
 import { AuthContext } from "@/contexts/authContext";
 import { useCheckAuth } from "@/hooks/useCheckAuth";
+import Sidebar from "@/components/Layout/Sidebar";
 
 interface Props {
 
@@ -14,8 +15,9 @@ interface Props {
 
 const AccountPage: INextPageWithLayout<Props> = ({ }) => {
 
-  const { user } = useContext(AuthContext);
-  const { isLoading } = useCheckAuth({ routeToPushIfNoAuth: "/auth" });
+  const { user, isLoading } = useCheckAuth({ routeToPushIfNoAuth: "/auth" });
+
+  if (isLoading || !user) return null;
 
   return (
     <>
@@ -26,12 +28,9 @@ const AccountPage: INextPageWithLayout<Props> = ({ }) => {
         <meta name="format-detection" content="telephone=no" />
         <link rel="icon" href="/footykids-icon.png" />
       </Head>
-      {
-        !isLoading && user &&
-        <div>
-          account
-        </div>
-      }
+      <div>
+        account
+      </div>
     </>
   )
 };
@@ -41,8 +40,9 @@ AccountPage.getLayout = (page) => {
     <Layout
       renderHeader={() => <Header />}
       renderFooter={() => <Footer />}
+      renderSidebar={() => <Sidebar />}
     >
-      <Box sx={{ marginTop: "69.8px" }}>
+      <Box>
         {page}
       </Box>
     </Layout>

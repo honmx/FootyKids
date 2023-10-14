@@ -13,7 +13,7 @@ interface Props {
 const MainBanner: FC<Props> = ({ }) => {
 
   return (
-    <SectionWrapper id="#" sx={{ position: "relative" }}>
+    <SectionWrapper id="#" sx={{ position: "relative", marginTop: "-69.8px" }}>
       <DarkForeground>
         <Image src={banner} alt="banner" style={{
           width: "100%",

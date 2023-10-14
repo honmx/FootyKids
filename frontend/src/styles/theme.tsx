@@ -337,10 +337,6 @@ export const createCustomTheme = ({ deviceType }: ICreateThemeProps) => {
             "img": {
               transition: "all 0.15s ease",
             },
-            // "&:hover": {
-            //   backgroundColor: "transparent",
-            //   filter: "brightness(0) invert(1)"
-            // }
             "@media (hover: hover)": {
               "&:hover": {
                 backgroundColor: "transparent",
@@ -354,14 +350,12 @@ export const createCustomTheme = ({ deviceType }: ICreateThemeProps) => {
             props: { color: "black" },
             style: {
               filter: "brightness(0) invert(0)",
+              transition: "all 0.15s ease",
               "@media (hover: hover)": {
                 "&:hover": {
-                  filter: "invert(35%) sepia(78%) saturate(4713%) hue-rotate(203deg) brightness(102%) contrast(109%)"
+                  filter: "invert(35%) sepia(78%) saturate(4713%) hue-rotate(203deg) brightness(102%) contrast(109%) !important"
                 }
               }
-              // "&:hover": {
-              //   filter: "invert(35%) sepia(78%) saturate(4713%) hue-rotate(203deg) brightness(102%) contrast(109%)"
-              // }
             }
           },
         ]
@@ -374,6 +368,8 @@ export const createCustomTheme = ({ deviceType }: ICreateThemeProps) => {
         },
         styleOverrides: {
           root: {
+            display: "flex",
+            alignItems: "center",
             fontFamily: font.style.fontFamily,
             fontWeight: 300,
             color: paletteTheme.palette.typography.dark,

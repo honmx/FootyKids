@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react"
 
 export const useHover = () => {
-  const hoverRef = useRef<HTMLDivElement>(null);
+  const hoverRef = useRef<HTMLDivElement | HTMLButtonElement>(null);
 
   const [isHover, setIsHover] = useState<boolean>(false);
 
