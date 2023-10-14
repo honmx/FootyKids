@@ -73,22 +73,57 @@ const Header: FC<Props> = ({ }) => {
                   </Typography>
                   <Divider />
                   <List component="nav" onClick={handleOpenDrawerClick} sx={{ height: "100%" }}>
-                    {
-                      headerLinks.map(link => (
-                        <ListItemButton key={link.href} sx={{ justifyContent: "center", padding: "10px 0" }}>
-                          <CustomLink
-                            href={link.href}
-                            fontSize="20px"
-                          >
-                            {link.text}
-                          </CustomLink>
-                        </ListItemButton>
-                      ))
-                    }
-                    {/* <Accordion>
-                      <AccordionSummary onClick={(e) => e.stopPropagation()}>dfgsdfgsdfg</AccordionSummary>
-                      <AccordionDetails>dfgsdfgsdfg</AccordionDetails>
-                    </Accordion> */}
+                    <Accordion disableGutters sx={{ borderBottom: "none !important" }}>
+                      <AccordionSummary
+                        onClick={(e) => e.stopPropagation()}
+                        expandIcon={<Image src={arrowDown} alt="arrow" style={{ width: "10px", height: "10px", aspectRatio: 1 }} />}
+                        sx={{
+                          color: router.pathname === "/"
+                            ? "typography.main"
+                            : "",
+                          "& img": {
+                            filter: router.pathname === "/"
+                              ? "invert(29%) sepia(41%) saturate(4358%) hue-rotate(203deg) brightness(103%) contrast(106%) !important"
+                              : ""
+                          },
+                          "& .MuiAccordionSummary-content": {
+                            flex: "0 0 0",
+                          },
+                          "& .MuiAccordionSummary-expandIconWrapper": {
+                            minWidth: "10px"
+                          },
+                          "& .Mui-expanded.MuiAccordionSummary-expandIconWrapper": {
+                            transform: "rotate(-180deg) !important",
+                          }
+                        }}
+                      >
+                        <Typography fontSize="22px">Главная</Typography>
+                      </AccordionSummary>
+                      <AccordionDetails>
+                        {
+                          headerLinks.map(link => (
+                            <ListItemButton key={link.href} sx={{ justifyContent: "center", padding: "10px 0" }}>
+                              <CustomLink
+                                href={link.href}
+                                fontSize="20px"
+                              >
+                                {link.text}
+                              </CustomLink>
+                            </ListItemButton>
+                          ))
+                        }
+                      </AccordionDetails>
+                    </Accordion>
+                    <CustomLink
+                      href="/account"
+                      sx={{
+                        marginTop: "10px",
+                        fontSize: "22px",
+                        justifyContent: "center"
+                      }}
+                    >
+                      Личный кабинет
+                    </CustomLink>
                     <Box
                       sx={{
                         position: "absolute",
