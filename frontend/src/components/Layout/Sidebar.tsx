@@ -1,8 +1,9 @@
 import { FC, RefObject, useContext, useEffect, useState } from "react";
-import { Box, Drawer, List, ListItem, ListItemButton, Typography } from "@mui/material";
+import { Box, Button, Drawer, IconButton, List, ListItem, ListItemButton, Typography } from "@mui/material";
 import leftArrow from "../../assets/left arrow.svg";
 import rightArrow from "../../assets/right arrow.svg";
 import userPhoto from "../../assets/user.jpg";
+import logout from "../../assets/logout icon.svg";
 import Image from "next/image";
 import { useHover } from "@/hooks/useHover";
 import { AuthContext } from "@/contexts/authContext";
@@ -10,6 +11,8 @@ import CustomLink from "../UI/CustomLink";
 import { sidebarUserLinks } from "@/data/sidebarUserLinks";
 import { sidebarCoachLinks } from "@/data/sidebarCoachLinks";
 import { useResize } from "@/hooks/useResize";
+import { useCheckAuth } from "@/hooks/useCheckAuth";
+import authService from "@/services/authService";
 
 interface Props {
 
@@ -17,15 +20,24 @@ interface Props {
 
 const Sidebar: FC<Props> = ({ }) => {
 
+  const { isLoading, user } = useCheckAuth({});
   const isTablet = useResize("tablet");
+  const isLaptop = useResize("laptop");
   const { hoverRef, isHover } = useHover();
-  const { user } = useContext(AuthContext);
+  const { setUser } = useContext(AuthContext);
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const handleOpenDrawerClick = () => {
     setIsOpen(prev => !prev);
   }
+
+  const handleLogoutClick = async () => {
+    await authService.logout();
+    setUser(null);
+  }
+
+  if (isLoading || !user) return null;
 
   return (
     <Box sx={{ height: "100%", position: "relative" }}>
@@ -44,8 +56,11 @@ const Sidebar: FC<Props> = ({ }) => {
             }
           }}
         >
-          <Box sx={{ padding: "0 5px" }}>
+          <Box sx={{ padding: "0 5px", height: "100%", }}>
             <List sx={{
+              display: "flex",
+              flexDirection: "column",
+              height: "100%",
               "& .MuiListItem-root:not(:last-child)": {
                 paddingBottom: "15px",
               }
@@ -74,22 +89,7 @@ const Sidebar: FC<Props> = ({ }) => {
                 </CustomLink>
               </ListItem>
               {
-                user?.type === "user" && sidebarUserLinks.map(item => (
-                  <ListItem key={item.alt}>
-                    <Image
-                      src={item.icon}
-                      alt={item.alt}
-                      style={{
-                        maxWidth: "30px",
-                        width: "100%",
-                        borderRadius: "5px"
-                      }}
-                    />
-                  </ListItem>
-                ))
-              }
-              {
-                user?.type === "coach" && sidebarCoachLinks.map(item => (
+                (user?.type === "coach" ? sidebarCoachLinks : sidebarUserLinks).map(item => (
                   <ListItem key={item.alt}>
                     <CustomLink href={item.href} changeImgColorOnHover sx={{ width: "100%" }}>
                       <Box sx={{
@@ -118,6 +118,38 @@ const Sidebar: FC<Props> = ({ }) => {
                     </CustomLink>
                   </ListItem>
                 ))
+              }
+              {/* todo - replace */}
+              {
+                isLaptop &&
+                <ListItem>
+                  <IconButton color="black" disableRipple sx={{ aspectRatio: 0, padding: 0 }}>
+                    <Box sx={{
+                      width: "47px",
+                      display: "flex",
+                      justifyContent: "center",
+                    }}>
+                      <Image
+                        src={logout}
+                        alt="logout"
+                        style={{
+                          maxWidth: "30px",
+                          width: "100%"
+                        }}
+                      />
+                    </Box>
+                    <Typography sx={{
+                      fontSize: isOpen ? 16 : 0,
+                      opacity: isOpen ? 1 : 0,
+                      marginLeft: isOpen ? 1 : 0,
+                      transition: "font-size 0.15s ease",
+                      color: "typography.dark"
+                    }}
+                    >
+                      Выйти
+                    </Typography>
+                  </IconButton>
+                </ListItem>
               }
             </List>
           </Box>

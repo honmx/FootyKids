@@ -38,6 +38,7 @@ const ValidateCodeForm: FC<Props> = ({ onContinueClick }) => {
 
 
   const onSubmit: SubmitHandler<ValidateCodeFormInput> = async (data) => {
+    console.log(passwordRecoveryData);
     try {
       await authService.validateCode({
         email: passwordRecoveryData.email || registrationData.email,
@@ -47,7 +48,8 @@ const ValidateCodeForm: FC<Props> = ({ onContinueClick }) => {
       if (registrationData.parentName) {
         const userData = await authService.register(registrationData);
         setUser(userData.user);
-      } else {
+      }
+      else if (registrationData.email) {
         const userData = await authService.registerCoach(registrationData);
         setUser(userData.user);
       }

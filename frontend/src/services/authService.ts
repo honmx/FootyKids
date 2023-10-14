@@ -13,6 +13,11 @@ const login = async (loginProps: LoginProps): Promise<IAuthResponse> => {
   return user;
 }
 
+const logout = async (): Promise<void> => {
+  await $authAPI.post("/logout");
+  localStorage.removeItem("token");
+}
+
 interface RegisterProps {
   name?: string;
   parentName?: string | null;
@@ -65,6 +70,7 @@ const validateRefreshToken = async (): Promise<IUser | undefined> => {
 
 export default {
   login,
+  logout,
   register,
   registerCoach,
   recoverPassword,

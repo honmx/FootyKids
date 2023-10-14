@@ -1,4 +1,3 @@
-"use client"
 import { FC, useContext, useState } from "react";
 import { INextPageWithLayout } from "@/types/INextPageWithLayout";
 import Layout from "@/components/Layout/Layout";
@@ -32,6 +31,8 @@ const AuthPage: INextPageWithLayout<Props> = ({ }) => {
 
   const { user, isLoading } = useCheckAuth({ routeToPushIfAuth: "/account" });
 
+  if (isLoading || user) return null;
+
   return (
     <>
       <Head>
@@ -40,62 +41,59 @@ const AuthPage: INextPageWithLayout<Props> = ({ }) => {
         <meta name="format-detection" content="telephone=no" />
         <link rel="icon" href="/footykids-icon.png" />
       </Head>
-      {
-        !isLoading && !user &&
-        <Box sx={{ height: "100%" }}>
-          <Container maxWidth="largePhone" sx={{ height: "100%" }}>
-            <Box sx={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              height: "100%",
-              gap: "20px",
-              padding: "40px 0"
-            }}>
-              {
-                ...[
-                  [
-                    <Typography key={0} fontSize={{ smallPhone: 26, middlePhone: 30 }}>Вход или регистрация</Typography>,
-                    <LoginForm key={1} onRegistrationClick={() => setFormIndex(1)} onResetPasswordClick={() => setFormIndex(2)} />
-                  ],
-                  [
-                    <RegistrationContext.Provider key={2} value={{ registrationData, setRegistrationData }}>
-                      <Typography fontSize={30}>Регистрация</Typography>
-                      <RegistrationForm onLoginClick={() => setFormIndex(0)} onRegistrationClick={() => setFormIndex(5)} />
-                    </RegistrationContext.Provider>
-                  ],
-                  [
-                    <PasswordRecoveryContext.Provider key={3} value={{ passwordRecoveryData, setPasswordRecoveryData }}>
-                      <Typography fontSize={{ smallPhone: 24, middlePhone: 30 }}>Восстановление пароля</Typography>
-                      <SendCodeToEmailForm onContinueClick={() => setFormIndex(3)} />
-                    </PasswordRecoveryContext.Provider>
-                  ],
-                  [
-                    <PasswordRecoveryContext.Provider key={4} value={{ passwordRecoveryData, setPasswordRecoveryData }}>
-                      <Typography fontSize={{ smallPhone: 24, middlePhone: 30 }}>Восстановление пароля</Typography>
-                      <Typography fontSize={14}>Мы выслали код Вам на почту, введите его в поле ниже, чтобы продолжить</Typography>
-                      <ValidateCodeForm onContinueClick={() => setFormIndex(4)} />
-                    </PasswordRecoveryContext.Provider>
-                  ],
-                  [
-                    <PasswordRecoveryContext.Provider key={5} value={{ passwordRecoveryData, setPasswordRecoveryData }}>
-                      <Typography fontSize={{ smallPhone: 24, middlePhone: 30 }}>Восстановление пароля</Typography>
-                      <NewPasswordForm onContinueClick={() => setFormIndex(0)} />
-                    </PasswordRecoveryContext.Provider>
-                  ],
-                  [
-                    <RegistrationContext.Provider key={6} value={{ registrationData, setRegistrationData }}>
-                      <Typography fontSize={30}>Регистрация</Typography>
-                      <Typography fontSize={14}>Мы выслали код Вам на почту, введите его в поле ниже, чтобы продолжить</Typography>
-                      <ValidateCodeForm onContinueClick={() => router.push("/account")} />
-                    </RegistrationContext.Provider>
-                  ],
-                ][formIndex]
-              }
-            </Box>
-          </Container>
-        </Box>
-      }
+      <Box sx={{ height: "100%" }}>
+        <Container maxWidth="largePhone" sx={{ height: "100%" }}>
+          <Box sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            height: "100%",
+            gap: "20px",
+            padding: "40px 0"
+          }}>
+            {
+              ...[
+                [
+                  <Typography key={0} fontSize={{ smallPhone: 26, middlePhone: 30 }}>Вход или регистрация</Typography>,
+                  <LoginForm key={1} onRegistrationClick={() => setFormIndex(1)} onResetPasswordClick={() => setFormIndex(2)} />
+                ],
+                [
+                  <RegistrationContext.Provider key={2} value={{ registrationData, setRegistrationData }}>
+                    <Typography fontSize={30}>Регистрация</Typography>
+                    <RegistrationForm onLoginClick={() => setFormIndex(0)} onRegistrationClick={() => setFormIndex(5)} />
+                  </RegistrationContext.Provider>
+                ],
+                [
+                  <PasswordRecoveryContext.Provider key={3} value={{ passwordRecoveryData, setPasswordRecoveryData }}>
+                    <Typography fontSize={{ smallPhone: 24, middlePhone: 30 }}>Восстановление пароля</Typography>
+                    <SendCodeToEmailForm onContinueClick={() => setFormIndex(3)} />
+                  </PasswordRecoveryContext.Provider>
+                ],
+                [
+                  <PasswordRecoveryContext.Provider key={4} value={{ passwordRecoveryData, setPasswordRecoveryData }}>
+                    <Typography fontSize={{ smallPhone: 24, middlePhone: 30 }}>Восстановление пароля</Typography>
+                    <Typography fontSize={14}>Мы выслали код Вам на почту, введите его в поле ниже, чтобы продолжить</Typography>
+                    <ValidateCodeForm onContinueClick={() => setFormIndex(4)} />
+                  </PasswordRecoveryContext.Provider>
+                ],
+                [
+                  <PasswordRecoveryContext.Provider key={5} value={{ passwordRecoveryData, setPasswordRecoveryData }}>
+                    <Typography fontSize={{ smallPhone: 24, middlePhone: 30 }}>Восстановление пароля</Typography>
+                    <NewPasswordForm onContinueClick={() => setFormIndex(0)} />
+                  </PasswordRecoveryContext.Provider>
+                ],
+                [
+                  <RegistrationContext.Provider key={6} value={{ registrationData, setRegistrationData }}>
+                    <Typography fontSize={30}>Регистрация</Typography>
+                    <Typography fontSize={14}>Мы выслали код Вам на почту, введите его в поле ниже, чтобы продолжить</Typography>
+                    <ValidateCodeForm onContinueClick={() => router.push("/account")} />
+                  </RegistrationContext.Provider>
+                ],
+              ][formIndex]
+            }
+          </Box>
+        </Container>
+      </Box>
     </>
   )
 };

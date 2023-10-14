@@ -1,15 +1,18 @@
-import { FC, RefObject, useEffect, useRef, useState } from "react";
+import { FC, RefObject, useContext, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { Accordion, AccordionDetails, AccordionSummary, AppBar, Box, ClickAwayListener, Container, Divider, IconButton, Link, List, ListItem, ListItemButton, Menu, MenuItem, MenuList, Paper, Popper, Stack, SwipeableDrawer, Typography } from "@mui/material";
 import CustomLink from "../UI/CustomLink";
 import { headerLinks } from "@/data/mainPageLinks";
 import logo from "@/assets/footykids-logo-1.svg";
+import logout from "@/assets/logout icon.svg";
 import menu from "@/assets/menu icon.svg";
 import arrowDown from "@/assets/arrow down.svg";
 import { useResize } from "@/hooks/useResize";
 import { useHover } from "@/hooks/useHover";
 import Dropdown from "../UI/Dropdown";
 import { useRouter } from "next/router";
+import authService from "@/services/authService";
+import { AuthContext } from "@/contexts/authContext";
 
 interface Props {
 
@@ -21,11 +24,17 @@ const Header: FC<Props> = ({ }) => {
 
   const isTablet = useResize("laptop");
   const { hoverRef, isHover } = useHover();
+  const { user, setUser } = useContext(AuthContext);
 
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
 
   const handleOpenDrawerClick = () => {
     setIsDrawerOpen(prev => !prev);
+  }
+
+  const handleLogoutClick = async () => {
+    await authService.logout();
+    setUser(null);
   }
 
   return (
@@ -185,6 +194,12 @@ const Header: FC<Props> = ({ }) => {
                 </Stack>
               </Box>
             )
+        }
+        {
+          !isTablet && user &&
+          <IconButton color="black" onClick={handleLogoutClick}>
+            <Image src={logout} alt="logout" style={{ width: "20px", height: "20px" }} />
+          </IconButton>
         }
       </Container>
     </AppBar>

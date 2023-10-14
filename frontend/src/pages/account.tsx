@@ -15,8 +15,9 @@ interface Props {
 
 const AccountPage: INextPageWithLayout<Props> = ({ }) => {
 
-  const { user } = useContext(AuthContext);
-  const { isLoading } = useCheckAuth({ routeToPushIfNoAuth: "/auth" });
+  const { user, isLoading } = useCheckAuth({ routeToPushIfNoAuth: "/auth" });
+
+  if (isLoading || !user) return null;
 
   return (
     <>
@@ -27,12 +28,9 @@ const AccountPage: INextPageWithLayout<Props> = ({ }) => {
         <meta name="format-detection" content="telephone=no" />
         <link rel="icon" href="/footykids-icon.png" />
       </Head>
-      {
-        !isLoading && user &&
-        <div>
-          account
-        </div>
-      }
+      <div>
+        account
+      </div>
     </>
   )
 };
