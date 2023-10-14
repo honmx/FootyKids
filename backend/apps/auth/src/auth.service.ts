@@ -110,13 +110,6 @@ export class AuthService {
   }
 
   async sendVerificationCode(dto: SendCodeDto) {
-
-    const userFromDb = await lastValueFrom(this.usersClient.send("get-user-by-email", { email: dto.email }));
-
-    if (!userFromDb) {
-      return new BadRequestException("Пользователя с таким email не существует");
-    }
-
     const code = this.generateCode();
 
     await this.saveCode(dto.email, code);
@@ -181,11 +174,11 @@ export class AuthService {
   }
 
   private generateTokens(user: IUser | IUserCoach) {
-    const payload = this.helpersService.pick(["id", "email", "role"], user);
+    const { password, ...payload } = user;
 
     return {
-      accessToken: this.jwtService.sign(payload, { secret: this.configServce.get<string>("JWT_PRIVATE_ACCESS_KEY"), expiresIn: "30s" }),
-      refreshToken: this.jwtService.sign(payload, { secret: this.configServce.get<string>("JWT_PRIVATE_REFRESH_KEY"), expiresIn: "2m" }),
+      accessToken: this.jwtService.sign(payload, { secret: this.configServce.get<string>("JWT_PRIVATE_ACCESS_KEY"), expiresIn: "24h" }),
+      refreshToken: this.jwtService.sign(payload, { secret: this.configServce.get<string>("JWT_PRIVATE_REFRESH_KEY"), expiresIn: "30d" }),
     }
   }
 

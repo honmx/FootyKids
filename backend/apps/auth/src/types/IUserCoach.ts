@@ -3,6 +3,6 @@ import { IRole } from "./IRole";
 export interface IUserCoach {
   id: number;
   email: string;
-  passowrd: string;
+  password: string;
   role: IRole;
 }
