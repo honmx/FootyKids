@@ -15,7 +15,7 @@ import { News } from './news/news.model';
     }),
     SequelizeModule.forRoot({
       dialect: "postgres",
-      host: process.env.POSTGRES_HOST,
+      host: process.env.POSTGRES_CONTENT_HOST,
       port: Number(process.env.POSTGRES_CONTENT_PORT),
       username: process.env.POSTGRES_CONTENT_USER,
       password: process.env.POSTGRES_CONTENT_PASSWORD,

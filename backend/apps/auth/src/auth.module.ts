@@ -17,7 +17,7 @@ import { Code } from './models/code.model';
     }),
     SequelizeModule.forRoot({
       dialect: "postgres",
-      host: process.env.POSTGRES_HOST,
+      host: process.env.POSTGRES_AUTH_HOST,
       port: Number(process.env.POSTGRES_AUTH_PORT),
       username: process.env.POSTGRES_AUTH_USER,
       password: process.env.POSTGRES_AUTH_PASSWORD,

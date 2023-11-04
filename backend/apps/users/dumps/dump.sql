@@ -62,8 +62,14 @@ ALTER SEQUENCE public.roles_id_seq OWNED BY public.roles.id;
 
 CREATE TABLE public.users (
     id integer NOT NULL,
+    type text,
     email text,
     password text,
+    photo text,
+    name text,
+    "parentName" text,
+    birth text,
+    "roleId" integer,
     "createdAt" timestamp with time zone NOT NULL,
     "updatedAt" timestamp with time zone NOT NULL
 );
@@ -122,7 +128,7 @@ COPY public.roles (id, value, "createdAt", "updatedAt") FROM stdin;
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.users (id, email, password, "createdAt", "updatedAt") FROM stdin;
+COPY public.users (id, type, email, password, photo, name, "parentName", birth, "roleId", "createdAt", "updatedAt") FROM stdin;
 \.
 
 
@@ -170,6 +176,14 @@ ALTER TABLE ONLY public.users
 
 ALTER TABLE ONLY public.users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users users_roleId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT "users_roleId_fkey" FOREIGN KEY ("roleId") REFERENCES public.roles(id) ON UPDATE CASCADE ON DELETE SET NULL;
 
 
 --
