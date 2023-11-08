@@ -17,7 +17,8 @@ const Footer: FC<Props> = ({ ...restProps }) => {
         backgroundColor: "primary.main",
         color: "typography.light",
         paddingTop: "10px",
-        paddingBottom: "10px"
+        paddingBottom: "10px",
+        zIndex: 100,
       }}
       {...restProps}
     >

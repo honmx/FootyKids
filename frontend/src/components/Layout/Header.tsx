@@ -1,6 +1,6 @@
 import { FC, RefObject, useContext, useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { Accordion, AccordionDetails, AccordionSummary, AppBar, Box, ClickAwayListener, Container, Divider, IconButton, Link, List, ListItem, ListItemButton, Menu, MenuItem, MenuList, Paper, Popper, Stack, SwipeableDrawer, Typography } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, AppBar, Box, Button, ClickAwayListener, Container, Divider, IconButton, Link, List, ListItem, ListItemButton, Menu, MenuItem, MenuList, Paper, Popper, Stack, SwipeableDrawer, Typography } from "@mui/material";
 import CustomLink from "../UI/CustomLink";
 import { headerLinks } from "@/data/mainPageLinks";
 import logo from "@/assets/footykids-logo-1.svg";
@@ -22,7 +22,7 @@ const Header: FC<Props> = ({ }) => {
 
   const router = useRouter();
 
-  const isTablet = useResize("laptop");
+  const isLaptop = useResize("laptop");
   const { hoverRef, isHover } = useHover();
   const { user, setUser } = useContext(AuthContext);
 
@@ -54,7 +54,7 @@ const Header: FC<Props> = ({ }) => {
           </Link>
         </Box>
         {
-          isTablet
+          isLaptop
             ? (
               <Box>
                 <IconButton size="medium" color="black" onClick={handleOpenDrawerClick}>
@@ -196,7 +196,7 @@ const Header: FC<Props> = ({ }) => {
             )
         }
         {
-          !isTablet && user &&
+          !isLaptop && user &&
           <IconButton color="black" onClick={handleLogoutClick}>
             <Image src={logout} alt="logout" style={{ width: "20px", height: "20px" }} />
           </IconButton>

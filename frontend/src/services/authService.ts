@@ -65,7 +65,9 @@ const validateRefreshToken = async (): Promise<IUser | undefined> => {
   try {
     const { data: user } = await $authAPI.get<IUser>("/validateRefreshToken");
     return user;
-  } catch (error) { }
+  } catch (error) {
+    return undefined;
+  }
 }
 
 export default {

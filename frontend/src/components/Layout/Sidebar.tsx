@@ -41,7 +41,7 @@ const Sidebar: FC<Props> = ({ }) => {
 
   return (
     <Box sx={{ height: "100%", position: "relative" }}>
-      <Box sx={{ position: isTablet ? "absolute !important" : "static !important", height: "100%" }}>
+      <Box sx={{ position: "fixed !important", height: "100%" }}>
         <Drawer
           anchor="left"
           variant={isTablet ? "persistent" : "permanent"}
@@ -119,11 +119,15 @@ const Sidebar: FC<Props> = ({ }) => {
                   </ListItem>
                 ))
               }
-              {/* todo - replace */}
               {
                 isLaptop &&
                 <ListItem>
-                  <IconButton color="black" disableRipple sx={{ aspectRatio: 0, padding: 0 }}>
+                  <IconButton
+                    color="black"
+                    disableRipple
+                    onClick={handleLogoutClick}
+                    sx={{ aspectRatio: 0, padding: 0 }}
+                  >
                     <Box sx={{
                       width: "47px",
                       display: "flex",
@@ -158,9 +162,9 @@ const Sidebar: FC<Props> = ({ }) => {
           ref={hoverRef as RefObject<HTMLButtonElement>}
           onClick={handleOpenDrawerClick}
           style={{
-            position: "absolute",
+            position: isTablet && !isOpen ? "fixed" : "absolute",
             left: isTablet && !isOpen ? "9px" : "calc(100% - 15px)",
-            top: "40px",
+            top: isTablet && !isOpen ? "110px" : "40px",
             transform: "translate(-50%, -50%)",
             backgroundColor: isHover ? "#F8F8F8" : "#FFF",
             display: "flex",

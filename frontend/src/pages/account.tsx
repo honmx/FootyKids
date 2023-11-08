@@ -29,7 +29,54 @@ const AccountPage: INextPageWithLayout<Props> = ({ }) => {
         <link rel="icon" href="/footykids-icon.png" />
       </Head>
       <div>
-        account
+        <p>account</p>
+        <p>account</p>
+        <p>account</p>
+        <p>account</p>
+        <p>account</p>
+        <p>account</p>
+        <p>account</p>
+        <p>account</p>
+        <p>account</p>
+        <p>account</p>
+        <p>account</p>
+        <p>account</p>
+        <p>account</p>
+        <p>account</p>
+        <p>account</p>
+        <p>account</p>
+        <p>account</p>
+        <p>account</p>
+        <p>account</p>
+        <p>account</p>
+        <p>account</p>
+        <p>account</p>
+        <p>account</p>
+        <p>account</p>
+        <p>account</p>
+        <p>account</p>
+        <p>account</p>
+        <p>account</p>
+        <p>account</p>
+        <p>account</p>
+        <p>account</p>
+        <p>account</p>
+        <p>account</p>
+        <p>account</p>
+        <p>account</p>
+        <p>account</p>
+        <p>account</p>
+        <p>account</p>
+        <p>account</p>
+        <p>account</p>
+        <p>account</p>
+        <p>account</p>
+        <p>account</p>
+        <p>account</p>
+        <p>account</p>
+        <p>account</p>
+        <p>account</p>
+        <p>account</p>
       </div>
     </>
   )
