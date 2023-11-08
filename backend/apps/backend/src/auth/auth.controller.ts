@@ -32,7 +32,6 @@ export class AuthController {
   }
 
   @Post("/logout")
-  @UseGuards(JwtAuthGuard)
   async logout(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
     const refreshToken = req.headers.cookie?.split("=")[1] || "";
     

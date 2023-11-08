@@ -20,7 +20,7 @@ services:
       - "5432:5432"
     volumes:
       - ./apps/content/dumps/dump.sql:/docker-entrypoint-initdb.d/dump.sql
-      - db:/var/lib/postgresql/data
+      - contentdb:/var/lib/postgresql/data
 
   authdb:
     container_name: authdb
@@ -33,7 +33,7 @@ services:
     ports:
       - "5433:5432"
     volumes:
-      - db:/var/lib/postgresql/data
+      - authdb:/var/lib/postgresql/data
 
   usersdb:
     container_name: usersdb
@@ -47,7 +47,7 @@ services:
       - "5434:5432"
     volumes:
       - ./apps/users/dumps/dump.sql:/docker-entrypoint-initdb.d/dump.sql
-      - db:/var/lib/postgresql/data
+      - usersdb:/var/lib/postgresql/data
 
   api-gateway:
     container_name: api-gateway
@@ -107,4 +107,6 @@ services:
       - contentdb
 
 volumes:
-  db:
+  contentdb:
+  authdb:
+  usersdb:
