@@ -7,6 +7,8 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
+    networks:
+      - app
 
   contentdb:
     container_name: contentdb
@@ -21,6 +23,8 @@ services:
     volumes:
       - ./backend/apps/content/dumps/dump.sql:/docker-entrypoint-initdb.d/dump.sql
       - contentdb:/var/lib/postgresql/data
+    networks:
+      - app
 
   authdb:
     container_name: authdb
@@ -34,6 +38,8 @@ services:
       - "5433:5432"
     volumes:
       - authdb:/var/lib/postgresql/data
+    networks:
+      - app
 
   usersdb:
     container_name: usersdb
@@ -48,6 +54,8 @@ services:
     volumes:
       - ./backend/apps/users/dumps/dump.sql:/docker-entrypoint-initdb.d/dump.sql
       - usersdb:/var/lib/postgresql/data
+    networks:
+      - app
 
   api-gateway:
     container_name: api-gateway
@@ -65,6 +73,8 @@ services:
       - content
     ports:
       - "5000:5000"
+    networks:
+      - app
 
   auth:
     container_name: auth-microservice
@@ -77,6 +87,8 @@ services:
     depends_on:
       - rabbitmq
       - authdb
+    networks:
+      - app
 
   users:
     container_name: users-microservice
@@ -89,6 +101,8 @@ services:
     depends_on:
       - rabbitmq
       - usersdb
+    networks:
+      - app
 
   content:
     container_name: content-microservice
@@ -101,6 +115,8 @@ services:
     depends_on:
       - rabbitmq
       - contentdb
+    networks:
+      - app
 
   frontend:
     container_name: frontend
@@ -111,6 +127,8 @@ services:
       - ./frontend/.env
     depends_on:
       - api-gateway
+    networks:
+      - app
 
   nginx:
     container_name: nginx
@@ -123,6 +141,12 @@ services:
       - frontend
     ports:
       - "80:80"
+    networks:
+      - app
+
+networks:
+  app:
+    driver: bridge
 
 volumes:
   contentdb:
