@@ -1,5 +1,7 @@
-import { BelongsTo, Column, DataType, ForeignKey, Model, Table } from "sequelize-typescript";
+import { BelongsTo, Column, DataType, ForeignKey, HasMany, Model, Table } from "sequelize-typescript";
 import { Role } from "./role.model";
+import { Group } from "apps/groups/src/models/group.model";
+import { PersonTraining } from "apps/groups/src/models/personTraining.model";
 
 interface UserCreationAttrs {
   type: "user" | "coach";
@@ -24,16 +26,16 @@ export class User extends Model<User, UserCreationAttrs> {
 
   @Column({ type: DataType.TEXT })
   password: string;
-  
+
   @Column({ type: DataType.TEXT, allowNull: true })
   photo: string;
-  
+
   @Column({ type: DataType.TEXT })
   name: string;
-  
+
   @Column({ type: DataType.TEXT, allowNull: true })
   parentName: string;
-  
+
   @Column({ type: DataType.TEXT, allowNull: true })
   birth: string;
 
@@ -43,4 +45,14 @@ export class User extends Model<User, UserCreationAttrs> {
 
   @BelongsTo(() => Role)
   role: Role;
+
+  @ForeignKey(() => Group)
+  @Column({ type: DataType.INTEGER, allowNull: true })
+  groupId: number;
+
+  @BelongsTo(() => Group)
+  group: Group;
+
+  @HasMany(() => PersonTraining)
+  history: PersonTraining[];
 }

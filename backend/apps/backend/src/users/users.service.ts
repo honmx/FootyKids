@@ -11,11 +11,13 @@ export class UsersService {
   ) {}
 
   async getUsers() {
-    return await lastValueFrom(this.usersClient.send("get-users", {}));
+    const response = await lastValueFrom(this.usersClient.send("get-users", {}));
+    return response;
   }
 
   async createUser(createUserDto: CreateUserDto) {
-    return await lastValueFrom(this.usersClient.send("create-user", createUserDto));
+    const response = await lastValueFrom(this.usersClient.send("create-user", createUserDto));
+    return response;
   }
 
   // async createRole(createRoleDto: createRoleDto) {

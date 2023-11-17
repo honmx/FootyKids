@@ -9,30 +9,30 @@ export class ContentController {
   constructor(private readonly contentService: ContentService) { }
 
   @Get("/coaches")
-  getCoaches() {
-    return this.contentService.getCoaches();
+  async getCoaches() {
+    return await this.contentService.getCoaches();
   }
 
   @Post("/coach")
   @UseInterceptors(FileInterceptor("photo"))
-  createCoach(
+  async createCoach(
     @UploadedFile() photo: Express.Multer.File,
     @Body() coachDto: CreateCoachDto
   ) {
-    return this.contentService.createCoach(coachDto, photo);
+    return await this.contentService.createCoach(coachDto, photo);
   }
 
   @Get("/news")
-  getNews() {
-    return this.contentService.getNews();
+  async getNews() {
+    return await this.contentService.getNews();
   }
 
   @Post("/news")
   @UseInterceptors(FilesInterceptor("photos"))
-  createNews(
+  async createNews(
     @UploadedFiles() photos: Express.Multer.File[],
     @Body() newsDto: CreateNewsDto
   ) {
-    return this.contentService.createNews(newsDto, photos);
+    return await this.contentService.createNews(newsDto, photos);
   }
 }

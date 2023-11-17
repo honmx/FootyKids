@@ -9,13 +9,13 @@ export class UsersController {
 
   @UseGuards(JwtAuthGuard)
   @Get("/")
-  getUsers() {
-    return this.usersService.getUsers();
+  async getUsers() {
+    return await this.usersService.getUsers();
   }
 
   @Post("/user")
-  createUser(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.createUser(createUserDto);
+  async createUser(@Body() createUserDto: CreateUserDto) {
+    return await this.usersService.createUser(createUserDto);
   }
 
   // @Post("/role")
