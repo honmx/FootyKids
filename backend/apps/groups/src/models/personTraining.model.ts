@@ -1,6 +1,4 @@
-import { BelongsTo, Column, DataType, ForeignKey, Model, Table } from "sequelize-typescript";
-import { IPlace } from "../types/IPlace";
-import { Place } from "apps/places/src/models/place.model";
+import { BelongsTo, Column, DataType, ForeignKey, HasMany, Model, Table } from "sequelize-typescript";
 import { TrainingByDay } from "./trainingByDay.model";
 import { User } from "apps/users/src/models/user.model";
 
@@ -20,10 +18,10 @@ export class PersonTraining extends Model<PersonTraining, PersonTrainingCreation
   @Column({ type: DataType.INTEGER, allowNull: true })
   trainingByDayId: number;
 
-  @BelongsTo(() => TrainingByDay)
-  trainingByDay: TrainingByDay;
-
   @ForeignKey(() => User)
   @Column({ type: DataType.INTEGER, allowNull: true })
   userId: number;
+
+  @HasMany(() => TrainingByDay)
+  trainings: TrainingByDay[];
 }

@@ -1,2 +1,0 @@
-  @HasMany(() => TrainingByDayOfTheWeek)
-  trainingsByDayOfTheWeek: TrainingByDayOfTheWeek[];

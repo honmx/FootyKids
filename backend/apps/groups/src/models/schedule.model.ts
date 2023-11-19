@@ -2,10 +2,10 @@ import { BelongsTo, Column, DataType, ForeignKey, HasMany, Model, Table } from "
 import { User } from "apps/users/src/models/user.model";
 import { TrainingByDay } from "./trainingByDay.model";
 import { TrainingByDayOfTheWeek } from "./trainingByDayOfTheWeek.model";
+import { Group } from "./group.model";
 
 interface ScheduleCreationAttrs {
   date: string;
-  participantsId?: number[];
 }
 
 @Table({ tableName: "schedule" })
@@ -18,14 +18,14 @@ export class Schedule extends Model<Schedule, ScheduleCreationAttrs> {
 
   @ForeignKey(() => TrainingByDay)
   @Column({ type: DataType.INTEGER, allowNull: true })
-  trainingByDayId: number;
+  trainingsByDayId: number;
 
   @HasMany(() => TrainingByDay)
   trainingsByDay: TrainingByDay[];
 
   @ForeignKey(() => TrainingByDayOfTheWeek)
   @Column({ type: DataType.INTEGER, allowNull: true })
-  trainingByDayOfTheWeekId: number;
+  trainingsByDayOfTheWeekId: number;
 
   @HasMany(() => TrainingByDayOfTheWeek)
   trainingsByDayOfTheWeek: TrainingByDayOfTheWeek[];
@@ -33,4 +33,8 @@ export class Schedule extends Model<Schedule, ScheduleCreationAttrs> {
   @ForeignKey(() => User)
   @Column({ type: DataType.INTEGER, allowNull: true })
   userId: number;
+
+  @ForeignKey(() => Group)
+  @Column({ type: DataType.INTEGER, allowNull: true })
+  groupId: number;
 }

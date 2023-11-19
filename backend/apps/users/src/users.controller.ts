@@ -7,6 +7,7 @@ import { GetUserByEmailDto } from './dto/getUserByEmailDto';
 import { GetUserByIdDto } from './dto/getUserByIdDto';
 import { ChangePasswordDto } from './dto/changePasswordDto';
 import { CreateCoachDto } from './dto/createCoachDto';
+import { GetUsersByIdDto } from './dto/getUsersByIdDto';
 // import { createRoleDto } from 'apps/backend/src/users/dto/createRoleDto';
 
 @Controller()
@@ -47,6 +48,13 @@ export class UsersController {
   @MessagePattern("get-user-by-id")
   async getUserById(@Payload() dto: GetUserByIdDto, @Ctx() context: RmqContext) {
     const response = await this.usersService.getUserById(dto);
+    this.rmqService.ack(context);
+    return response;
+  }
+
+  @MessagePattern("get-users-by-id")
+  async getUsersById(@Payload() dto: GetUsersByIdDto, @Ctx() context: RmqContext) {
+    const response = await this.usersService.getUsersById(dto);
     this.rmqService.ack(context);
     return response;
   }

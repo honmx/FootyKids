@@ -7,6 +7,8 @@ import { Role } from './models/role.model';
 import { GetUserByIdDto } from './dto/getUserByIdDto';
 import { ChangePasswordDto } from './dto/changePasswordDto';
 import { CreateCoachDto } from './dto/createCoachDto';
+import { GetUsersByIdDto } from './dto/getUsersByIdDto';
+import { Op } from 'sequelize';
 // import { createRoleDto } from 'apps/backend/src/users/dto/createRoleDto';
 
 @Injectable()
@@ -58,8 +60,12 @@ export class UsersService {
     const user = await this.usersRepository.findOne({ where: { id: dto.id }, include: { all: true } });
     return user;
   }
-  
-  
+
+  async getUsersById(dto: GetUsersByIdDto) {
+    const user = await this.usersRepository.findAll({ where: { type: "user", [Op.or]: dto.usersId.map(id => ({ id })) }, include: { all: true } });
+    return user;
+  }
+
   async changePassword(dto: ChangePasswordDto) {
     const user = await this.usersRepository.update({ password: dto.password }, { where: { email: dto.email } });
     return user;

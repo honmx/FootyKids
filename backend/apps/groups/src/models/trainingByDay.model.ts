@@ -7,7 +7,6 @@ import { PersonTraining } from "./personTraining.model";
 interface TrainingByDayCreationAttrs {
   date: string;
   time: string;
-  place: IPlace;
 }
 
 @Table({ tableName: "trainingsByDay" })
@@ -32,6 +31,10 @@ export class TrainingByDay extends Model<TrainingByDay, TrainingByDayCreationAtt
   @Column({ type: DataType.INTEGER, allowNull: true })
   scheduleId: number;
 
-  @HasMany(() => PersonTraining)
-  personTrainings: PersonTraining[];
+  @ForeignKey(() => PersonTraining)
+  @Column({ type: DataType.INTEGER, allowNull: true })
+  personTrainingId: number;
+
+  // @BelongsTo(() => PersonTraining)
+  // personTraining: PersonTraining;
 }

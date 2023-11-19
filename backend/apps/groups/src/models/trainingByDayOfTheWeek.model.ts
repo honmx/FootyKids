@@ -4,9 +4,8 @@ import { Place } from "apps/places/src/models/place.model";
 import { Schedule } from "./schedule.model";
 
 interface TrainingByDayOfTheWeekCreationAttrs {
-  dayOfTheWeek: string;
+  dayOfTheWeek: number;
   time: string;
-  place: IPlace;
 }
 
 @Table({ tableName: "trainingsByDayOfTheWeek" })
@@ -15,7 +14,7 @@ export class TrainingByDayOfTheWeek extends Model<TrainingByDayOfTheWeek, Traini
   id: number;
 
   @Column({ type: DataType.TEXT })
-  dayOfTheWeek: string;
+  dayOfTheWeek: number;
   
   @Column({ type: DataType.TEXT })
   time: string;

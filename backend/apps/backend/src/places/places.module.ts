@@ -1,11 +1,13 @@
 import { Module } from '@nestjs/common';
 import { PlacesController } from './places.controller';
 import { PlacesService } from './places.service';
-import { RmqModule } from '@app/common';
+import { FileModule, HelpersModule, RmqModule } from '@app/common';
 
 @Module({
   imports: [
     RmqModule.register({ name: "PLACES" }),
+    FileModule,
+    HelpersModule
   ],
   controllers: [PlacesController],
   providers: [PlacesService]

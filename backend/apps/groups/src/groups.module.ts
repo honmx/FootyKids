@@ -31,6 +31,8 @@ import { PersonTraining } from './models/personTraining.model';
     }),
     SequelizeModule.forFeature([Group, Schedule, TrainingByDay, TrainingByDayOfTheWeek, PersonTraining]),
     RmqModule,
+    RmqModule.register({ name: "USERS" }),
+    RmqModule.register({ name: "PLACES" }),
   ],
   controllers: [GroupsController],
   providers: [GroupsService],

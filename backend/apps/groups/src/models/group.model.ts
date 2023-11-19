@@ -4,7 +4,6 @@ import { Schedule } from "./schedule.model";
 
 interface GroupCreationAttrs {
   name: string;
-  participantsId?: number[];
 }
 
 @Table({ tableName: "groups" })
@@ -12,12 +11,12 @@ export class Group extends Model<Group, GroupCreationAttrs> {
   @Column({ type: DataType.INTEGER, unique: true, autoIncrement: true, primaryKey: true })
   id: number;
 
-  @Column({ type: DataType.TEXT })
+  @Column({ type: DataType.TEXT, unique: true })
   name: string;
 
   @ForeignKey(() => User)
   @Column({ type: DataType.INTEGER, allowNull: true })
-  userId: number;
+  participantId: number;
 
   @HasMany(() => User)
   participants: User[];
@@ -26,6 +25,6 @@ export class Group extends Model<Group, GroupCreationAttrs> {
   @Column({ type: DataType.INTEGER, allowNull: true })
   scheduleId: number;
 
-  @BelongsTo(() => User)
+  @HasMany(() => Schedule)
   schedule: Schedule[];
 }
