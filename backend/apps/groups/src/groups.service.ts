@@ -111,7 +111,7 @@ export class GroupsService {
 
     await group.$add("schedule", schedule.id);
 
-    return group;
+    return this.getGroupById({ id: group.id });
   }
 
   async getScheduleByGroupIdAndDate(groupId: number, date: string) {
