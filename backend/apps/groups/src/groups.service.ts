@@ -91,9 +91,13 @@ export class GroupsService {
       return new BadRequestException("Такой группы не существует");
     }
 
-    // if (group.schedule) {
+    const scheduleFromDb = await this.getScheduleByGroupIdAndDate(dto.id, dto.date);
 
-    // }
+    if (scheduleFromDb) {
+      await this.trainingsByDayOfTheWeekRepository.destroy({ where: { scheduleId: scheduleFromDb.id } });
+      await this.trainingsByDayRepository.destroy({ where: { scheduleId: scheduleFromDb.id } });
+      await this.scheduleRepository.destroy({ where: { id: scheduleFromDb.id } });
+    }
 
     const [month, year] = dto.date.split(".");
     const datesArray = this.getDatesArray(Number(month), Number(year));
@@ -105,9 +109,14 @@ export class GroupsService {
     await schedule.$set("trainingsByDayOfTheWeek", trainingsByDayOfTheWeek.map(training => training.id));
     await schedule.$set("trainingsByDay", trainingsByDay.map(training => training.id));
 
-    await group.$set("schedule", schedule.id);
+    await group.$add("schedule", schedule.id);
 
     return group;
+  }
+
+  async getScheduleByGroupIdAndDate(groupId: number, date: string) {
+    const schedule = await this.scheduleRepository.findOne({ where: { groupId, date }, include: { all: true, nested: true } });
+    return schedule;
   }
 
   async createTrainingsByDay(trainingsByDayOfTheWeekObjects: ITrainingByDayOfTheWeek[], datesArray: Date[]) {
