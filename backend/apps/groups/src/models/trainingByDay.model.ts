@@ -33,8 +33,8 @@ export class TrainingByDay extends Model<TrainingByDay, TrainingByDayCreationAtt
 
   @ForeignKey(() => PersonTraining)
   @Column({ type: DataType.INTEGER, allowNull: true })
-  personTrainingId: number;
+  personTrainingsId: number;
 
-  // @BelongsTo(() => PersonTraining)
-  // personTraining: PersonTraining;
+  // @HasMany(() => PersonTraining)
+  // personTrainings: PersonTraining[];
 }

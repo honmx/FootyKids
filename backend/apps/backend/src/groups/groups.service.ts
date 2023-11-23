@@ -9,6 +9,7 @@ import { CreateTrainingDto } from './dto/createTrainingDto';
 import { GetCurrentScheduleDto } from './dto/getCurrentScheduleDto';
 import { ChangeTrainingDto } from './dto/changeTrainingDto';
 import { DeleteTrainingDto } from './dto/deleteTrainingDto';
+import { MarkAttendanceDto } from './dto/markAttendanceDto';
 
 @Injectable()
 export class GroupsService {
@@ -118,6 +119,16 @@ export class GroupsService {
 
   async deleteTraining(id: number, deleteTrainingDto: DeleteTrainingDto) {
     const response = await lastValueFrom(this.groupsClient.send("delete-training", { id, ...deleteTrainingDto }));
+
+    if (response?.status >= 400 || !response) {
+      throw new HttpException(response?.message || "Some error", response?.status || HttpStatus.BAD_REQUEST);
+    }
+
+    return response;
+  }
+
+  async markAttendance(id: number, markAttendanceDto: MarkAttendanceDto) {
+    const response = await lastValueFrom(this.groupsClient.send("mark-attendance", { id, ...markAttendanceDto }));
 
     if (response?.status >= 400 || !response) {
       throw new HttpException(response?.message || "Some error", response?.status || HttpStatus.BAD_REQUEST);

@@ -19,9 +19,11 @@ import { Schedule } from './models/schedule.model';
 import { GetGroupByIdDto } from './dto/getGroupByIdDto';
 import { CreateTrainingDto } from './dto/createTrainingDto';
 import { GetCurrentScheduleDto } from './dto/getCurrentScheduleDto';
-import { Op } from 'sequelize';
+import { FindOptions, Includeable, Op } from 'sequelize';
 import { ChangeTrainingDto } from './dto/changeTrainingDto';
 import { DeleteTrainingDto } from './dto/deleteTrainingDto';
+import { MarkAttendanceDto } from './dto/markAttendanceDto';
+import { PersonTraining } from './models/personTraining.model';
 
 @Injectable()
 export class GroupsService {
@@ -30,6 +32,7 @@ export class GroupsService {
     @InjectModel(TrainingByDayOfTheWeek) private trainingsByDayOfTheWeekRepository: typeof TrainingByDayOfTheWeek,
     @InjectModel(TrainingByDay) private trainingsByDayRepository: typeof TrainingByDay,
     @InjectModel(Schedule) private scheduleRepository: typeof Schedule,
+    @InjectModel(PersonTraining) private personTrainingsRepository: typeof PersonTraining,
     @Inject("USERS") private usersClient: ClientProxy,
     @Inject("PLACES") private placesClient: ClientProxy,
   ) { }
@@ -44,8 +47,8 @@ export class GroupsService {
     return group;
   }
 
-  async getGroupById(dto: GetGroupByIdDto) {
-    const group = await this.groupsRepository.findOne({ where: { id: dto.id }, include: { all: true, nested: true } });
+  async getGroupById(dto: GetGroupByIdDto, include?: Includeable) {
+    const group = await this.groupsRepository.findOne({ where: { id: dto.id }, include: include || { all: true, nested: true } });
     return group;
   }
 
@@ -206,6 +209,27 @@ export class GroupsService {
     await this.trainingsByDayRepository.destroy({ where: { scheduleId: schedule.id, date: dto.date } });
 
     return await this.getCurrentSchedule({ id, month: Number(month), year: Number(year) });
+  }
+
+  async markAttendance(dto: MarkAttendanceDto) {
+    const { id, date, attendanceData } = dto;
+
+    const [day, month, year] = date.split(".");
+
+    const schedule = await this.getScheduleByGroupIdAndDate(id, `${month}.${year}`);
+
+    const training = await this.trainingsByDayRepository.findOne({ where: { scheduleId: schedule.id, date: dto.date }, include: { all: true } });
+
+    if (!training) {
+      return new BadRequestException("Такой тренировки не существует");
+    }
+
+    await this.personTrainingsRepository.destroy({ where: { trainingByDayId: training.id } });
+
+    const personTrainings = await this.personTrainingsRepository.bulkCreate(attendanceData, { include: { all: true } });
+    personTrainings.forEach(async (personTraining) => await personTraining.$set("training", training.id));
+
+    return await this.personTrainingsRepository.findAll({ include: { all: true, nested: true } });
   }
 
   getDatesArray(month: number, year: number) {

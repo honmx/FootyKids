@@ -8,6 +8,7 @@ import { CreateTrainingDto } from './dto/createTrainingDto';
 import { GetCurrentScheduleDto } from './dto/getCurrentScheduleDto';
 import { ChangeTrainingDto } from './dto/changeTrainingDto';
 import { DeleteTrainingDto } from './dto/deleteTrainingDto';
+import { MarkAttendanceDto } from './dto/markAttendanceDto';
 
 @Controller("groups")
 export class GroupsController {
@@ -66,5 +67,10 @@ export class GroupsController {
   @Delete("/:id/deleteTraining")
   async deleteTraining(@Body() deleteTrainingDto: DeleteTrainingDto, @Param("id") id: number) {
     return await this.groupsService.deleteTraining(id, deleteTrainingDto);
+  }
+
+  @Patch("/:id/markAttendance")
+  async markAttendance(@Body() markAttendanceDto: MarkAttendanceDto, @Param("id") id: number) {
+    return await this.groupsService.markAttendance(id, markAttendanceDto);
   }
 }

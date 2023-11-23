@@ -22,6 +22,6 @@ export class PersonTraining extends Model<PersonTraining, PersonTrainingCreation
   @Column({ type: DataType.INTEGER, allowNull: true })
   userId: number;
 
-  @HasMany(() => TrainingByDay)
-  trainings: TrainingByDay[];
+  @BelongsTo(() => TrainingByDay)
+  training: TrainingByDay;
 }

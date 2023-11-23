@@ -12,6 +12,7 @@ import { CreateTrainingDto } from './dto/createTrainingDto';
 import { GetCurrentScheduleDto } from './dto/getCurrentScheduleDto';
 import { ChangeTrainingDto } from './dto/changeTrainingDto';
 import { DeleteTrainingDto } from './dto/deleteTrainingDto';
+import { MarkAttendanceDto } from './dto/markAttendanceDto';
 
 @Controller()
 export class GroupsController {
@@ -93,6 +94,13 @@ export class GroupsController {
   @MessagePattern("delete-training")
   async deleteTraining(@Payload() dto: DeleteTrainingDto, @Ctx() context: RmqContext) {
     const response = await this.groupsService.deleteTraining(dto);
+    this.rmqService.ack(context);
+    return response;
+  }
+
+  @MessagePattern("mark-attendance")
+  async markAttendance(@Payload() dto: MarkAttendanceDto, @Ctx() context: RmqContext) {
+    const response = await this.groupsService.markAttendance(dto);
     this.rmqService.ack(context);
     return response;
   }
