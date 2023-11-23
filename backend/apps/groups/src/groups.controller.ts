@@ -8,6 +8,10 @@ import { DeleteGroupDto } from './dto/deleteGroupDto';
 import { AddChildrenDto } from './dto/addChildrenDto';
 import { CreateScheduleDto } from './dto/createScheduleDto';
 import { GetGroupByIdDto } from './dto/getGroupByIdDto';
+import { CreateTrainingDto } from './dto/createTrainingDto';
+import { GetCurrentScheduleDto } from './dto/getCurrentScheduleDto';
+import { ChangeTrainingDto } from './dto/changeTrainingDto';
+import { DeleteTrainingDto } from './dto/deleteTrainingDto';
 
 @Controller()
 export class GroupsController {
@@ -58,9 +62,37 @@ export class GroupsController {
     return response;
   }
 
+  @MessagePattern("get-current-schedule")
+  async getCurrentSchedule(@Payload() dto: GetCurrentScheduleDto, @Ctx() context: RmqContext) {
+    const response = await this.groupsService.getCurrentSchedule(dto);
+    this.rmqService.ack(context);
+    return response;
+  }
+
   @MessagePattern("create-schedule")
   async createSchedule(@Payload() dto: CreateScheduleDto, @Ctx() context: RmqContext) {
     const response = await this.groupsService.createSchedule(dto);
+    this.rmqService.ack(context);
+    return response;
+  }
+
+  @MessagePattern("create-training")
+  async createTraining(@Payload() dto: CreateTrainingDto, @Ctx() context: RmqContext) {
+    const response = await this.groupsService.createTraining(dto);
+    this.rmqService.ack(context);
+    return response;
+  }
+
+  @MessagePattern("change-training")
+  async changeTraining(@Payload() dto: ChangeTrainingDto, @Ctx() context: RmqContext) {
+    const response = await this.groupsService.changeTraining(dto);
+    this.rmqService.ack(context);
+    return response;
+  }
+
+  @MessagePattern("delete-training")
+  async deleteTraining(@Payload() dto: DeleteTrainingDto, @Ctx() context: RmqContext) {
+    const response = await this.groupsService.deleteTraining(dto);
     this.rmqService.ack(context);
     return response;
   }

@@ -5,6 +5,10 @@ import { CreateGroupDto } from './dto/createGroupDto';
 import { ChangeGroupNameDto } from './dto/changeGroupNameDto';
 import { AddChildrenDto } from './dto/addChildrenDto';
 import { CreateScheduleDto } from './dto/createScheduleDto';
+import { CreateTrainingDto } from './dto/createTrainingDto';
+import { GetCurrentScheduleDto } from './dto/getCurrentScheduleDto';
+import { ChangeTrainingDto } from './dto/changeTrainingDto';
+import { DeleteTrainingDto } from './dto/deleteTrainingDto';
 
 @Injectable()
 export class GroupsService {
@@ -72,8 +76,48 @@ export class GroupsService {
     return response;
   }
 
+  async getCurrentSchedule(id: number, getCurrentScheduleDto: GetCurrentScheduleDto) {
+    const response = await lastValueFrom(this.groupsClient.send("get-current-schedule", { id, ...getCurrentScheduleDto }));
+
+    if (response?.status >= 400 || !response) {
+      throw new HttpException(response?.message || "Some error", response?.status || HttpStatus.BAD_REQUEST);
+    }
+
+    return response;
+  }
+
   async createSchedule(id: number, createScheduleDto: CreateScheduleDto) {
     const response = await lastValueFrom(this.groupsClient.send("create-schedule", { id, ...createScheduleDto }));
+
+    if (response?.status >= 400 || !response) {
+      throw new HttpException(response?.message || "Some error", response?.status || HttpStatus.BAD_REQUEST);
+    }
+
+    return response;
+  }
+
+  async createTraining(id: number, createTrainingDto: CreateTrainingDto) {
+    const response = await lastValueFrom(this.groupsClient.send("create-training", { id, ...createTrainingDto }));
+
+    if (response?.status >= 400 || !response) {
+      throw new HttpException(response?.message || "Some error", response?.status || HttpStatus.BAD_REQUEST);
+    }
+
+    return response;
+  }
+
+  async changeTraining(id: number, changeTrainingDto: ChangeTrainingDto) {
+    const response = await lastValueFrom(this.groupsClient.send("change-training", { id, ...changeTrainingDto }));
+
+    if (response?.status >= 400 || !response) {
+      throw new HttpException(response?.message || "Some error", response?.status || HttpStatus.BAD_REQUEST);
+    }
+
+    return response;
+  }
+
+  async deleteTraining(id: number, deleteTrainingDto: DeleteTrainingDto) {
+    const response = await lastValueFrom(this.groupsClient.send("delete-training", { id, ...deleteTrainingDto }));
 
     if (response?.status >= 400 || !response) {
       throw new HttpException(response?.message || "Some error", response?.status || HttpStatus.BAD_REQUEST);

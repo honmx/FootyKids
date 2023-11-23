@@ -32,7 +32,7 @@ export class UsersService {
 
     await newUser.$set("role", role.id);
 
-    const user = this.getUserByEmail({ email: newUser.email });
+    const user = await this.getUserByEmail({ email: newUser.email });
 
     if (!user) return new BadRequestException("User hasnt been found");
 
@@ -44,7 +44,7 @@ export class UsersService {
 
     if (!newCoach) return new BadRequestException("User hasnt been created");
 
-    const user = this.getUserByEmail({ email: newCoach.email });
+    const user = await this.getUserByEmail({ email: newCoach.email });
 
     if (!user) return new BadRequestException("User hasnt been found");
 

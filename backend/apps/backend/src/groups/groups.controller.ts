@@ -4,6 +4,10 @@ import { CreateGroupDto } from './dto/createGroupDto';
 import { ChangeGroupNameDto } from './dto/changeGroupNameDto';
 import { AddChildrenDto } from './dto/addChildrenDto';
 import { CreateScheduleDto } from './dto/createScheduleDto';
+import { CreateTrainingDto } from './dto/createTrainingDto';
+import { GetCurrentScheduleDto } from './dto/getCurrentScheduleDto';
+import { ChangeTrainingDto } from './dto/changeTrainingDto';
+import { DeleteTrainingDto } from './dto/deleteTrainingDto';
 
 @Controller("groups")
 export class GroupsController {
@@ -38,9 +42,29 @@ export class GroupsController {
   async addChildren(@Body() addChildrenDto: AddChildrenDto, @Param("id") id: number) {
     return await this.groupsService.addChildren(id, addChildrenDto);
   }
+  
+  @Get("/:id/getCurrentSchedule")
+  async getCurretnSchedule(@Body() getCurrentScheduleDto: GetCurrentScheduleDto, @Param("id") id: number) {
+    return await this.groupsService.getCurrentSchedule(id, getCurrentScheduleDto);
+  }
 
   @Patch("/:id/createSchedule")
   async createSchedule(@Body() createScheduleDto: CreateScheduleDto, @Param("id") id: number) {
     return await this.groupsService.createSchedule(id, createScheduleDto);
+  }
+
+  @Patch("/:id/createTraining")
+  async createTraining(@Body() createTrainingDto: CreateTrainingDto, @Param("id") id: number) {
+    return await this.groupsService.createTraining(id, createTrainingDto);
+  }
+
+  @Patch("/:id/changeTraining")
+  async changeTraining(@Body() changeTrainingDto: ChangeTrainingDto, @Param("id") id: number) {
+    return await this.groupsService.changeTraining(id, changeTrainingDto);
+  }
+
+  @Delete("/:id/deleteTraining")
+  async deleteTraining(@Body() deleteTrainingDto: DeleteTrainingDto, @Param("id") id: number) {
+    return await this.groupsService.deleteTraining(id, deleteTrainingDto);
   }
 }
