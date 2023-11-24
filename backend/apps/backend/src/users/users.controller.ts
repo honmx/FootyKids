@@ -13,6 +13,11 @@ export class UsersController {
     return await this.usersService.getUsers();
   }
 
+  @Get("/withoutGroup")
+  async getUsersWithoutGroup() {
+    return await this.usersService.getUsersWithoutGroup();
+  }
+
   @Post("/user")
   async createUser(@Body() createUserDto: CreateUserDto) {
     return await this.usersService.createUser(createUserDto);

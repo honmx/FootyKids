@@ -24,6 +24,13 @@ export class UsersController {
     return response;
   }
 
+  @MessagePattern("get-users-without-group")
+  getUsersWithoutGroup(@Ctx() context: RmqContext) {
+    const response = this.usersService.getUsersWithoutGroup();
+    this.rmqService.ack(context);
+    return response;
+  }
+
   @MessagePattern("create-user")
   async createUser(@Payload() dto: CreateUserDto, @Ctx() context: RmqContext) {
     const response = await this.usersService.createUser(dto);

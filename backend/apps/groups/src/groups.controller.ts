@@ -13,6 +13,11 @@ import { GetCurrentScheduleDto } from './dto/getCurrentScheduleDto';
 import { ChangeTrainingDto } from './dto/changeTrainingDto';
 import { DeleteTrainingDto } from './dto/deleteTrainingDto';
 import { MarkAttendanceDto } from './dto/markAttendanceDto';
+import { User } from 'apps/users/src/models/user.model';
+import { Schedule } from './models/schedule.model';
+import { TrainingByDayOfTheWeek } from './models/trainingByDayOfTheWeek.model';
+import { TrainingByDay } from './models/trainingByDay.model';
+import { GetGroupByNameDto } from './dto/getGroupByNameDto';
 
 @Controller()
 export class GroupsController {
@@ -31,6 +36,13 @@ export class GroupsController {
   @MessagePattern("get-group-by-id")
   async getGroupById(@Payload() dto: GetGroupByIdDto, @Ctx() context: RmqContext) {
     const response = await this.groupsService.getGroupById(dto);
+    this.rmqService.ack(context);
+    return response;
+  }
+
+  @MessagePattern("get-group-by-name")
+  async getGroupByName(@Payload() dto: GetGroupByNameDto, @Ctx() context: RmqContext) {
+    const response = await this.groupsService.getGroupByName(dto);
     this.rmqService.ack(context);
     return response;
   }

@@ -24,6 +24,11 @@ export class GroupsController {
     return await this.groupsService.getGroupById(id);
   }
 
+  @Get("/group/:name")
+  async getGroupByName(@Param("name") name: string) {
+    return await this.groupsService.getGroupByName(name);
+  }
+
   @Post("/")
   async createGroup(@Body() createGroupDto: CreateGroupDto) {
     return await this.groupsService.createGroup(createGroupDto);

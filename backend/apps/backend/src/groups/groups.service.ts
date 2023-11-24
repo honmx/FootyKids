@@ -37,6 +37,16 @@ export class GroupsService {
     return response;
   }
 
+  async getGroupByName(name: string) {
+    const response = await lastValueFrom(this.groupsClient.send("get-group-by-name", { name }));
+
+    if (response?.status >= 400 || !response) {
+      throw new HttpException(response?.message || "Some error", response?.status || HttpStatus.BAD_REQUEST);
+    }
+
+    return response;
+  }
+
   async createGroup(createGroupDto: CreateGroupDto) {
     const response = await lastValueFrom(this.groupsClient.send("create-group", createGroupDto));
 

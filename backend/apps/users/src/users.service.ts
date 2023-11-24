@@ -23,6 +23,11 @@ export class UsersService {
     return users;
   }
 
+  async getUsersWithoutGroup() {
+    const users = await this.usersRepository.findAll({ where: { groupId: { [Op.not]: null } } });
+    return users;
+  }
+
   async createUser(dto: CreateUserDto) {
     const newUser = await this.usersRepository.create({ ...dto, type: "user" });
     const role = await this.rolesRepository.findOne({ where: { value: "USER" } });

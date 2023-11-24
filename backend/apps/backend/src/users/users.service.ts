@@ -15,6 +15,11 @@ export class UsersService {
     return response;
   }
 
+  async getUsersWithoutGroup() {
+    const response = await lastValueFrom(this.usersClient.send("get-users-without-group", {}));
+    return response;
+  }
+
   async createUser(createUserDto: CreateUserDto) {
     const response = await lastValueFrom(this.usersClient.send("create-user", createUserDto));
     return response;
