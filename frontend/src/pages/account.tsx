@@ -32,7 +32,7 @@ const AccountPage: INextPageWithLayout<Props> = ({ }) => {
         <meta name="format-detection" content="telephone=no" />
         <link rel="icon" href="/footykids-icon.png" />
       </Head>
-      <Container maxWidth="tablet" sx={{ paddingTop: 3, paddingBottom: 3, height: "100%" }}>
+      <Container maxWidth="tablet" sx={{ height: "100%" }}>
         <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100%" }}>
           <Grid container spacing={2}>
             <Grid item xs={6}>
@@ -41,7 +41,7 @@ const AccountPage: INextPageWithLayout<Props> = ({ }) => {
             <Grid item container xs={6} spacing={2}>
               {
                 coachLinks.map(link => (
-                  <Grid item xs={6}>
+                  <Grid item xs={6} key={link.alt}>
                     <Link href={link.href}>
                       <Paper
                         sx={{
@@ -83,7 +83,7 @@ AccountPage.getLayout = (page) => {
       renderFooter={() => <Footer />}
       renderSidebar={() => <Sidebar />}
     >
-      <Box sx={{ height: "100%" }}>
+      <Box sx={{ paddingTop: 3, paddingBottom: 3, height: "100%" }}>
         {page}
       </Box>
     </Layout >

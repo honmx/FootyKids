@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { GetStaticProps, NextPage } from "next";
+import { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import { Box, Container, Grid, Paper, Typography } from "@mui/material";
 import Head from "next/head";
 import { INextPageWithLayout } from "@/types/INextPageWithLayout";
@@ -12,10 +12,13 @@ import { IGroup } from "@/types/IGroup";
 import Link from "next/link";
 
 interface Props {
-  groups: IGroup[];
+  group: IGroup;
 }
 
-const GroupsPage: INextPageWithLayout<Props> = ({ groups }) => {
+const GroupPage: INextPageWithLayout<Props> = ({ group }) => {
+
+  console.log(group);
+
   return (
     <>
       <Head>
@@ -25,33 +28,14 @@ const GroupsPage: INextPageWithLayout<Props> = ({ groups }) => {
       </Head>
       <Box>
         <Container>
-          <Grid container spacing={2}>
-            {
-              groups && groups.map(group => (
-                <Grid item xs={2}>
-                  <Link href={`/groups/${group.name}`}>
-                    <Paper
-                      sx={{
-                        aspectRatio: 1,
-                        padding: 2,
-                        transition: "all 0.15s ease",
-                        "&:hover": { backgroundColor: "#F5F5F5" }
-                      }}
-                    >
-                      <Typography>{group.name}</Typography>
-                    </Paper>
-                  </Link>
-                </Grid>
-              ))
-            }
-          </Grid>
+          group
         </Container>
       </Box>
     </>
   )
 };
 
-GroupsPage.getLayout = (page) => {
+GroupPage.getLayout = (page) => {
   return (
     <Layout
       renderHeader={() => <Header />}
@@ -65,15 +49,24 @@ GroupsPage.getLayout = (page) => {
   )
 }
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getStaticPaths: GetStaticPaths = async () => {
+  const groups = await groupsService.getGroups() || [];
 
-  const groups = await groupsService.getGroups();
+  return {
+    paths: groups.map(group => ({ params: { groupName: group.name } })),
+    fallback: true
+  }
+}
+
+export const getStaticProps: GetStaticProps = async (context) => {
+
+  const group = await groupsService.getGroupByName(context.params?.groupName as string);
 
   return {
     props: {
-      groups
+      group
     }
   }
 }
 
-export default GroupsPage;
+export default GroupPage;
