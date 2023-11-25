@@ -1,14 +1,17 @@
 import { FC, useEffect, useRef, useState } from "react";
 import { Box, IconButton, Modal, ModalProps, Paper, Typography } from "@mui/material";
 import crossIcon from "@/assets/cross icon.svg";
+import penIcon from "@/assets/pen icon.svg";
 import Image from "next/image";
 
 interface Props extends ModalProps {
   open: boolean,
   handleCloseClick: () => void;
+  edit?: boolean;
+  handleEditClick?: () => void;
 }
 
-const ModalWrapper: FC<Props> = ({ open, handleCloseClick, children, ...restProps }) => {
+const ModalWrapper: FC<Props> = ({ open, handleCloseClick, edit, handleEditClick, children, ...restProps }) => {
 
   const ref = useRef<HTMLDivElement>(null);
 
@@ -49,6 +52,17 @@ const ModalWrapper: FC<Props> = ({ open, handleCloseClick, children, ...restProp
           }}>
             <Image src={crossIcon} alt="cross icon" />
           </IconButton>
+          {
+            edit &&
+            <IconButton onClick={handleEditClick} sx={{
+              position: "absolute",
+              top: "40px",
+              right: "-40px",
+              width: "40px"
+            }}>
+              <Image src={penIcon} alt="pen icon" />
+            </IconButton>
+          }
         </Box>
       </Box>
     </Modal>

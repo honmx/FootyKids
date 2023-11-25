@@ -11,5 +11,5 @@ export interface IUser {
   role: {
     id: number;
     value: string;
-  }
+  } | null
 }

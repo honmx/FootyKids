@@ -8,8 +8,8 @@ import Image from "next/image";
 import { useHover } from "@/hooks/useHover";
 import { AuthContext } from "@/contexts/authContext";
 import CustomLink from "../UI/CustomLink";
-import { sidebarUserLinks } from "@/data/sidebarUserLinks";
-import { sidebarCoachLinks } from "@/data/sidebarCoachLinks";
+import { userLinks } from "@/data/userLinks";
+import { coachLinks } from "@/data/coachLinks";
 import { useResize } from "@/hooks/useResize";
 import { useCheckAuth } from "@/hooks/useCheckAuth";
 import authService from "@/services/authService";
@@ -89,7 +89,7 @@ const Sidebar: FC<Props> = ({ }) => {
                 </CustomLink>
               </ListItem>
               {
-                (user?.type === "coach" ? sidebarCoachLinks : sidebarUserLinks).map(item => (
+                (user?.type === "coach" ? coachLinks : userLinks).map(item => (
                   <ListItem key={item.alt}>
                     <CustomLink href={item.href} changeImgColorOnHover sx={{ width: "100%" }}>
                       <Box sx={{
