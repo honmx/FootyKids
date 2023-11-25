@@ -50,7 +50,7 @@ export class GroupsController {
   }
   
   @Get("/:id/getCurrentSchedule")
-  async getCurretnSchedule(@Body() getCurrentScheduleDto: GetCurrentScheduleDto, @Param("id") id: number) {
+  async getCurrentSchedule(@Body() getCurrentScheduleDto: GetCurrentScheduleDto, @Param("id") id: number) {
     return await this.groupsService.getCurrentSchedule(id, getCurrentScheduleDto);
   }
 

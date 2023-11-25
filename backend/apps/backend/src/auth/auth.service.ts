@@ -53,7 +53,7 @@ export class AuthService {
   async logout(logoutDto: LogoutDto, res: Response) {
     const response = await lastValueFrom(this.authClient.send("logout", logoutDto));
 
-    if (response?.status >= 400 || !response) {
+    if (response?.status >= 400 || response === "undefined") {
       throw new HttpException(response?.message || "Some error", response?.status || HttpStatus.BAD_REQUEST);
     }
 

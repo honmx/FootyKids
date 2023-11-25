@@ -44,10 +44,26 @@ export class GroupsService {
   }
 
   async getGroupByName(dto: GetGroupByNameDto, include?: Includeable | Includeable[]) {
+    const [day, month, year] = new Date().toLocaleDateString().split(".");
+    const { previousMonth, currentMonth, nextMonth } = this.getCurrentMonthAndSublings(Number(month), Number(year));
+
+    const groupFromDb = await this.groupsRepository.findOne({ where: { name: dto.name } });
+
+    if (!groupFromDb) {
+      return new BadRequestException("Такой группы не существует");
+    }
+
     const group = await this.groupsRepository.findOne({
       where: { name: dto.name }, include: include || [
         { model: User },
-        { model: Schedule, include: [{ model: TrainingByDayOfTheWeek }, { model: TrainingByDay }] }
+        {
+          model: Schedule,
+          where: {
+            [Op.or]: [{ date: previousMonth }, { date: currentMonth }, { date: nextMonth }]
+          },
+          include: [{ model: TrainingByDayOfTheWeek }, { model: TrainingByDay }],
+          required: false
+        }
       ]
     });
 
@@ -108,15 +124,7 @@ export class GroupsService {
   async getCurrentSchedule(dto: GetCurrentScheduleDto) {
     const { id, month, year } = dto;
 
-    const previousMonth = month - 1 === 0
-      ? `12.${year - 1}`
-      : `${month - 1}.${year}`;
-
-    const currentMonth = `${month}.${year}`;
-
-    const nextMonth = month + 1 === 13
-      ? `01.${year + 1}`
-      : `${month + 1}.${year}`;
+    const { previousMonth, currentMonth, nextMonth } = this.getCurrentMonthAndSublings(month, year);
 
     const schedule = await this.scheduleRepository.findAll({
       where: {
@@ -255,6 +263,20 @@ export class GroupsService {
     personTrainings.forEach(async (personTraining) => await personTraining.$set("training", training.id));
 
     return await this.personTrainingsRepository.findAll({ include: { all: true, nested: true } });
+  }
+
+  getCurrentMonthAndSublings(month: number, year: number) {
+    const previousMonth = month - 1 === 0
+      ? `12.${year - 1}`
+      : `${month - 1}.${year}`;
+
+    const currentMonth = `${month}.${year}`;
+
+    const nextMonth = month + 1 === 13
+      ? `01.${year + 1}`
+      : `${month + 1}.${year}`;
+
+    return { previousMonth, currentMonth, nextMonth };
   }
 
   getDatesArray(month: number, year: number) {

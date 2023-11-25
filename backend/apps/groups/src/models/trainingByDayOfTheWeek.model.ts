@@ -13,7 +13,7 @@ export class TrainingByDayOfTheWeek extends Model<TrainingByDayOfTheWeek, Traini
   @Column({ type: DataType.INTEGER, unique: true, autoIncrement: true, primaryKey: true })
   id: number;
 
-  @Column({ type: DataType.TEXT })
+  @Column({ type: DataType.INTEGER })
   dayOfTheWeek: number;
   
   @Column({ type: DataType.TEXT })

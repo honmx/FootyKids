@@ -40,7 +40,7 @@ export class GroupsService {
   async getGroupByName(name: string) {
     const response = await lastValueFrom(this.groupsClient.send("get-group-by-name", { name }));
 
-    if (response?.status >= 400 || !response) {
+    if (response?.status >= 400) {
       throw new HttpException(response?.message || "Some error", response?.status || HttpStatus.BAD_REQUEST);
     }
 
