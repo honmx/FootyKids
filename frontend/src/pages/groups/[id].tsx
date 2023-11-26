@@ -16,6 +16,7 @@ import penIcon from "@/assets/pen icon.svg";
 import { createPortal } from "react-dom";
 import ChangeGroupNameModal from "@/components/Modals/ChangeGroupNameModal";
 import Schedule from "@/components/Widgets/Schedule";
+import { sortGroupSchedules } from "@/helpers/sortGroupSchedules";
 
 interface Props {
   group: IGroup;
@@ -23,7 +24,7 @@ interface Props {
 
 const GroupPage: INextPageWithLayout<Props> = ({ group }) => {
 
-  const [groupFromContext, setGroupFromContext] = useState<IGroup>(group);
+  const [groupFromContext, setGroupFromContext] = useState<IGroup>(sortGroupSchedules(group));
   const [isChangeGroupNameModalActive, setIsChangeGroupNameModalActive] = useState<boolean>(false);
 
   const handleOpenChangeGroupNameModal = () => {
@@ -37,7 +38,7 @@ const GroupPage: INextPageWithLayout<Props> = ({ group }) => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/footykids-icon.png" />
       </Head>
-      <GroupContext.Provider value={{ groupFromContext, setGroupFromContext }}>
+      <GroupContext.Provider value={{ group: groupFromContext, setGroup: setGroupFromContext }}>
         <Container sx={{ height: "100%" }}>
           <Stack spacing={3}>
             <Stack spacing={2} direction="row" sx={{ alignItems: "center" }}>

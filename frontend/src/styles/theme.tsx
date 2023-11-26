@@ -283,13 +283,30 @@ export const createCustomTheme = ({ deviceType }: ICreateThemeProps) => {
         }
       },
       MuiSelect: {
+        defaultProps: {
+          MenuProps: {
+            sx: {
+              "& .MuiList-root": {
+                overflow: "auto",
+                maxHeight: 200,
+                padding: 0,
+              },
+              "& .MuiMenuItem-root": {
+                padding: 1,
+                minHeight: 20,
+                fontWeight: 300
+              }
+            }
+          }
+        },
         styleOverrides: {
           select: {
             paddingTop: 10,
             paddingBottom: 10,
+            fontWeight: 300,
           },
           icon: {
-            color: "white",
+            transition: "all 0.15s ease",
           }
         }
       },

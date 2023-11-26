@@ -41,7 +41,7 @@ const Sidebar: FC<Props> = ({ }) => {
 
   return (
     <Box sx={{ height: "100%", position: "relative" }}>
-      <Box sx={{ position: "fixed !important", height: "100%" }}>
+      <Box sx={{ position: "fixed !important", height: "100%", zIndex: 100 }}>
         <Drawer
           anchor="left"
           variant={isTablet ? "persistent" : "permanent"}

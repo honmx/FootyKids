@@ -2,11 +2,11 @@ import { IGroup } from "@/types/IGroup";
 import { Dispatch, SetStateAction, createContext } from "react";
 
 interface IGroupContext {
-  groupFromContext: IGroup;
-  setGroupFromContext: Dispatch<SetStateAction<IGroup>>;
+  group: IGroup;
+  setGroup: Dispatch<SetStateAction<IGroup>>;
 }
 
 export const GroupContext = createContext<IGroupContext>({
-  groupFromContext: {} as IGroup,
-  setGroupFromContext: () => {}
+  group: {} as IGroup,
+  setGroup: () => {}
 })
