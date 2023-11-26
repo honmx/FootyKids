@@ -52,8 +52,8 @@ export class GroupsController {
   @Get("/:id/getCurrentSchedule/:year/:month")
   async getCurrentSchedule(
     @Param("id") id: number,
-    @Param("year") year: number,
-    @Param("month") month: number
+    @Param("year") year: string,
+    @Param("month") month: string
   ) {
     return await this.groupsService.getCurrentSchedule({ id, month: Number(month), year: Number(year) });
   }

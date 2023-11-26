@@ -297,13 +297,13 @@ export class GroupsService {
   getCurrentMonthAndSublings(month: number, year: number) {
     const previousMonth = month - 1 === 0
       ? `12.${year - 1}`
-      : `${month - 1}.${year}`;
+      : `${month - 1 < 10 ? "0" : ""}${month - 1}.${year}`;
 
-    const currentMonth = `${month}.${year}`;
+    const currentMonth = `${month < 10 ? "0" : ""}${month}.${year}`;
 
     const nextMonth = month + 1 === 13
       ? `01.${year + 1}`
-      : `${month + 1}.${year}`;
+      : `${month + 1 < 10 ? "0" : ""}${month + 1}.${year}`;
 
     return { previousMonth, currentMonth, nextMonth };
   }
