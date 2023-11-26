@@ -1,5 +1,6 @@
 import { $groupsAPI } from "@/http/groupsAxios"
 import { IGroup } from "@/types/IGroup";
+import { ISchedule } from "@/types/ISchedule";
 
 const getGroups = async () => {
   try {
@@ -41,9 +42,20 @@ const changeGroupName = async (groupId: number, groupName: string) => {
   }
 }
 
+const getCurrentSchedule = async (groupId: number, month: number, year: number) => {
+  try {
+    const { data: schedule } = await $groupsAPI.get<ISchedule[]>(`/${groupId}/getCurrentSchedule/${year}/${month}`);
+    return schedule;
+
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export default {
   getGroups,
   getGroupByName,
   getGroupById,
   changeGroupName,
+  getCurrentSchedule,
 }

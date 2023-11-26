@@ -1,5 +1,5 @@
-export const getScheduleIndex = (monthIndex: number, date: Date) => {
-  if (date.getMonth() < monthIndex) return 0;
-  if (date.getMonth() === monthIndex) return 1;
-  return 2;
+import { ISchedule } from "@/types/ISchedule";
+
+export const getScheduleIndex = (monthIndex: number, date: Date, schedule: ISchedule[]) => {
+  return schedule.findIndex(scheduleItem => scheduleItem.date === date.toLocaleDateString().slice(3));
 }

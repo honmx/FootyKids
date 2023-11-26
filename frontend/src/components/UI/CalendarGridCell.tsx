@@ -15,8 +15,9 @@ const CalendarGridCell: FC<Props> = ({ date }) => {
   const { group } = useContext(GroupContext);
   const { monthIndex, year } = useContext(DateContext);
 
-  const scheduleIndex = getScheduleIndex(monthIndex, date);
-  const training = group.schedule[scheduleIndex].trainingsByDay.find(traning => traning.date === date.toLocaleDateString());
+  const scheduleIndex = getScheduleIndex(monthIndex, date, group.schedule);
+  // console.log(scheduleIndex);
+  const training = group.schedule[scheduleIndex]?.trainingsByDay.find(traning => traning.date === date.toLocaleDateString());
 
   return (
     <>

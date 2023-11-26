@@ -7,6 +7,8 @@ import { years } from "@/data/years";
 import arrowDown from "@/assets/arrow down.svg";
 import Image from "next/image";
 import { DateContext } from "@/contexts/dateContext";
+import groupsService from "@/services/groupsService";
+import { GroupContext } from "@/contexts/groupContext";
 
 interface Props {
 
@@ -14,6 +16,7 @@ interface Props {
 
 const PickDateSelectsGroup: FC<Props> = ({ }) => {
 
+  const { group, setGroup } = useContext(GroupContext);
   const { monthIndex, setMonthIndex, year, setYear } = useContext(DateContext);
 
   const handleMonthChange = (e: SelectChangeEvent<number>) => {
@@ -24,9 +27,19 @@ const PickDateSelectsGroup: FC<Props> = ({ }) => {
     setYear(Number(e.target.value));
   }
 
-  // useEffect(() => {
-  //   console.log(monthIndex, year);
-  // }, [year, monthIndex]);
+  useEffect(() => {
+    (async () => {
+      const newSchedule = await groupsService.getCurrentSchedule(group.id, monthIndex + 1, year);
+
+      if (!newSchedule) return;
+
+      setGroup({ ...group, schedule: newSchedule });
+    })()
+  }, [year, monthIndex]);
+
+  useEffect(() => {
+    console.log(group);
+  }, [group]);
 
   return (
     <Stack spacing={1} direction="row">
