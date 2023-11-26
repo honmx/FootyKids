@@ -25,6 +25,7 @@ import { DeleteTrainingDto } from './dto/deleteTrainingDto';
 import { MarkAttendanceDto } from './dto/markAttendanceDto';
 import { PersonTraining } from './models/personTraining.model';
 import { User } from 'apps/users/src/models/user.model';
+import { Place } from 'apps/places/src/models/place.model';
 
 @Injectable()
 export class GroupsService {
@@ -61,7 +62,16 @@ export class GroupsService {
           where: {
             [Op.or]: [{ date: previousMonth }, { date: currentMonth }, { date: nextMonth }]
           },
-          include: [{ model: TrainingByDayOfTheWeek }, { model: TrainingByDay }],
+          include: [
+            {
+              model: TrainingByDayOfTheWeek,
+              include: [{ model: Place }]
+            },
+            {
+              model: TrainingByDay,
+              include: [{ model: Place }]
+            }
+          ],
           required: false
         }
       ]
@@ -71,10 +81,29 @@ export class GroupsService {
   }
 
   async getGroupById(dto: GetGroupByIdDto, include?: Includeable | Includeable[]) {
+    const [day, month, year] = new Date().toLocaleDateString().split(".");
+    const { previousMonth, currentMonth, nextMonth } = this.getCurrentMonthAndSublings(Number(month), Number(year));
+
     const group = await this.groupsRepository.findOne({
       where: { id: dto.id }, include: include || [
         { model: User },
-        { model: Schedule, include: [{ model: TrainingByDayOfTheWeek }, { model: TrainingByDay }] }
+        {
+          model: Schedule,
+          where: {
+            [Op.or]: [{ date: previousMonth }, { date: currentMonth }, { date: nextMonth }]
+          },
+          include: [
+            {
+              model: TrainingByDayOfTheWeek,
+              include: [{ model: Place }]
+            },
+            {
+              model: TrainingByDay,
+              include: [{ model: Place }]
+            }
+          ],
+          required: false
+        }
       ]
     });
 
@@ -99,8 +128,8 @@ export class GroupsService {
   }
 
   async changeGroupName(dto: ChangeGroupNameDto) {
-    const group = await this.groupsRepository.update({ name: dto.name }, { where: { id: dto.id } });
-    return group;
+    await this.groupsRepository.update({ name: dto.name }, { where: { id: dto.id } });
+    return await this.getGroupById({ id: dto.id }, []);
   }
 
   async deleteGroup(dto: DeleteGroupDto) {

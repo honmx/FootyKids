@@ -34,7 +34,7 @@ export class GroupsController {
     return await this.groupsService.createGroup(createGroupDto);
   }
 
-  @Patch("/:id")
+  @Patch("/:id/changeName")
   async changeGroupName(@Body() changeGroupNameDto: ChangeGroupNameDto, @Param("id") id: number) {
     return await this.groupsService.changeGroupName(id, changeGroupNameDto);
   }
@@ -48,10 +48,14 @@ export class GroupsController {
   async addChildren(@Body() addChildrenDto: AddChildrenDto, @Param("id") id: number) {
     return await this.groupsService.addChildren(id, addChildrenDto);
   }
-  
-  @Get("/:id/getCurrentSchedule")
-  async getCurrentSchedule(@Body() getCurrentScheduleDto: GetCurrentScheduleDto, @Param("id") id: number) {
-    return await this.groupsService.getCurrentSchedule(id, getCurrentScheduleDto);
+
+  @Get("/:id/getCurrentSchedule/:year/:month")
+  async getCurrentSchedule(
+    @Param("id") id: number,
+    @Param("year") year: number,
+    @Param("month") month: number
+  ) {
+    return await this.groupsService.getCurrentSchedule({ id, month: Number(month), year: Number(year) });
   }
 
   @Patch("/:id/createSchedule")

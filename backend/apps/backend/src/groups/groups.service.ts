@@ -87,8 +87,8 @@ export class GroupsService {
     return response;
   }
 
-  async getCurrentSchedule(id: number, getCurrentScheduleDto: GetCurrentScheduleDto) {
-    const response = await lastValueFrom(this.groupsClient.send("get-current-schedule", { id, ...getCurrentScheduleDto }));
+  async getCurrentSchedule(getCurrentScheduleDto: GetCurrentScheduleDto) {
+    const response = await lastValueFrom(this.groupsClient.send("get-current-schedule", { ...getCurrentScheduleDto }));
 
     if (response?.status >= 400 || !response) {
       throw new HttpException(response?.message || "Some error", response?.status || HttpStatus.BAD_REQUEST);
