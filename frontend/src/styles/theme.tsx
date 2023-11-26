@@ -282,6 +282,17 @@ export const createCustomTheme = ({ deviceType }: ICreateThemeProps) => {
           }
         }
       },
+      MuiSelect: {
+        styleOverrides: {
+          select: {
+            paddingTop: 10,
+            paddingBottom: 10,
+          },
+          icon: {
+            color: "white",
+          }
+        }
+      },
       MuiButton: {
         styleOverrides: {
           root: {

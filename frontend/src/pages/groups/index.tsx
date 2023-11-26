@@ -28,8 +28,8 @@ const GroupsPage: INextPageWithLayout<Props> = ({ groups }) => {
           <Grid container spacing={2}>
             {
               groups && groups.map(group => (
-                <Grid item xs={2}>
-                  <Link href={`/groups/${group.name}`}>
+                <Grid item xs={2} key={group.id}>
+                  <Link href={`/groups/${group.id}`}>
                     <Paper
                       sx={{
                         aspectRatio: 1,
