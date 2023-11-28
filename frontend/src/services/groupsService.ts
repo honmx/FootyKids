@@ -1,5 +1,6 @@
 import { $groupsAPI } from "@/http/groupsAxios"
 import { IGroup } from "@/types/IGroup";
+import { IRequestTrainingByDayOfTheWeek } from "@/types/IRequestTrainingByDayOfTheWeek";
 import { ISchedule } from "@/types/ISchedule";
 
 const getGroups = async () => {
@@ -52,10 +53,21 @@ const getCurrentSchedule = async (groupId: number, month: number, year: number) 
   }
 }
 
+const createSchedule = async (groupId: number, date: string, trainingsByDayOfTheWeek: IRequestTrainingByDayOfTheWeek[]) => {
+  try {
+    const { data: schedule } = await $groupsAPI.patch<ISchedule[]>(`/${groupId}/createSchedule`, { date, trainingsByDayOfTheWeek });
+    return schedule;
+
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export default {
   getGroups,
   getGroupByName,
   getGroupById,
   changeGroupName,
   getCurrentSchedule,
+  createSchedule,
 }

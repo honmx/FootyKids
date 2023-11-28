@@ -42,7 +42,7 @@ const PickDateSelectsGroup: FC<Props> = ({ }) => {
       <Select
         value={monthIndex}
         onChange={handleMonthChange}
-        sx={{ width: "140px", position: "relative" }}
+        sx={{ width: "140px" }}
       >
         {
           months.map(month => (
@@ -53,7 +53,7 @@ const PickDateSelectsGroup: FC<Props> = ({ }) => {
       <Select
         value={year}
         onChange={handleYearChange}
-        sx={{ width: "140px", position: "relative" }}
+        sx={{ width: "140px" }}
       >
         {
           years.map(year => (

@@ -1,8 +1,6 @@
-import { StaticImageData } from "next/image";
-
-// to change
 export interface IPlace {
-  photo: StaticImageData,
+  id: number;
+  photo: string,
   name: string;
   address: string;
 }
