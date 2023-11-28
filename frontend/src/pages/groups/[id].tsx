@@ -17,6 +17,7 @@ import { createPortal } from "react-dom";
 import ChangeGroupNameModal from "@/components/Modals/ChangeGroupNameModal";
 import Schedule from "@/components/Widgets/Schedule";
 import { sortGroupSchedules } from "@/helpers/sortGroupSchedules";
+import { useCheckAuth } from "@/hooks/useCheckAuth";
 
 interface Props {
   group: IGroup;
@@ -24,12 +25,16 @@ interface Props {
 
 const GroupPage: INextPageWithLayout<Props> = ({ group }) => {
 
+  const { user, isLoading } = useCheckAuth  ({ routeToPushIfNoAuth: "/auth" });
+
   const [groupFromContext, setGroupFromContext] = useState<IGroup>(sortGroupSchedules(group));
   const [isChangeGroupNameModalActive, setIsChangeGroupNameModalActive] = useState<boolean>(false);
-
+  
   const handleOpenChangeGroupNameModal = () => {
     setIsChangeGroupNameModalActive(prev => !prev);
   }
+
+  if (isLoading || !user) return null;
 
   return (
     <>

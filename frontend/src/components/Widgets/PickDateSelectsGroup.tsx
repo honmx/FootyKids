@@ -37,10 +37,6 @@ const PickDateSelectsGroup: FC<Props> = ({ }) => {
     })()
   }, [year, monthIndex]);
 
-  useEffect(() => {
-    console.log(group);
-  }, [group]);
-
   return (
     <Stack spacing={1} direction="row">
       <Select

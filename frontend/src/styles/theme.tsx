@@ -388,6 +388,16 @@ export const createCustomTheme = ({ deviceType }: ICreateThemeProps) => {
           },
         ]
       },
+      MuiListItemButton: {
+        styleOverrides: {
+          root: {
+            transition: "all 0.15s ease",
+            "&:hover": {
+              color: paletteTheme.palette.typography.main
+            }
+          }
+        }
+      },
       MuiLink: {
         defaultProps: {
           component: forwardRef<HTMLAnchorElement, LinkProps>(function LinkBehaviour(props, ref) {

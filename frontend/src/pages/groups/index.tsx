@@ -10,12 +10,18 @@ import Sidebar from "@/components/Layout/Sidebar";
 import groupsService from "@/services/groupsService";
 import { IGroup } from "@/types/IGroup";
 import Link from "next/link";
+import { useCheckAuth } from "@/hooks/useCheckAuth";
 
 interface Props {
   groups: IGroup[];
 }
 
 const GroupsPage: INextPageWithLayout<Props> = ({ groups }) => {
+
+  const { user, isLoading } = useCheckAuth({ routeToPushIfNoAuth: "/auth" });
+
+  if (isLoading || !user) return null;
+
   return (
     <>
       <Head>
