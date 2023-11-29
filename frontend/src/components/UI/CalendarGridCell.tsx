@@ -166,23 +166,23 @@ const CalendarGridCell: FC<Props> = ({ date, sx, ...restProps }) => {
         </Box>
       </Grid>
       {
-        typeof document !== "undefined" &&
+        typeof document !== "undefined" && !training &&
         createPortal(
           <CreateTrainingModal open={isCreateTrainingModalActive} handleCloseClick={handleOpenCreateTrainingModal} />,
           document.body.querySelector("#modal-container") as Element
         )
       }
       {
-        typeof document !== "undefined" &&
+        typeof document !== "undefined" && training &&
         createPortal(
-          <ChangeTrainingModal open={isChangeTrainingModalActive} handleCloseClick={handleOpenChangeTrainingModal} />,
+          <ChangeTrainingModal open={isChangeTrainingModalActive} handleCloseClick={handleOpenChangeTrainingModal} training={training} />,
           document.body.querySelector("#modal-container") as Element
         )
       }
       {
-        typeof document !== "undefined" &&
+        typeof document !== "undefined" && training &&
         createPortal(
-          <DeleteTrainingModal open={isDeleteTrainingModalActive} handleCloseClick={handleOpenDeleteTrainingModal} />,
+          <DeleteTrainingModal open={isDeleteTrainingModalActive} handleCloseClick={handleOpenDeleteTrainingModal} training={training} />,
           document.body.querySelector("#modal-container") as Element
         )
       }

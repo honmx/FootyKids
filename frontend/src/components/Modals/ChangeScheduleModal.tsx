@@ -11,6 +11,7 @@ import TrainingByDayOfTheWeekItem from "../Items/TrainingByDayOfTheWeekItem";
 import { IPlace } from "@/types/IPlace";
 import placesService from "@/services/placesService";
 import groupsService from "@/services/groupsService";
+import { usePlaces } from "@/hooks/usePlaces";
 
 interface Props extends IModalProps {
 
@@ -23,17 +24,11 @@ const ChangeScheduleModal: FC<Props> = ({ open, handleCloseClick }) => {
 
   const currentSchedule = group.schedule.find(schedule => schedule.date === `${monthIndex + 1}.${year}`);
 
-  const [places, setPlaces] = useState<IPlace[]>([]);
   const [trainings, setTrainings] = useState<ITrainingByDayOfTheWeek[]>(currentSchedule?.trainingsByDayOfTheWeek.sort((a, b) =>
     (a.dayOfTheWeek === 0 ? 7 : a.dayOfTheWeek) - (b.dayOfTheWeek === 0 ? 7 : b.dayOfTheWeek)
   ) || []);
 
-  useEffect(() => {
-    (async () => {
-      const places = await placesService.getPlaces() || [];
-      setPlaces(places);
-    })()
-  }, []);
+  const places = usePlaces();
 
   useEffect(() => {
     setTrainings(currentSchedule?.trainingsByDayOfTheWeek.sort((a, b) =>
@@ -64,8 +59,6 @@ const ChangeScheduleModal: FC<Props> = ({ open, handleCloseClick }) => {
   }
 
   const handleCreateSchedule = async () => {
-    
-
     const newSchedule = await groupsService.createSchedule(
       group.id,
       `${monthIndex + 1}.${year}`,

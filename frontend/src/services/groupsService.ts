@@ -63,6 +63,21 @@ const createSchedule = async (groupId: number, date: string, trainingsByDayOfThe
   }
 }
 
+const changeTraining = async (groupId: number, id: number, date: string, time: string, placeId: number) => {
+  const { data: schedule } = await $groupsAPI.patch<ISchedule[]>(`/${groupId}/changeTraining`, { id, date, time, placeId });
+  return schedule;
+}
+
+const deleteTraining = async (groupId: number, date: string) => {
+  try {
+    const { data: schedule } = await $groupsAPI.delete<ISchedule[]>(`/${groupId}/deleteTraining/${date}`);
+    return schedule;
+
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export default {
   getGroups,
   getGroupByName,
@@ -70,4 +85,6 @@ export default {
   changeGroupName,
   getCurrentSchedule,
   createSchedule,
+  changeTraining,
+  deleteTraining,
 }
