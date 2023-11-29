@@ -27,6 +27,7 @@ const ChangeScheduleModal: FC<Props> = ({ open, handleCloseClick }) => {
   const [trainings, setTrainings] = useState<ITrainingByDayOfTheWeek[]>(currentSchedule?.trainingsByDayOfTheWeek.sort((a, b) =>
     (a.dayOfTheWeek === 0 ? 7 : a.dayOfTheWeek) - (b.dayOfTheWeek === 0 ? 7 : b.dayOfTheWeek)
   ) || []);
+  const [error, setError] = useState<string>("");
 
   const places = usePlaces();
 
@@ -34,11 +35,8 @@ const ChangeScheduleModal: FC<Props> = ({ open, handleCloseClick }) => {
     setTrainings(currentSchedule?.trainingsByDayOfTheWeek.sort((a, b) =>
       (a.dayOfTheWeek === 0 ? 7 : a.dayOfTheWeek) - (b.dayOfTheWeek === 0 ? 7 : b.dayOfTheWeek)
     ) || []);
+    setError("");
   }, [year, monthIndex, open]);
-
-  // useEffect(() => {
-  //   console.log(places);
-  // }, [trainings, places]);
 
   const handleCreateTrainingClick = () => {
     setTrainings([
@@ -59,6 +57,11 @@ const ChangeScheduleModal: FC<Props> = ({ open, handleCloseClick }) => {
   }
 
   const handleCreateSchedule = async () => {
+    if (Array.from(new Set(trainings.map(training => training.dayOfTheWeek))).length !== trainings.length) {
+      setError("Дни тренировок должны быть уникальны");
+      return;
+    }
+
     const newSchedule = await groupsService.createSchedule(
       group.id,
       `${monthIndex + 1}.${year}`,
@@ -94,6 +97,9 @@ const ChangeScheduleModal: FC<Props> = ({ open, handleCloseClick }) => {
                 sx={{ borderBottom: i !== trainings.length - 1 ? "1px solid #DDD" : 0 }}
               />
             ))
+          }
+          {
+            error && <Typography color="error">{error}</Typography>
           }
         </Box>
         <Button onClick={handleCreateSchedule}>Применить</Button>

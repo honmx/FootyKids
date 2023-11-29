@@ -25,6 +25,8 @@ const ChangeTrainingModal: FC<Props> = ({ open, handleCloseClick, training }) =>
 
   const places = usePlaces();
 
+  const currentSchedule = group.schedule.find(schedule => schedule.date === `${monthIndex + 1}.${year}`);
+
   useEffect(() => {
     setChangedTraining(training);
     setError("");
@@ -40,24 +42,24 @@ const ChangeTrainingModal: FC<Props> = ({ open, handleCloseClick, training }) =>
   }
 
   const handleChangeTrainingRequest = async () => {
-    try {
-      const newSchedule = await groupsService.changeTraining(
-        group.id,
-        training.id,
-        `${changedTraining.date}`,
-        changedTraining.time,
-        changedTraining.place.id
-      );
-
-      if (newSchedule) {
-        setGroup({ ...group, schedule: newSchedule });
-      }
-
-      handleCloseClick();
-
-    } catch (error: any) {
-      setError(error.response.data.message);
+    if (training.date !== changedTraining.date && currentSchedule?.trainingsByDay.find(trainingByDay => changedTraining.date === trainingByDay.date)) {
+      setError("У вас уже есть тренировка в эту дату");
+      return;
     }
+
+    const newSchedule = await groupsService.changeTraining(
+      group.id,
+      training.id,
+      `${changedTraining.date}`,
+      changedTraining.time,
+      changedTraining.place.id
+    );
+
+    if (newSchedule) {
+      setGroup({ ...group, schedule: newSchedule });
+    }
+
+    handleCloseClick();
   }
 
   return (
