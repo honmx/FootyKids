@@ -168,7 +168,7 @@ const CalendarGridCell: FC<Props> = ({ date, sx, ...restProps }) => {
       {
         typeof document !== "undefined" && !training &&
         createPortal(
-          <CreateTrainingModal open={isCreateTrainingModalActive} handleCloseClick={handleOpenCreateTrainingModal} />,
+          <CreateTrainingModal open={isCreateTrainingModalActive} handleCloseClick={handleOpenCreateTrainingModal} date={date.toLocaleDateString()} />,
           document.body.querySelector("#modal-container") as Element
         )
       }

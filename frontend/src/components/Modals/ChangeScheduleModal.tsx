@@ -27,6 +27,7 @@ const ChangeScheduleModal: FC<Props> = ({ open, handleCloseClick }) => {
   const [trainings, setTrainings] = useState<ITrainingByDayOfTheWeek[]>(currentSchedule?.trainingsByDayOfTheWeek.sort((a, b) =>
     (a.dayOfTheWeek === 0 ? 7 : a.dayOfTheWeek) - (b.dayOfTheWeek === 0 ? 7 : b.dayOfTheWeek)
   ) || []);
+  
   const [error, setError] = useState<string>("");
 
   const places = usePlaces();

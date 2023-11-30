@@ -63,6 +63,16 @@ const createSchedule = async (groupId: number, date: string, trainingsByDayOfThe
   }
 }
 
+const createTraining = async (groupId: number, date: string, time: string, placeId: number) => {
+  try {
+    const { data: schedule } = await $groupsAPI.patch<ISchedule[]>(`/${groupId}/createTraining`, { date, time, placeId });
+    return schedule;
+    
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 const changeTraining = async (groupId: number, id: number, date: string, time: string, placeId: number) => {
   try {
     const { data: schedule } = await $groupsAPI.patch<ISchedule[]>(`/${groupId}/changeTraining`, { id, date, time, placeId });
@@ -90,6 +100,7 @@ export default {
   changeGroupName,
   getCurrentSchedule,
   createSchedule,
+  createTraining,
   changeTraining,
   deleteTraining,
 }

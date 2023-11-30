@@ -27,11 +27,6 @@
       "static/chunks/main.js",
       "static/chunks/pages/account.js"
     ],
-    "/groups": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/groups.js"
-    ],
     "/groups/[id]": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",

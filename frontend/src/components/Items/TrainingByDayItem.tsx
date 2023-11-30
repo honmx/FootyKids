@@ -10,7 +10,7 @@ import { getCurrentCalendarDates } from "@/helpers/getCurrentCalendarDates";
 import { DateContext } from "@/contexts/dateContext";
 
 interface Props extends BoxProps {
-  training: ITrainingByDay;
+  training: Pick<ITrainingByDay, "date" | "time" | "place">;
   onChangeTraining: (date: number, time: string, placeId: number) => void;
   places: IPlace[];
 }
@@ -19,26 +19,21 @@ const TrainingByDayItem: FC<Props> = ({ training, onChangeTraining, places, sx, 
 
   const { year, monthIndex } = useContext(DateContext);
 
-  const [date, setDate] = useState<number>(Number(training.date.slice(0, 2)));
-  const [time, setTime] = useState<string>(training.time);
-  const [placeId, setPlaceId] = useState<number>(training.place.id);
-
   const currentCalendarDates = getCurrentCalendarDates(year, monthIndex, false);
 
-  useEffect(() => {
-    onChangeTraining(date, time, placeId);
-  }, [date, time, placeId]);
-
   const handleDateChange = (e: SelectChangeEvent<number>) => {
-    setDate(Number(e.target.value));
+    const date = Number(e.target.value);
+    onChangeTraining(date, training.time, training.place.id);
   }
 
   const handleTimeChange = (e: SelectChangeEvent<string>) => {
-    setTime(e.target.value);
+    const time = e.target.value;
+    onChangeTraining(Number(training.date.slice(0, 2)), time, training.place.id);
   }
 
   const handlePlaceIdChange = (e: SelectChangeEvent<number>) => {
-    setPlaceId(Number(e.target.value));
+    const placeId = Number(e.target.value);
+    onChangeTraining(Number(training.date.slice(0, 2)), training.time, placeId);
   }
 
   return (
@@ -53,21 +48,21 @@ const TrainingByDayItem: FC<Props> = ({ training, onChangeTraining, places, sx, 
     >
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
         <Stack spacing={2} direction="row">
-          <Select value={date} onChange={handleDateChange} sx={{ width: "70px" }}>
+          <Select value={Number(training.date.slice(0, 2))} onChange={handleDateChange} sx={{ width: "70px" }}>
             {
               currentCalendarDates.map(date => (
                 <MenuItem key={date.toLocaleDateString()} value={date.getDate()}>{date.getDate()}</MenuItem>
               ))
             }
           </Select>
-          <Select value={time} onChange={handleTimeChange} sx={{ width: "100px" }}>
+          <Select value={training.time} onChange={handleTimeChange} sx={{ width: "100px" }}>
             {
               times.map(time => (
                 <MenuItem key={time} value={time}>{time}</MenuItem>
               ))
             }
           </Select>
-          <Select value={placeId} onChange={handlePlaceIdChange}>
+          <Select value={training.place.id} onChange={handlePlaceIdChange}>
             {
               places.map(place => (
                 <MenuItem key={place.id} value={place.id}>{place.name}</MenuItem>

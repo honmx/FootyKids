@@ -10,6 +10,8 @@ import { usePlaces } from "@/hooks/usePlaces";
 import groupsService from "@/services/groupsService";
 import { GroupContext } from "@/contexts/groupContext";
 import { IPlace } from "@/types/IPlace";
+import { useTrainingChange } from "@/hooks/useTrainingChange";
+import { useTrainingRequest } from "@/hooks/useTrainingRequest";
 
 interface Props extends IModalProps {
   training: ITrainingByDay;
@@ -17,50 +19,26 @@ interface Props extends IModalProps {
 
 const ChangeTrainingModal: FC<Props> = ({ open, handleCloseClick, training }) => {
 
-  const { group, setGroup } = useContext(GroupContext);
-  const { year, monthIndex } = useContext(DateContext);
+  const { group } = useContext(GroupContext);
 
-  const [changedTraining, setChangedTraining] = useState<ITrainingByDay>(training);
   const [error, setError] = useState<string>("");
 
   const places = usePlaces();
 
-  const currentSchedule = group.schedule.find(schedule => schedule.date === `${monthIndex + 1}.${year}`);
+  const { changedTraining, handleChangeTraining } = useTrainingChange(training);
+
+  const { makeRequest } = useTrainingRequest({
+    initialTraining: training,
+    changedTraining,
+    handleErrorChange: (message: string) => setError(message),
+    requestFn: () => groupsService.changeTraining(group.id, training.id, changedTraining.date, changedTraining.time, changedTraining.place.id),
+    handleCloseClick
+  });
 
   useEffect(() => {
-    setChangedTraining(training);
+    handleChangeTraining(Number(training.date.slice(0, 2)), training.time, training.place.id);
     setError("");
   }, [open]);
-
-  const handleChangeTraining = (date: number, time: string, placeId: number) => {
-    setChangedTraining({
-      ...training,
-      date: `${date < 10 ? `0${date}` : date}.${monthIndex + 1}.${year}`,
-      time,
-      place: { id: placeId } as IPlace
-    });
-  }
-
-  const handleChangeTrainingRequest = async () => {
-    if (training.date !== changedTraining.date && currentSchedule?.trainingsByDay.find(trainingByDay => changedTraining.date === trainingByDay.date)) {
-      setError("У вас уже есть тренировка в эту дату");
-      return;
-    }
-
-    const newSchedule = await groupsService.changeTraining(
-      group.id,
-      training.id,
-      `${changedTraining.date}`,
-      changedTraining.time,
-      changedTraining.place.id
-    );
-
-    if (newSchedule) {
-      setGroup({ ...group, schedule: newSchedule });
-    }
-
-    handleCloseClick();
-  }
 
   return (
     <ModalWrapper open={open} handleCloseClick={handleCloseClick}>
@@ -76,7 +54,7 @@ const ChangeTrainingModal: FC<Props> = ({ open, handleCloseClick, training }) =>
             error && <Typography color="error">{error}</Typography>
           }
         </Box>
-        <Button onClick={handleChangeTrainingRequest}>Применить</Button>
+        <Button onClick={makeRequest}>Применить</Button>
       </Stack>
     </ModalWrapper>
   )
