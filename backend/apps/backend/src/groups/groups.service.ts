@@ -117,8 +117,8 @@ export class GroupsService {
     return response;
   }
 
-  async changeTraining(id: number, changeTrainingDto: ChangeTrainingDto) {
-    const response = await lastValueFrom(this.groupsClient.send("change-training", { id, ...changeTrainingDto }));
+  async changeTraining(groupId: number, changeTrainingDto: ChangeTrainingDto) {
+    const response = await lastValueFrom(this.groupsClient.send("change-training", { groupId, ...changeTrainingDto }));
 
     if (response?.status >= 400 || !response) {
       throw new HttpException(response?.message || "Some error", response?.status || HttpStatus.BAD_REQUEST);
@@ -127,8 +127,8 @@ export class GroupsService {
     return response;
   }
 
-  async deleteTraining(id: number, deleteTrainingDto: DeleteTrainingDto) {
-    const response = await lastValueFrom(this.groupsClient.send("delete-training", { id, ...deleteTrainingDto }));
+  async deleteTraining(deleteTrainingDto: DeleteTrainingDto) {
+    const response = await lastValueFrom(this.groupsClient.send("delete-training", deleteTrainingDto));
 
     if (response?.status >= 400 || !response) {
       throw new HttpException(response?.message || "Some error", response?.status || HttpStatus.BAD_REQUEST);

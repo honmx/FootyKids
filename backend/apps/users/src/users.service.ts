@@ -9,13 +9,22 @@ import { ChangePasswordDto } from './dto/changePasswordDto';
 import { CreateCoachDto } from './dto/createCoachDto';
 import { GetUsersByIdDto } from './dto/getUsersByIdDto';
 import { Op } from 'sequelize';
+import { UploadMedicalDocumentPhotoDto } from './dto/uploadMedicalDocumentPhotoDto';
+import { MedicalDocument } from './models/medicalDocument.model';
+import { SetMedicalDocumentExpirationDto } from './dto/setMedicalDocumentExpirationDto';
+import { UploadInsurancePhotoDto } from './dto/uploadInsurancePhotoDto';
+import { Insurance } from './models/insurance.model';
+import { SetInsuranceExpirationDto } from './dto/setInsuranceExpirationDto';
+import { GetUsersByGroupIdDto } from './dto/getUsersByGroupIdDto';
 // import { createRoleDto } from 'apps/backend/src/users/dto/createRoleDto';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectModel(User) private usersRepository: typeof User,
-    @InjectModel(Role) private rolesRepository: typeof Role
+    @InjectModel(Role) private rolesRepository: typeof Role,
+    @InjectModel(MedicalDocument) private medicalDocumentsRepository: typeof MedicalDocument,
+    @InjectModel(Insurance) private insurancesRepository: typeof Insurance
   ) { }
 
   async getUsers() {
@@ -47,11 +56,15 @@ export class UsersService {
   async createCoach(dto: CreateCoachDto) {
     const newCoach = await this.usersRepository.create({ ...dto, type: "coach" });
 
-    if (!newCoach) return new BadRequestException("User hasnt been created");
+    if (!newCoach) {
+      return new BadRequestException("User hasnt been created");
+    }
 
     const user = await this.getUserByEmail({ email: newCoach.email });
 
-    if (!user) return new BadRequestException("User hasnt been found");
+    if (!user) {
+      return new BadRequestException("User hasnt been found");
+    }
 
     return user;
   }
@@ -67,13 +80,108 @@ export class UsersService {
   }
 
   async getUsersById(dto: GetUsersByIdDto) {
-    const user = await this.usersRepository.findAll({ where: { type: "user", [Op.or]: dto.usersId.map(id => ({ id })) }, include: { all: true } });
+    const user = await this.usersRepository.findAll({ where: { type: "user", [Op.or]: dto.usersId.map(id => ({ id })) } });
     return user;
+  }
+
+  async getUsersByGroupId(dto: GetUsersByGroupIdDto) {
+    const users = await this.usersRepository.findAll({
+      where: { groupId: dto.groupId },
+      include: [
+        { model: MedicalDocument },
+        { model: Insurance },
+      ]
+    });
+    return users;
   }
 
   async changePassword(dto: ChangePasswordDto) {
     const user = await this.usersRepository.update({ password: dto.password }, { where: { email: dto.email } });
     return user;
+  }
+
+  async getMedicalDocumentByUserId(userId: number) {
+    const medicalDocument = await this.medicalDocumentsRepository.findOne({ where: { userId } });
+    return medicalDocument;
+  }
+
+  async uploadMedicalDocumentPhoto(dto: UploadMedicalDocumentPhotoDto) {
+    const user = await this.getUserById({ id: dto.id });
+
+    if (!user) {
+      return new BadRequestException("Такого пользователя не существует");
+    }
+
+    await this.medicalDocumentsRepository.destroy({ where: { userId: dto.id } });
+
+    const medicalDocument = await this.medicalDocumentsRepository.create({ photo: dto.photo });
+
+    await user.$set("medicalDocument", medicalDocument.id);
+
+    return medicalDocument;
+  }
+
+  async setMedicalDocumentExpiration(dto: SetMedicalDocumentExpirationDto) {
+    const user = await this.getUserById({ id: dto.id });
+
+    if (!user) {
+      return new BadRequestException("Такого пользователя не существует");
+    }
+
+    const medicalDocumentFromDb = await this.medicalDocumentsRepository.findOne({ where: { userId: dto.id } });
+
+    if (medicalDocumentFromDb) {
+      await this.medicalDocumentsRepository.update({ expires: dto.expires }, { where: { userId: dto.id } });
+      return await this.getMedicalDocumentByUserId(dto.id);
+    }
+
+    const medicalDocument = await this.medicalDocumentsRepository.create({ expires: dto.expires });
+
+    user.$set("medicalDocument", medicalDocument.id);
+
+    return medicalDocument;
+  }
+
+  async getInsuranceByUserId(userId: number) {
+    const insurance = await this.insurancesRepository.findOne({ where: { userId } });
+    return insurance;
+  }
+
+  async uploadInsurancePhoto(dto: UploadInsurancePhotoDto) {
+    const user = await this.getUserById({ id: dto.id });
+
+    if (!user) {
+      return new BadRequestException("Такого пользователя не существует");
+    }
+
+    await this.insurancesRepository.destroy({ where: { userId: dto.id } });
+
+    const insurance = await this.insurancesRepository.create({ photo: dto.photo });
+
+    await user.$set("insurance", insurance.id);
+
+    return insurance;
+  }
+
+  async setInsuranceExpiration(dto: SetInsuranceExpirationDto) {
+    const user = await this.getUserById({ id: dto.id });
+
+    if (!user) {
+      return new BadRequestException("Такого пользователя не существует");
+    }
+
+    const insuranceFromDb = await this.insurancesRepository.findOne({ where: { userId: dto.id } });
+
+    if (insuranceFromDb) {
+      await this.insurancesRepository.update({ expires: dto.expires }, { where: { userId: dto.id } });
+      return await this.getInsuranceByUserId(dto.id);
+    }
+
+    const insurance = await this.insurancesRepository.create({ expires: dto.expires });
+
+    user.$set("insurance", insurance.id);
+
+    return insurance;
   }
 
   // async getRoleByValue(value: string) {

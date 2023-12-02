@@ -2,8 +2,11 @@ import { IsNumber, IsString } from "class-validator";
 
 export class ChangeTrainingDto {
   @IsNumber()
-  id: number;
+  groupId: number;
   
+  @IsNumber()
+  id: number;
+
   @IsString()
   date: string;
   

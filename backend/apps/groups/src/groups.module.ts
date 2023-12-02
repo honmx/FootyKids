@@ -12,6 +12,8 @@ import { Role } from 'apps/users/src/models/role.model';
 import { Place } from 'apps/places/src/models/place.model';
 import { TrainingByDayOfTheWeek } from './models/trainingByDayOfTheWeek.model';
 import { PersonTraining } from './models/personTraining.model';
+import { MedicalDocument } from 'apps/users/src/models/medicalDocument.model';
+import { Insurance } from 'apps/users/src/models/insurance.model';
 
 @Module({
   imports: [
@@ -26,7 +28,7 @@ import { PersonTraining } from './models/personTraining.model';
       username: process.env.POSTGRES_GROUPS_USER,
       password: process.env.POSTGRES_GROUPS_PASSWORD,
       database: process.env.POSTGRES_GROUPS_DB,
-      models: [User, Role, Place, Group, Schedule, TrainingByDay, TrainingByDayOfTheWeek, PersonTraining],
+      models: [User, Role, MedicalDocument, Insurance, Place, Group, Schedule, TrainingByDay, TrainingByDayOfTheWeek, PersonTraining],
       autoLoadModels: true
     }),
     SequelizeModule.forFeature([Group, Schedule, TrainingByDay, TrainingByDayOfTheWeek, PersonTraining]),

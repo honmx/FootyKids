@@ -50,11 +50,7 @@ export class GroupsController {
   }
 
   @Get("/:id/getCurrentSchedule/:year/:month")
-  async getCurrentSchedule(
-    @Param("id") id: number,
-    @Param("year") year: string,
-    @Param("month") month: string
-  ) {
+  async getCurrentSchedule(@Param("id") id: number, @Param("year") year: string, @Param("month") month: string) {
     return await this.groupsService.getCurrentSchedule({ id, month: Number(month), year: Number(year) });
   }
 
@@ -69,13 +65,13 @@ export class GroupsController {
   }
 
   @Patch("/:id/changeTraining")
-  async changeTraining(@Body() changeTrainingDto: ChangeTrainingDto, @Param("id") id: number) {
-    return await this.groupsService.changeTraining(id, changeTrainingDto);
+  async changeTraining(@Body() changeTrainingDto: ChangeTrainingDto, @Param("id") groupId: number) {
+    return await this.groupsService.changeTraining(groupId, changeTrainingDto);
   }
 
-  @Delete("/:id/deleteTraining")
-  async deleteTraining(@Body() deleteTrainingDto: DeleteTrainingDto, @Param("id") id: number) {
-    return await this.groupsService.deleteTraining(id, deleteTrainingDto);
+  @Delete("/:id/deleteTraining/:date")
+  async deleteTraining(@Param("id") id: number, @Param("date") date: string) {
+    return await this.groupsService.deleteTraining({ id, date });
   }
 
   @Patch("/:id/markAttendance")

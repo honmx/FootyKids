@@ -1,6 +1,6 @@
 import { IsString } from "class-validator";
 
-export class createRoleDto {
+export class SetInsuranceExpirationDto {
   @IsString()
-  value: string;
+  expires: string;
 }

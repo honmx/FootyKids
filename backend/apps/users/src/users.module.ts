@@ -12,6 +12,8 @@ import { TrainingByDay } from 'apps/groups/src/models/trainingByDay.model';
 import { Place } from 'apps/places/src/models/place.model';
 import { Schedule } from 'apps/groups/src/models/schedule.model';
 import { TrainingByDayOfTheWeek } from 'apps/groups/src/models/trainingByDayOfTheWeek.model';
+import { MedicalDocument } from './models/medicalDocument.model';
+import { Insurance } from './models/insurance.model';
 
 @Module({
   imports: [
@@ -26,10 +28,10 @@ import { TrainingByDayOfTheWeek } from 'apps/groups/src/models/trainingByDayOfTh
       username: process.env.POSTGRES_USERS_USER,
       password: process.env.POSTGRES_USERS_PASSWORD,
       database: process.env.POSTGRES_USERS_DB,
-      models: [User, Role, Group, TrainingByDay, TrainingByDayOfTheWeek, Place, PersonTraining, Schedule],
+      models: [User, Role, MedicalDocument, Insurance, Group, TrainingByDay, TrainingByDayOfTheWeek, Place, PersonTraining, Schedule],
       autoLoadModels: true
     }),
-    SequelizeModule.forFeature([User, Role]),
+    SequelizeModule.forFeature([User, Role, MedicalDocument, Insurance]),
     RmqModule,
   ],
   controllers: [UsersController],

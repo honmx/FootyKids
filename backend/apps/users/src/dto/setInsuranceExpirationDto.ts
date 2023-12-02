@@ -1,9 +1,9 @@
 import { IsNumber, IsString } from "class-validator";
 
-export class DeleteTrainingDto {
+export class SetInsuranceExpirationDto {
   @IsNumber()
   id: number;
-  
+
   @IsString()
-  date: string;
+  expires: string;
 }
