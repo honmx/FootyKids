@@ -1,4 +1,5 @@
 import { $groupsAPI } from "@/http/groupsAxios"
+import { IChild } from "@/types/IChild";
 import { IGroup } from "@/types/IGroup";
 import { IRequestTrainingByDayOfTheWeek } from "@/types/IRequestTrainingByDayOfTheWeek";
 import { ISchedule } from "@/types/ISchedule";
@@ -67,7 +68,7 @@ const createTraining = async (groupId: number, date: string, time: string, place
   try {
     const { data: schedule } = await $groupsAPI.patch<ISchedule[]>(`/${groupId}/createTraining`, { date, time, placeId });
     return schedule;
-    
+
   } catch (error) {
     console.log(error);
   }
@@ -77,7 +78,7 @@ const changeTraining = async (groupId: number, id: number, date: string, time: s
   try {
     const { data: schedule } = await $groupsAPI.patch<ISchedule[]>(`/${groupId}/changeTraining`, { id, date, time, placeId });
     return schedule;
-    
+
   } catch (error) {
     console.log(error);
   }
@@ -87,6 +88,16 @@ const deleteTraining = async (groupId: number, date: string) => {
   try {
     const { data: schedule } = await $groupsAPI.delete<ISchedule[]>(`/${groupId}/deleteTraining/${date}`);
     return schedule;
+
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+const addChildren = async (groupId: number, usersId: number[]) => {
+  try {
+    const { data: users } = await $groupsAPI.patch<IChild[]>(`/${groupId}/addChildren`, { childrenId: usersId });
+    return users;
 
   } catch (error) {
     console.log(error);
@@ -103,4 +114,5 @@ export default {
   createTraining,
   changeTraining,
   deleteTraining,
+  addChildren,
 }

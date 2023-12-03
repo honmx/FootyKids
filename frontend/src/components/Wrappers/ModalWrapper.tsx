@@ -11,7 +11,7 @@ interface Props extends ModalProps {
   handleEditClick?: () => void;
 }
 
-const ModalWrapper: FC<Props> = ({ open, handleCloseClick, edit, handleEditClick, children, ...restProps }) => {
+const ModalWrapper: FC<Props> = ({ open, handleCloseClick, edit, handleEditClick, children, sx, ...restProps }) => {
 
   const ref = useRef<HTMLDivElement>(null);
 
@@ -29,7 +29,7 @@ const ModalWrapper: FC<Props> = ({ open, handleCloseClick, edit, handleEditClick
       onClose={handleCloseClick}
       disablePortal
       disableAutoFocus={true}
-      sx={{ overflowY: "auto", paddingInline: 5 }}
+      sx={{ overflowY: "auto", paddingInline: 5, ...sx }}
       {...restProps}
     >
       <Box

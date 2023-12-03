@@ -2,7 +2,7 @@ import { FC, useState } from "react";
 import { Box, Paper, Typography } from "@mui/material";
 import Image from "next/image";
 import defaultUserPhoto from "@/assets/user.jpg";
-import { IUser } from "@/types/IUser";
+import { IUser } from "@/types/UserType";
 import { createPortal } from "react-dom";
 import ProfileModal from "../Modals/ProfileModal";
 

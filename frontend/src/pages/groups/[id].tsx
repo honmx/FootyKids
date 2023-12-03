@@ -18,6 +18,7 @@ import ChangeGroupNameModal from "@/components/Modals/ChangeGroupNameModal";
 import Schedule from "@/components/Widgets/Schedule";
 import { sortGroupSchedules } from "@/helpers/sortGroupSchedules";
 import { useCheckAuth } from "@/hooks/useCheckAuth";
+import Participants from "@/components/Widgets/Participants";
 
 interface Props {
   group: IGroup;
@@ -33,6 +34,8 @@ const GroupPage: INextPageWithLayout<Props> = ({ group }) => {
   const handleOpenChangeGroupNameModal = () => {
     setIsChangeGroupNameModalActive(prev => !prev);
   }
+
+  // console.log(groupFromContext);
 
   if (isLoading || !user) return null;
 
@@ -53,6 +56,7 @@ const GroupPage: INextPageWithLayout<Props> = ({ group }) => {
               </IconButton>
             </Stack>
             <Schedule />
+            <Participants />
           </Stack>
         </Container>
         {

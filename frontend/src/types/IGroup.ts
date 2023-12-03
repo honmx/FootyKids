@@ -1,9 +1,9 @@
 import { ISchedule } from "./ISchedule";
-import { IUser } from "./IUser";
+import { IChild } from "./IChild";
 
 export interface IGroup {
   id: number;
   name: string;
-  participants: IUser[],
+  participants: IChild[],
   schedule: ISchedule[],
 }

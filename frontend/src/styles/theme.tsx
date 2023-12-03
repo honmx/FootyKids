@@ -5,6 +5,9 @@ import NextLink, { LinkProps } from "next/link";
 import { Ref, forwardRef } from "react";
 import parser from "ua-parser-js";
 import mediaQuery from "css-mediaquery";
+import Image from "next/image";
+import emptyCheckBoxIcon from "@/assets/empty checkbox icon.svg";
+import checkedCheckBoxIcon from "@/assets/checked checkbox icon.svg";
 
 const font = Noto_Sans({
   subsets: ["cyrillic", "latin"],
@@ -249,6 +252,12 @@ export const createCustomTheme = ({ deviceType }: ICreateThemeProps) => {
         }
       },
       // UI COMPONENTS
+      MuiCheckbox: {
+        defaultProps: {
+          checkedIcon: <Image src={checkedCheckBoxIcon} alt="checked checkbox" width={18} height={18} />,
+          icon: <Image src={emptyCheckBoxIcon} alt="empty checkbox" width={18} height={18} />
+        }
+      },
       MuiTextField: {
         styleOverrides: {
           root: {

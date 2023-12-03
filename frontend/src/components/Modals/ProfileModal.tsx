@@ -1,5 +1,5 @@
 import { IModalProps } from "@/types/IModalProps";
-import { IUser } from "@/types/IUser";
+import { UserType } from "@/types/UserType";
 import { FC } from "react";
 import ModalWrapper from "../Wrappers/ModalWrapper";
 import ModalContentDirectionDeterminant from "../Wrappers/ModalContentDirectionDeterminant";
@@ -9,7 +9,7 @@ import { Box, Container, Typography } from "@mui/material";
 import ModalItemHeightDeterminantWrapper from "../Wrappers/ModalItemHeightDeterminantWrapper";
 
 interface Props extends IModalProps {
-  user: IUser;
+  user: UserType;
 }
 
 const ProfileModal: FC<Props> = ({ open, handleCloseClick, user }) => {

@@ -1,4 +1,4 @@
-import { IUser } from "@/types/IUser";
+import { IUser } from "@/types/UserType";
 import { Dispatch, SetStateAction, createContext } from "react";
 
 interface IAuthContext {

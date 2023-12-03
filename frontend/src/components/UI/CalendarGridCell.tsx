@@ -139,7 +139,7 @@ const CalendarGridCell: FC<Props> = ({ date, sx, ...restProps }) => {
                     >
                       <Image src={menuDropdownIcon} alt="menu icon" />
                     </IconButton>
-                    <Dropdown open={isMenuOpen} sx={{ right: 5, top: 10, opacity: 1 }}>
+                    <Dropdown open={isMenuOpen} sx={{ right: 5, top: 10 }}>
                       {
                         menuButtons.map(button => (
                           <ListItemButton key={button.text} onClick={button.onClick} sx={{ paddingTop: 0.75, paddingBottom: 0.75 }}>

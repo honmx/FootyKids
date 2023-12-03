@@ -1,6 +1,6 @@
 import { $authAPI } from "@/http/authAxios";
 import { IAuthResponse } from "@/types/IAuthResponse";
-import { IUser } from "@/types/IUser";
+import { UserType } from "@/types/UserType";
 
 interface LoginProps {
   email: string;
@@ -44,8 +44,8 @@ interface RecoverPasswordProps {
   password: string;
 }
 
-const recoverPassword = async (recoverPasswordProps: RecoverPasswordProps): Promise<IUser> => {
-  const { data: user } = await $authAPI.put<IUser>("/recoverPassword", recoverPasswordProps);
+const recoverPassword = async (recoverPasswordProps: RecoverPasswordProps): Promise<UserType> => {
+  const { data: user } = await $authAPI.put<UserType>("/recoverPassword", recoverPasswordProps);
   return user;
 }
 
@@ -61,9 +61,9 @@ const validateCode = async ({ email, code }: ValidateCodeProps) => {
   await $authAPI.post("/validateVerificationCode", { email, code });
 }
 
-const validateRefreshToken = async (): Promise<IUser | undefined> => {
+const validateRefreshToken = async (): Promise<UserType | undefined> => {
   try {
-    const { data: user } = await $authAPI.get<IUser>("/validateRefreshToken");
+    const { data: user } = await $authAPI.get<UserType>("/validateRefreshToken");
     return user;
   } catch (error) {
     return undefined;

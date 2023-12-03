@@ -3,6 +3,7 @@ import PickDateSelectsGroup from "./PickDateSelectsGroup";
 import { Box, Button, Stack } from "@mui/material";
 import Image from "next/image";
 import smallPlusIcon from "@/assets/small plus icon.svg";
+import changeIcon from "@/assets/change icon.svg";
 import Calendar from "./Calendar";
 import { DateContext } from "@/contexts/dateContext";
 import { createPortal } from "react-dom";
@@ -34,7 +35,7 @@ const Schedule: FC<Props> = ({ }) => {
               Добавить тренировку
             </Button> */}
             <Button onClick={handleOpenChangeScheduleModal}>
-              {/* <Image src={smallPlusIcon} alt="plus icon" width={10} height={10} style={{ marginRight: 5 }} /> */}
+              <Image src={changeIcon} alt="change icon" width={15} height={15} style={{ marginRight: 5 }} />
               Изменить расписание
             </Button>
           </Stack>
