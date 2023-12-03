@@ -16,6 +16,8 @@ import { UploadInsurancePhotoDto } from './dto/uploadInsurancePhotoDto';
 import { Insurance } from './models/insurance.model';
 import { SetInsuranceExpirationDto } from './dto/setInsuranceExpirationDto';
 import { GetUsersByGroupIdDto } from './dto/getUsersByGroupIdDto';
+import { Group } from 'apps/groups/src/models/group.model';
+import { PersonTraining } from 'apps/groups/src/models/personTraining.model';
 // import { createRoleDto } from 'apps/backend/src/users/dto/createRoleDto';
 
 @Injectable()
@@ -33,7 +35,10 @@ export class UsersService {
   }
 
   async getUsersWithoutGroup() {
-    const users = await this.usersRepository.findAll({ where: { groupId: { [Op.not]: null } } });
+    const users = await this.usersRepository.findAll({
+      where: { [Op.and]: { type: "user", groupId: { [Op.eq]: null } } },
+      attributes: ["id", "name", "photo", "birth"]
+    });
     return users;
   }
 
@@ -88,6 +93,7 @@ export class UsersService {
     const users = await this.usersRepository.findAll({
       where: { groupId: dto.groupId },
       include: [
+        { model: Group },
         { model: MedicalDocument },
         { model: Insurance },
       ]

@@ -35,6 +35,16 @@ export class UsersService {
     return response;
   }
 
+  async getUserById(id: number) {
+    const response = await lastValueFrom(this.usersClient.send("get-user-by-id", { id }));
+
+    if (response?.status >= 400) {
+      throw new HttpException(response?.message || "Some error", response?.status || HttpStatus.BAD_REQUEST);
+    }
+
+    return response;
+  }
+
   async createUser(createUserDto: CreateUserDto) {
     const response = await lastValueFrom(this.usersClient.send("create-user", createUserDto));
 

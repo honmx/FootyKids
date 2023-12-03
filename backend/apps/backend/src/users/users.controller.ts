@@ -21,6 +21,11 @@ export class UsersController {
     return await this.usersService.getUsersWithoutGroup();
   }
 
+  @Get("/:id")
+  async getUserById(@Param("id") id: number) {
+    return await this.usersService.getUserById(id);
+  }
+
   @Post("/user")
   async createUser(@Body() createUserDto: CreateUserDto) {
     return await this.usersService.createUser(createUserDto);

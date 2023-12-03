@@ -85,6 +85,7 @@ export class GroupsService {
         {
           model: User,
           include: [
+            { model: Group },
             { model: MedicalDocument },
             { model: Insurance },
           ]
