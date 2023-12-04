@@ -29,6 +29,7 @@ const DeleteTrainingModal: FC<Props> = ({ open, handleCloseClick, training }) =>
     <ModalWrapper open={open} handleCloseClick={handleCloseClick}>
       <Stack spacing={3} sx={{ padding: 2 }}>
         <Typography fontSize={26}>Удаление тренировки</Typography>
+        <Typography>{training.date}, {training.time}, {training.place.name}</Typography>
         <Button onClick={handleDeleteTrainingClick}>Подтвердить</Button>
       </Stack>
     </ModalWrapper>
