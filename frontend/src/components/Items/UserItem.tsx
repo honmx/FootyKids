@@ -27,8 +27,8 @@ const UserItem: FC<Props> = ({ user, ...restProps }) => {
   }
 
   const menuButtons = [
-    { text: "Изменить", onClick: () => { } },
-    { text: "Удалить", onClick: () => { } },
+    { text: "Подробнее", onClick: () => { } },
+    { text: "Исключить", onClick: () => { } },
   ]
 
   return (
@@ -50,7 +50,7 @@ const UserItem: FC<Props> = ({ user, ...restProps }) => {
             </Box>
           </Stack>
         </Grid>
-        <Grid xs={1} />
+        <Grid item xs={1} />
         {
           user.type === "user" &&
           <Grid item xs={3}>

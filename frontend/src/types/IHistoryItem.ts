@@ -1,7 +1,8 @@
+import { AttendanceType } from "./AttendanceType";
 import { ITrainingByDay } from "./ITrainingByDay";
 
 export interface IHistoryItem {
   id: number;
-  attendance: "П" | "УП" | "НП" | "Б";
+  attendance: AttendanceType;
   training: ITrainingByDay;
 }

@@ -8,6 +8,7 @@ import mediaQuery from "css-mediaquery";
 import Image from "next/image";
 import emptyCheckBoxIcon from "@/assets/empty checkbox icon.svg";
 import checkedCheckBoxIcon from "@/assets/checked checkbox icon.svg";
+import emptyRadioIcon from "@/assets/empty radio icon.svg";
 
 const font = Noto_Sans({
   subsets: ["cyrillic", "latin"],
@@ -252,6 +253,16 @@ export const createCustomTheme = ({ deviceType }: ICreateThemeProps) => {
         }
       },
       // UI COMPONENTS
+      MuiFormControlLabel: {
+        styleOverrides: {
+          root: {
+            marginInline: 7.5,
+          },
+          label: {
+            fontSize: 14
+          }
+        }
+      },
       MuiCheckbox: {
         defaultProps: {
           checkedIcon: <Image src={checkedCheckBoxIcon} alt="checked checkbox" width={18} height={18} />,

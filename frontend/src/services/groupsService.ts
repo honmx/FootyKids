@@ -1,6 +1,7 @@
 import { $groupsAPI } from "@/http/groupsAxios"
 import { IChild } from "@/types/IChild";
 import { IGroup } from "@/types/IGroup";
+import { IMarkAttendanceItem } from "@/types/IMarkAttendanceItem";
 import { IRequestTrainingByDayOfTheWeek } from "@/types/IRequestTrainingByDayOfTheWeek";
 import { ISchedule } from "@/types/ISchedule";
 
@@ -104,6 +105,16 @@ const addChildren = async (groupId: number, usersId: number[]) => {
   }
 }
 
+const markAttendance = async (groupId: number, date: string, attendanceData: IMarkAttendanceItem[]) => {
+  try {
+    const { data: result } = await $groupsAPI.patch(`/${groupId}/markAttendance`, { date, attendanceData });
+    return result;
+    
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export default {
   getGroups,
   getGroupByName,
@@ -115,4 +126,5 @@ export default {
   changeTraining,
   deleteTraining,
   addChildren,
+  markAttendance,
 }
