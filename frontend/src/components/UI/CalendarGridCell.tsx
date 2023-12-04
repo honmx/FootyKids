@@ -14,6 +14,7 @@ import menuDropdownIcon from "@/assets/menu dropdown icon.svg";
 import plusIcon from "@/assets/small plus icon.svg";
 import ChangeTrainingModal from "../Modals/ChangeTrainingModal";
 import DeleteTrainingModal from "../Modals/DeleteTrainingModal";
+import MarkAttendanceModal from "../Modals/MarkAttendanceModal";
 
 interface Props extends GridProps {
   date: Date
@@ -31,6 +32,7 @@ const CalendarGridCell: FC<Props> = ({ date, sx, ...restProps }) => {
   const [isChangeTrainingModalActive, setIsChangeTrainingModalActive] = useState<boolean>(false);
   const [isCreateTrainingModalActive, setIsCreateTrainingModalActive] = useState<boolean>(false);
   const [isDeleteTrainingModalActive, setIsDeleteTrainingModalActive] = useState<boolean>(false);
+  const [isMarkAttendanceModalActive, setIsMarkAttendanceModalActive] = useState<boolean>(false);
 
   const scheduleIndex = getScheduleIndex(monthIndex, date, group.schedule);
   const training = group.schedule[scheduleIndex]?.trainingsByDay.find(traning => traning.date === date.toLocaleDateString());
@@ -53,8 +55,14 @@ const CalendarGridCell: FC<Props> = ({ date, sx, ...restProps }) => {
     setIsDeleteTrainingModalActive(prev => !prev);
     setIsMenuOpen(false);
   }
+  
+  const handleOpenMarkAttendanceModal = () => {
+    setIsMarkAttendanceModalActive(prev => !prev);
+    setIsMenuOpen(false);
+  }
 
   const menuButtons = [
+    { text: "Отметить", onClick: handleOpenMarkAttendanceModal },
     { text: "Изменить", onClick: handleOpenChangeTrainingModal },
     { text: "Удалить", onClick: handleOpenDeleteTrainingModal },
   ]
@@ -183,6 +191,13 @@ const CalendarGridCell: FC<Props> = ({ date, sx, ...restProps }) => {
         typeof document !== "undefined" && training &&
         createPortal(
           <DeleteTrainingModal open={isDeleteTrainingModalActive} handleCloseClick={handleOpenDeleteTrainingModal} training={training} />,
+          document.body.querySelector("#modal-container") as Element
+        )
+      }
+      {
+        typeof document !== "undefined" && training &&
+        createPortal(
+          <MarkAttendanceModal open={isMarkAttendanceModalActive} handleCloseClick={handleOpenMarkAttendanceModal} training={training} />,
           document.body.querySelector("#modal-container") as Element
         )
       }

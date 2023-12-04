@@ -23,7 +23,7 @@ const AddChildrenModal: FC<Props> = ({ open, handleCloseClick }) => {
 
   useEffect(() => {
     if (open) return;
-    
+
     (async () => {
       const users = await usersService.getUsersWithoutGroup() || [];
       setUsers(users);
@@ -54,7 +54,7 @@ const AddChildrenModal: FC<Props> = ({ open, handleCloseClick }) => {
 
   return (
     <ModalWrapper open={open} handleCloseClick={handleCloseClick} sx={{ width: "100%" }}>
-      <Stack spacing={3} sx={{ padding: 3 }}>
+      <Stack spacing={3} sx={{ padding: 2 }}>
         <Stack spacing={5} direction="row" sx={{ justifyContent: "space-between" }}>
           <Typography fontSize={28}>Добавить детей</Typography>
           <TextField variant="standard" placeholder="Имя/фамилия" onChange={handleNameChange} sx={{ width: "150px" }} />
@@ -72,8 +72,13 @@ const AddChildrenModal: FC<Props> = ({ open, handleCloseClick }) => {
                 />
               ))
           }
+          {
+            users.length === 0 && <>
+              <Typography textAlign="center" sx={{ margin: "40px 0" }}>Отсутствуют пользователи без группы</Typography>
+            </>
+          }
         </Box>
-        <Button onClick={handleAddChildrenClick}>Добавить</Button>
+        <Button onClick={handleAddChildrenClick} disabled={users.length === 0}>Добавить</Button>
       </Stack>
     </ModalWrapper>
   )
