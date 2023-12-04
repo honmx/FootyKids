@@ -55,6 +55,16 @@ export class UsersService {
     return response;
   }
 
+  async removeGroup(id: number) {
+    const response = await lastValueFrom(this.usersClient.send("remove-group", { id }));
+
+    if (response?.status >= 400) {
+      throw new HttpException(response?.message || "Some error", response?.status || HttpStatus.BAD_REQUEST);
+    }
+
+    return response;
+  }
+
   async uploadMedicalDocumentPhoto(id: number, photo: Express.Multer.File) {
     const uploadedPhoto = await this.fileService.uploadFile(
       photo,

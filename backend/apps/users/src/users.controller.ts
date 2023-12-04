@@ -13,6 +13,7 @@ import { SetMedicalDocumentExpirationDto } from './dto/setMedicalDocumentExpirat
 import { UploadInsurancePhotoDto } from './dto/uploadInsurancePhotoDto';
 import { SetInsuranceExpirationDto } from './dto/setInsuranceExpirationDto';
 import { GetUsersByGroupIdDto } from './dto/getUsersByGroupIdDto';
+import { RemoveGroupDto } from './dto/removeGroupDto';
 // import { createRoleDto } from 'apps/backend/src/users/dto/createRoleDto';
 
 @Controller()
@@ -39,6 +40,13 @@ export class UsersController {
   @MessagePattern("create-user")
   async createUser(@Payload() dto: CreateUserDto, @Ctx() context: RmqContext) {
     const response = await this.usersService.createUser(dto);
+    this.rmqService.ack(context);
+    return response;
+  }
+
+  @MessagePattern("remove-group")
+  async removeGroup(@Payload() dto: RemoveGroupDto, @Ctx() context: RmqContext) {
+    const response = await this.usersService.removeGroup(dto);
     this.rmqService.ack(context);
     return response;
   }

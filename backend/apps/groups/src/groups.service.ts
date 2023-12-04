@@ -292,7 +292,7 @@ export class GroupsService {
     const personTrainings = await this.personTrainingsRepository.bulkCreate(attendanceData, { include: { all: true } });
     personTrainings.forEach(async (personTraining) => await personTraining.$set("training", training.id));
 
-    return await this.personTrainingsRepository.findAll({ include: { all: true, nested: true } });
+    return 1;
   }
 
   getCurrentMonthAndSublings(month: number, year: number) {

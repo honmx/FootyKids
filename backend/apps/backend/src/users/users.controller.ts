@@ -31,6 +31,11 @@ export class UsersController {
     return await this.usersService.createUser(createUserDto);
   }
 
+  @Patch(":id/removeGroup")
+  async removeGroup(@Param("id") id: number) {
+    return await this.usersService.removeGroup(id);
+  }
+
   @Patch(":id/uploadMedicalDocumentPhoto")
   @UseInterceptors(FileInterceptor("photo"))
   async uploadMedicalDocumentPhoto(@Param("id") id: number, @UploadedFile() photo: Express.Multer.File) {

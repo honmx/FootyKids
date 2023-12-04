@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/createUserDto';
 import { InjectModel } from '@nestjs/sequelize';
 import { User } from './models/user.model';
@@ -18,6 +18,9 @@ import { SetInsuranceExpirationDto } from './dto/setInsuranceExpirationDto';
 import { GetUsersByGroupIdDto } from './dto/getUsersByGroupIdDto';
 import { Group } from 'apps/groups/src/models/group.model';
 import { PersonTraining } from 'apps/groups/src/models/personTraining.model';
+import { RemoveGroupDto } from './dto/removeGroupDto';
+import { lastValueFrom } from 'rxjs';
+import { ClientProxy } from '@nestjs/microservices';
 // import { createRoleDto } from 'apps/backend/src/users/dto/createRoleDto';
 
 @Injectable()
@@ -26,7 +29,7 @@ export class UsersService {
     @InjectModel(User) private usersRepository: typeof User,
     @InjectModel(Role) private rolesRepository: typeof Role,
     @InjectModel(MedicalDocument) private medicalDocumentsRepository: typeof MedicalDocument,
-    @InjectModel(Insurance) private insurancesRepository: typeof Insurance
+    @InjectModel(Insurance) private insurancesRepository: typeof Insurance,
   ) { }
 
   async getUsers() {
@@ -80,7 +83,10 @@ export class UsersService {
   }
 
   async getUserById(dto: GetUserByIdDto) {
-    const user = await this.usersRepository.findOne({ where: { id: dto.id }, include: { all: true } });
+    const user = await this.usersRepository.findOne({
+      where: { id: dto.id },
+      include: { all: true }
+    });
     return user;
   }
 
@@ -104,6 +110,19 @@ export class UsersService {
   async changePassword(dto: ChangePasswordDto) {
     const user = await this.usersRepository.update({ password: dto.password }, { where: { email: dto.email } });
     return user;
+  }
+
+  async removeGroup(dto: RemoveGroupDto) {
+    const user = await this.usersRepository.findOne({ where: { id: dto.id } });
+
+    if (!user) {
+      return new BadRequestException("Такого пользователя не существует");
+    }
+
+    await this.usersRepository.update({ groupId: null }, { where: { id: dto.id } });
+
+    const participants = await this.getUsersByGroupId({ groupId: user.groupId });
+    return participants;
   }
 
   async getMedicalDocumentByUserId(userId: number) {
