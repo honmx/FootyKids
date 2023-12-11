@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, MouseEvent, MouseEventHandler, useState } from "react";
 import { IChild } from "@/types/IChild";
 import { Box, BoxProps, Grid, IconButton, ListItemButton, Stack, Typography } from "@mui/material";
 import Image from "next/image";
@@ -14,42 +14,58 @@ import { createPortal } from "react-dom";
 import ExpelChildModal from "../Modals/ExpelChildModal";
 import ChangeChildGroupModal from "../Modals/ChangeChildGroupModal";
 import Avatar from "../UI/Avatar";
+import ProfileModal from "../Modals/ProfileModal";
 
 interface Props extends BoxProps {
   user: UserType;
 }
 
-const UserItem: FC<Props> = ({ user, ...restProps }) => {
+const UserItem: FC<Props> = ({ user, sx, ...restProps }) => {
 
   const { hoverRef, isHover } = useHover();
 
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
-  const [isExpelChildModalActive, setIsExpelChildModalActive] = useState<boolean>(false);
+  const [isProfileModalActive, setIsProfileModalActive] = useState<boolean>(false);
   const [isChangeChildGroupModalActive, setIsChangeChildGroupModalActive] = useState<boolean>(false);
+  const [isExpelChildModalActive, setIsExpelChildModalActive] = useState<boolean>(false);
 
   useOutsideClick(hoverRef, () => setIsMenuOpen(false));
 
-  const handleMenuClick = () => {
+  const handleMenuClick = (e: MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
     setIsMenuOpen(prev => !prev);
   }
 
-  const handleOpenExpelChildModal = () => {
-    setIsExpelChildModalActive(prev => !prev);
+  const handleOpenProfileModalClick = () => {
+    setIsProfileModalActive(prev => !prev);
   }
 
-  const handleOpenChangeChildGroupModal = () => {
+  const handleOpenChangeChildGroupModalClick = () => {
     setIsChangeChildGroupModalActive(prev => !prev);
   }
 
+  const handleOpenExpelChildModalClick = () => {
+    setIsExpelChildModalActive(prev => !prev);
+  }
+
   const menuButtons = [
-    { text: "Подробнее", onClick: () => { } },
-    { text: "Назначить группу", onClick: handleOpenChangeChildGroupModal },
-    { text: "Исключить", onClick: handleOpenExpelChildModal },
+    { text: "Подробнее", onClick: handleOpenProfileModalClick },
+    { text: "Назначить группу", onClick: handleOpenChangeChildGroupModalClick },
+    { text: "Исключить", onClick: handleOpenExpelChildModalClick },
   ]
 
   return (
     <>
-      <Box ref={hoverRef} {...restProps}>
+      <Box
+        ref={hoverRef}
+        sx={{
+          cursor: "pointer",
+          "&:hover": { backgroundColor: "#F8F8F8" },
+          ...sx
+        }}
+        {...restProps}
+        onClick={handleOpenProfileModalClick}
+      >
         <Grid
           container
           direction="row"
@@ -138,14 +154,21 @@ const UserItem: FC<Props> = ({ user, ...restProps }) => {
       {
         typeof document !== "undefined" && user.type === "user" &&
         createPortal(
-          <ExpelChildModal open={isExpelChildModalActive} handleCloseClick={handleOpenExpelChildModal} user={user} />,
+          <ProfileModal open={isProfileModalActive} handleCloseClick={handleOpenProfileModalClick} user={user} />,
           document.body.querySelector("#modal-container") as Element
         )
       }
       {
         typeof document !== "undefined" && user.type === "user" &&
         createPortal(
-          <ChangeChildGroupModal open={isChangeChildGroupModalActive} handleCloseClick={handleOpenChangeChildGroupModal} user={user} />,
+          <ChangeChildGroupModal open={isChangeChildGroupModalActive} handleCloseClick={handleOpenChangeChildGroupModalClick} user={user} />,
+          document.body.querySelector("#modal-container") as Element
+        )
+      }
+      {
+        typeof document !== "undefined" && user.type === "user" &&
+        createPortal(
+          <ExpelChildModal open={isExpelChildModalActive} handleCloseClick={handleOpenExpelChildModalClick} user={user} />,
           document.body.querySelector("#modal-container") as Element
         )
       }

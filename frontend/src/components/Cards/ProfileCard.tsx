@@ -2,12 +2,12 @@ import { FC, useState } from "react";
 import { Box, Paper, Typography } from "@mui/material";
 import Image from "next/image";
 import defaultUserPhoto from "@/assets/user.jpg";
-import { IUser } from "@/types/UserType";
+import { UserType } from "@/types/UserType";
 import { createPortal } from "react-dom";
 import ProfileModal from "../Modals/ProfileModal";
 
 interface Props {
-  user: IUser;
+  user: UserType;
 }
 
 const ProfileCard: FC<Props> = ({ user }) => {
