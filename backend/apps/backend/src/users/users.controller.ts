@@ -5,6 +5,7 @@ import { JwtAuthGuard } from '@app/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { SetMedicalDocumentExpirationDto } from './dto/setMedicalDocumentExpirationDto';
 import { SetInsuranceExpirationDto } from './dto/setInsuranceExpirationDto';
+import { ChangeGroupDto } from './dto/changeGroupDto';
 
 @Controller("users")
 export class UsersController {
@@ -34,6 +35,11 @@ export class UsersController {
   @Patch(":id/removeGroup")
   async removeGroup(@Param("id") id: number) {
     return await this.usersService.removeGroup(id);
+  }
+
+  @Patch(":id/changeGroup")
+  async changeGroup(@Body() changeGroupDto: ChangeGroupDto, @Param("id") id: number) {
+    return await this.usersService.changeGroup(id, changeGroupDto);
   }
 
   @Patch(":id/uploadMedicalDocumentPhoto")

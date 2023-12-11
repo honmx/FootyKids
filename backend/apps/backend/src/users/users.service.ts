@@ -6,6 +6,7 @@ import { createRoleDto } from './dto/createRoleDto';
 import { FileService, HelpersService } from '@app/common';
 import { SetMedicalDocumentExpirationDto } from './dto/setMedicalDocumentExpirationDto';
 import { SetInsuranceExpirationDto } from './dto/setInsuranceExpirationDto';
+import { ChangeGroupDto } from './dto/changeGroupDto';
 
 @Injectable()
 export class UsersService {
@@ -57,6 +58,16 @@ export class UsersService {
 
   async removeGroup(id: number) {
     const response = await lastValueFrom(this.usersClient.send("remove-group", { id }));
+
+    if (response?.status >= 400) {
+      throw new HttpException(response?.message || "Some error", response?.status || HttpStatus.BAD_REQUEST);
+    }
+
+    return response;
+  }
+
+  async changeGroup(id: number, changeGroupDto: ChangeGroupDto) {
+    const response = await lastValueFrom(this.usersClient.send("change-group", { id, ...changeGroupDto }));
 
     if (response?.status >= 400) {
       throw new HttpException(response?.message || "Some error", response?.status || HttpStatus.BAD_REQUEST);

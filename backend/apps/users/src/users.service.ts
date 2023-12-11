@@ -21,6 +21,7 @@ import { PersonTraining } from 'apps/groups/src/models/personTraining.model';
 import { RemoveGroupDto } from './dto/removeGroupDto';
 import { lastValueFrom } from 'rxjs';
 import { ClientProxy } from '@nestjs/microservices';
+import { ChangeGroupDto } from './dto/changeGroupDto';
 // import { createRoleDto } from 'apps/backend/src/users/dto/createRoleDto';
 
 @Injectable()
@@ -123,6 +124,25 @@ export class UsersService {
 
     const participants = await this.getUsersByGroupId({ groupId: user.groupId });
     return participants;
+  }
+
+  async changeGroup(dto: ChangeGroupDto) {
+    const user = await this.usersRepository.findOne({ where: { id: dto.id } });
+
+    if (!user) {
+      return new BadRequestException("Такого пользователя не существует");
+    }
+
+    await this.usersRepository.update({ groupId: dto.groupId }, { where: { id: dto.id } });
+
+    return await this.usersRepository.findOne({
+      where: { id: dto.id },
+      include: [
+        { model: Group },
+        { model: MedicalDocument },
+        { model: Insurance },
+      ]
+    });
   }
 
   async getMedicalDocumentByUserId(userId: number) {
