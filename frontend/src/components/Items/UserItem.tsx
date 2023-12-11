@@ -36,7 +36,8 @@ const UserItem: FC<Props> = ({ user, sx, ...restProps }) => {
     setIsMenuOpen(prev => !prev);
   }
 
-  const handleOpenProfileModalClick = () => {
+  const handleOpenProfileModalClick = (e?: MouseEvent<any>) => {
+    e?.stopPropagation();
     setIsProfileModalActive(prev => !prev);
   }
 
@@ -59,17 +60,22 @@ const UserItem: FC<Props> = ({ user, sx, ...restProps }) => {
       <Box
         ref={hoverRef}
         sx={{
-          cursor: "pointer",
-          "&:hover": { backgroundColor: "#F8F8F8" },
+          position: "relative",
           ...sx
         }}
-        {...restProps}
         onClick={handleOpenProfileModalClick}
+        {...restProps}
       >
         <Grid
           container
           direction="row"
-          sx={{ position: "relative", paddingTop: 1, paddingBottom: 1, alignItems: "center" }}
+          sx={{
+            paddingTop: 1,
+            paddingBottom: 1,
+            alignItems: "center",
+            cursor: "pointer",
+            "&:hover": { backgroundColor: "#F8F8F8" }
+          }}
         >
           <Grid item xs={4}>
             <Stack spacing={1} direction="row" sx={{ alignItems: "center" }}>
@@ -123,33 +129,33 @@ const UserItem: FC<Props> = ({ user, sx, ...restProps }) => {
                   </Typography>
                   <Typography fontSize={14}>{incline(5, "занятие", "занятия", "занятий")}</Typography>
                 </Stack>
-                <Box sx={{
-                  position: "absolute",
-                  top: "50%",
-                  right: 0,
-                  transform: "translateY(-50%)",
-                  zIndex: isMenuOpen ? 1000 : 10
-                }}>
-                  {
-                    (isHover || isMenuOpen) &&
-                    <IconButton color="black" onClick={handleMenuClick}>
-                      <Image src={menuDropdownIcon} alt="menu icon" />
-                    </IconButton>
-                  }
-                  <Dropdown open={isMenuOpen} sx={{ zIndex: 1000 }}>
-                    {
-                      menuButtons.map(button => (
-                        <ListItemButton key={button.text} onClick={button.onClick} sx={{ paddingTop: 0.75, paddingBottom: 0.75 }}>
-                          <Typography sx={{ margin: "0 auto", textAlign: "center" }}>{button.text}</Typography>
-                        </ListItemButton>
-                      ))
-                    }
-                  </Dropdown>
-                </Box>
               </Box>
             </Grid>
           }
         </Grid>
+        <Box sx={{
+          position: "absolute",
+          top: "50%",
+          right: 0,
+          transform: "translateY(-50%)",
+          zIndex: isMenuOpen ? 1000 : 10
+        }}>
+          {
+            (isHover || isMenuOpen) &&
+            <IconButton color="black" onClick={handleMenuClick}>
+              <Image src={menuDropdownIcon} alt="menu icon" />
+            </IconButton>
+          }
+          <Dropdown open={isMenuOpen} sx={{ zIndex: 1000 }}>
+            {
+              menuButtons.map(button => (
+                <ListItemButton key={button.text} onClick={button.onClick} sx={{ paddingTop: 0.75, paddingBottom: 0.75 }}>
+                  <Typography sx={{ margin: "0 auto", textAlign: "center" }}>{button.text}</Typography>
+                </ListItemButton>
+              ))
+            }
+          </Dropdown>
+        </Box>
       </Box>
       {
         typeof document !== "undefined" && user.type === "user" &&

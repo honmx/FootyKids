@@ -14,8 +14,7 @@ interface Props extends IModalProps {
 
 const ProfileModal: FC<Props> = ({ open, handleCloseClick, user }) => {
   return (
-    <ModalWrapper open={open} handleCloseClick={handleCloseClick} edit={true} handleEditClick={() => { }}>
-
+    <ModalWrapper open={open} handleCloseClick={handleCloseClick} edit={true} handleEditClick={() => { }} sx={{ maxWidth: "800px" }}>
       <ModalContentDirectionDeterminant>
         <ModalItemHeightDeterminantWrapper>
           <Image src={user.photo || defaultUserPhoto} alt="user photo" />

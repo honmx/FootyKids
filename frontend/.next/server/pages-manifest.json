@@ -3,6 +3,5 @@
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
   "/groups/[id]": "pages/groups/[id].js",
-  "/account": "pages/account.js",
-  "/groups": "pages/groups.js"
+  "/404": "pages/404.js"
 }

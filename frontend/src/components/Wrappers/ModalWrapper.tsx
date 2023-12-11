@@ -29,7 +29,7 @@ const ModalWrapper: FC<Props> = ({ open, handleCloseClick, edit, handleEditClick
       onClose={handleCloseClick}
       disablePortal
       disableAutoFocus={true}
-      sx={{ overflowY: "auto", paddingInline: 5, ...sx }}
+      sx={{ overflowY: "auto", paddingInline: 5, margin: "0 auto", ...sx }}
       {...restProps}
     >
       <Box
