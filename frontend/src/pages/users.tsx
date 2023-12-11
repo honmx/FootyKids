@@ -1,13 +1,15 @@
-import { FC } from "react";
+import { FC, useContext, useEffect } from "react";
 import { NextPage } from "next";
 import { Box } from "@mui/material";
 import Head from "next/head";
+import { GroupContext } from "@/contexts/groupContext";
 
 interface Props {
 
 }
 
-const GroupPage: NextPage = ({ }) => {
+const UsersPage: NextPage = ({ }) => {
+
   return (
     <>
       <Head>
@@ -16,10 +18,10 @@ const GroupPage: NextPage = ({ }) => {
         <link rel="icon" href="/footykids-icon.png" />
       </Head>
       <Box>
-        <p>groups</p>
+        <p>users</p>
       </Box>
     </>
   )
 };
 
-export default GroupPage;
+export default UsersPage;

@@ -21,7 +21,18 @@ const expelChild = async (userId: number) => {
   }
 }
 
+const changeGroup = async (userId: number, groupId: number) => {
+  try {
+    const { data: user } = await $usersAPI.patch<IChild>(`/${userId}/changeGroup`, { groupId });
+    return user;
+
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export default {
   getUsersWithoutGroup,
   expelChild,
+  changeGroup
 }

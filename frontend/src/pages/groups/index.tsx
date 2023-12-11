@@ -13,7 +13,7 @@ import Link from "next/link";
 import { useCheckAuth } from "@/hooks/useCheckAuth";
 
 interface Props {
-  groups: IGroup[];
+  groups: Pick<IGroup, "id" | "name">[];
 }
 
 const GroupsPage: INextPageWithLayout<Props> = ({ groups }) => {

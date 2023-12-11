@@ -41,7 +41,7 @@ const ModalWrapper: FC<Props> = ({ open, handleCloseClick, edit, handleEditClick
         }}
       >
         <Box sx={{ position: "relative", margin: isOverflowing ? "50px 0" : "0" }}>
-          <Paper ref={ref} sx={{ maxWidth: "1000px", overflow: "hidden" }}>
+          <Paper ref={ref} sx={{ maxWidth: "1000px", overflow: "hidden", minWidth: 280 }}>
             {children}
           </Paper>
           <IconButton onClick={handleCloseClick} sx={{

@@ -12,6 +12,8 @@ import { useOutsideClick } from "@/hooks/useOutsideClick";
 import { useHover } from "@/hooks/useHover";
 import { createPortal } from "react-dom";
 import ExpelChildModal from "../Modals/ExpelChildModal";
+import ChangeChildGroupModal from "../Modals/ChangeChildGroupModal";
+import Avatar from "../UI/Avatar";
 
 interface Props extends BoxProps {
   user: UserType;
@@ -23,6 +25,7 @@ const UserItem: FC<Props> = ({ user, ...restProps }) => {
 
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const [isExpelChildModalActive, setIsExpelChildModalActive] = useState<boolean>(false);
+  const [isChangeChildGroupModalActive, setIsChangeChildGroupModalActive] = useState<boolean>(false);
 
   useOutsideClick(hoverRef, () => setIsMenuOpen(false));
 
@@ -34,9 +37,13 @@ const UserItem: FC<Props> = ({ user, ...restProps }) => {
     setIsExpelChildModalActive(prev => !prev);
   }
 
+  const handleOpenChangeChildGroupModal = () => {
+    setIsChangeChildGroupModalActive(prev => !prev);
+  }
+
   const menuButtons = [
     { text: "Подробнее", onClick: () => { } },
-    { text: "Назначить группу", onClick: () => { } },
+    { text: "Назначить группу", onClick: handleOpenChangeChildGroupModal },
     { text: "Исключить", onClick: handleOpenExpelChildModal },
   ]
 
@@ -50,7 +57,7 @@ const UserItem: FC<Props> = ({ user, ...restProps }) => {
         >
           <Grid item xs={4}>
             <Stack spacing={1} direction="row" sx={{ alignItems: "center" }}>
-              <Image src={user.photo || userPhoto} alt="user" width={60} height={60} style={{ aspectRatio: 1, objectFit: "cover" }} />
+              <Avatar photo={user.photo} />
               <Box>
                 <Typography>{user.name.split(" ").slice(0, 2).join(" ")}</Typography>
                 {
@@ -132,6 +139,13 @@ const UserItem: FC<Props> = ({ user, ...restProps }) => {
         typeof document !== "undefined" && user.type === "user" &&
         createPortal(
           <ExpelChildModal open={isExpelChildModalActive} handleCloseClick={handleOpenExpelChildModal} user={user} />,
+          document.body.querySelector("#modal-container") as Element
+        )
+      }
+      {
+        typeof document !== "undefined" && user.type === "user" &&
+        createPortal(
+          <ChangeChildGroupModal open={isChangeChildGroupModalActive} handleCloseClick={handleOpenChangeChildGroupModal} user={user} />,
           document.body.querySelector("#modal-container") as Element
         )
       }

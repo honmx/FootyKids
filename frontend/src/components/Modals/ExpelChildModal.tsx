@@ -7,6 +7,7 @@ import Image from "next/image";
 import userPhoto from "@/assets/user.jpg";
 import usersService from "@/services/usersService";
 import { GroupContext } from "@/contexts/groupContext";
+import Avatar from "../UI/Avatar";
 
 interface Props extends IModalProps {
   user: IChild;
@@ -31,7 +32,7 @@ const ExpelChildModal: FC<Props> = ({ open, handleCloseClick, user }) => {
       <Stack spacing={3} sx={{ padding: 2 }}>
         <Typography fontSize={28}>Исключить</Typography>
         <Stack spacing={1} direction="row" sx={{ alignItems: "center" }}>
-          <Image src={user.photo || userPhoto} alt="user photo" width={60} height={60} style={{ aspectRatio: 1, objectFit: "cover" }} />
+          <Avatar photo={user.photo} />
           <Box>
             <Typography>{user.name.split(" ").slice(0, 2).join(" ")}</Typography>
             <Typography>{user.birth}</Typography>

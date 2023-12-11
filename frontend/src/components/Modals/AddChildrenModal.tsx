@@ -22,12 +22,11 @@ const AddChildrenModal: FC<Props> = ({ open, handleCloseClick }) => {
   const [selectedUsersId, setSelectedUsersId] = useState<number[]>([]);
 
   useEffect(() => {
-    if (open) return;
-
     (async () => {
       const users = await usersService.getUsersWithoutGroup() || [];
       setUsers(users);
     })();
+    setSelectedUsersId([]);
   }, [open]);
 
   const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -44,6 +43,7 @@ const AddChildrenModal: FC<Props> = ({ open, handleCloseClick }) => {
 
   const handleAddChildrenClick = async () => {
     const newParticipants = await groupsService.addChildren(group.id, selectedUsersId);
+
 
     if (newParticipants) { 
       setGroup({ ...group, participants: newParticipants });

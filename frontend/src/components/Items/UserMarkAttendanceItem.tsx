@@ -5,6 +5,7 @@ import Image from "next/image";
 import userPhoto from "@/assets/user.jpg";
 import { AttendanceType } from "@/types/AttendanceType";
 import { arrayOfAttendanceVariants } from "@/helpers/arrayOfAttendanceVariants";
+import Avatar from "../UI/Avatar";
 
 interface Props extends StackProps {
   user: IChild;
@@ -41,7 +42,7 @@ const UserMarkAttendanceItem: FC<Props> = ({ user, handleMarkAttendanceItemChang
       {...restProps}
     >
       <Stack spacing={1} direction="row" sx={{ alignItems: "center" }}>
-        <Image src={user.photo || userPhoto} alt="user photo" width={60} height={60} style={{ aspectRatio: 1, objectFit: "cover" }} />
+        <Avatar photo={user.photo} />
         <Box>
           <Typography>{user.name.split(" ").slice(0, 2).join(" ")}</Typography>
           <Typography fontSize={12}>{user.birth}</Typography>
