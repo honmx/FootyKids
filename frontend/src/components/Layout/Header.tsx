@@ -33,8 +33,12 @@ const Header: FC<Props> = ({ }) => {
   }
 
   const handleLogoutClick = async () => {
-    await authService.logout();
-    setUser(null);
+    try {
+      await authService.logout();
+      setUser(null);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (

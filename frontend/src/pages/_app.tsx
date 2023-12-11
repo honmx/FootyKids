@@ -8,7 +8,7 @@ import { createCustomTheme } from "@/styles/theme";
 import "@/styles/reset.scss";
 import { useEffect, useState } from "react";
 import { AuthContext } from "@/contexts/authContext";
-import { IUser } from "@/types/IUser";
+import { IUser } from "@/types/UserType";
 
 type CustomAppProps = {
   deviceType: "mobile" | "desktop";

@@ -7,6 +7,14 @@ import { GetUserByEmailDto } from './dto/getUserByEmailDto';
 import { GetUserByIdDto } from './dto/getUserByIdDto';
 import { ChangePasswordDto } from './dto/changePasswordDto';
 import { CreateCoachDto } from './dto/createCoachDto';
+import { GetUsersByIdDto } from './dto/getUsersByIdDto';
+import { UploadMedicalDocumentPhotoDto } from './dto/uploadMedicalDocumentPhotoDto';
+import { SetMedicalDocumentExpirationDto } from './dto/setMedicalDocumentExpirationDto';
+import { UploadInsurancePhotoDto } from './dto/uploadInsurancePhotoDto';
+import { SetInsuranceExpirationDto } from './dto/setInsuranceExpirationDto';
+import { GetUsersByGroupIdDto } from './dto/getUsersByGroupIdDto';
+import { RemoveGroupDto } from './dto/removeGroupDto';
+import { ChangeGroupDto } from './dto/changeGroupDto';
 // import { createRoleDto } from 'apps/backend/src/users/dto/createRoleDto';
 
 @Controller()
@@ -23,9 +31,30 @@ export class UsersController {
     return response;
   }
 
+  @MessagePattern("get-users-without-group")
+  getUsersWithoutGroup(@Ctx() context: RmqContext) {
+    const response = this.usersService.getUsersWithoutGroup();
+    this.rmqService.ack(context);
+    return response;
+  }
+
   @MessagePattern("create-user")
   async createUser(@Payload() dto: CreateUserDto, @Ctx() context: RmqContext) {
     const response = await this.usersService.createUser(dto);
+    this.rmqService.ack(context);
+    return response;
+  }
+
+  @MessagePattern("remove-group")
+  async removeGroup(@Payload() dto: RemoveGroupDto, @Ctx() context: RmqContext) {
+    const response = await this.usersService.removeGroup(dto);
+    this.rmqService.ack(context);
+    return response;
+  }
+
+  @MessagePattern("change-group")
+  async changeGroup(@Payload() dto: ChangeGroupDto, @Ctx() context: RmqContext) {
+    const response = await this.usersService.changeGroup(dto);
     this.rmqService.ack(context);
     return response;
   }
@@ -51,9 +80,51 @@ export class UsersController {
     return response;
   }
 
+  @MessagePattern("get-users-by-id")
+  async getUsersById(@Payload() dto: GetUsersByIdDto, @Ctx() context: RmqContext) {
+    const response = await this.usersService.getUsersById(dto);
+    this.rmqService.ack(context);
+    return response;
+  }
+
+  @MessagePattern("get-users-by-group-id")
+  async getUsersByGroupId(@Payload() dto: GetUsersByGroupIdDto, @Ctx() context: RmqContext) {
+    const response = await this.usersService.getUsersByGroupId(dto);
+    this.rmqService.ack(context);
+    return response;
+  }
+
   @MessagePattern("change-user-password")
   async changeUserPassword(@Payload() dto: ChangePasswordDto, @Ctx() context: RmqContext) {
     const response = await this.usersService.changePassword(dto);
+    this.rmqService.ack(context);
+    return response;
+  }
+
+  @MessagePattern("upload-medical-document-photo")
+  async uploadMedicalDocumentPhoto(@Payload() dto: UploadMedicalDocumentPhotoDto, @Ctx() context: RmqContext) {
+    const response = await this.usersService.uploadMedicalDocumentPhoto(dto);
+    this.rmqService.ack(context);
+    return response;
+  }
+
+  @MessagePattern("set-medical-document-expiration")
+  async setMedicalDocumentExpiration(@Payload() dto: SetMedicalDocumentExpirationDto, @Ctx() context: RmqContext) {
+    const response = await this.usersService.setMedicalDocumentExpiration(dto);
+    this.rmqService.ack(context);
+    return response;
+  }
+
+  @MessagePattern("upload-insurance-photo")
+  async uploadInsurancePhoto(@Payload() dto: UploadInsurancePhotoDto, @Ctx() context: RmqContext) {
+    const response = await this.usersService.uploadInsurancePhoto(dto);
+    this.rmqService.ack(context);
+    return response;
+  }
+
+  @MessagePattern("set-insurance-expiration")
+  async setInsuranceExpiration(@Payload() dto: SetInsuranceExpirationDto, @Ctx() context: RmqContext) {
+    const response = await this.usersService.setInsuranceExpiration(dto);
     this.rmqService.ack(context);
     return response;
   }

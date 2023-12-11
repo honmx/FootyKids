@@ -5,6 +5,10 @@ import NextLink, { LinkProps } from "next/link";
 import { Ref, forwardRef } from "react";
 import parser from "ua-parser-js";
 import mediaQuery from "css-mediaquery";
+import Image from "next/image";
+import emptyCheckBoxIcon from "@/assets/empty checkbox icon.svg";
+import checkedCheckBoxIcon from "@/assets/checked checkbox icon.svg";
+import emptyRadioIcon from "@/assets/empty radio icon.svg";
 
 const font = Noto_Sans({
   subsets: ["cyrillic", "latin"],
@@ -249,6 +253,22 @@ export const createCustomTheme = ({ deviceType }: ICreateThemeProps) => {
         }
       },
       // UI COMPONENTS
+      MuiFormControlLabel: {
+        styleOverrides: {
+          root: {
+            marginInline: 7.5,
+          },
+          label: {
+            fontSize: 14
+          }
+        }
+      },
+      MuiCheckbox: {
+        defaultProps: {
+          checkedIcon: <Image src={checkedCheckBoxIcon} alt="checked checkbox" width={18} height={18} />,
+          icon: <Image src={emptyCheckBoxIcon} alt="empty checkbox" width={18} height={18} />
+        }
+      },
       MuiTextField: {
         styleOverrides: {
           root: {
@@ -279,6 +299,34 @@ export const createCustomTheme = ({ deviceType }: ICreateThemeProps) => {
         styleOverrides: {
           root: {
             fontWeight: 300
+          }
+        }
+      },
+      MuiSelect: {
+        defaultProps: {
+          MenuProps: {
+            sx: {
+              "& .MuiList-root": {
+                overflow: "auto",
+                maxHeight: 200,
+                padding: 0,
+              },
+              "& .MuiMenuItem-root": {
+                padding: 1,
+                minHeight: 20,
+                fontWeight: 300
+              }
+            }
+          }
+        },
+        styleOverrides: {
+          select: {
+            paddingTop: 10,
+            paddingBottom: 10,
+            fontWeight: 300,
+          },
+          icon: {
+            transition: "all 0.15s ease",
           }
         }
       },
@@ -359,6 +407,16 @@ export const createCustomTheme = ({ deviceType }: ICreateThemeProps) => {
             }
           },
         ]
+      },
+      MuiListItemButton: {
+        styleOverrides: {
+          root: {
+            transition: "all 0.15s ease",
+            "&:hover": {
+              color: paletteTheme.palette.typography.main
+            }
+          }
+        }
       },
       MuiLink: {
         defaultProps: {

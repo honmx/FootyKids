@@ -54,6 +54,24 @@
       "compilerOptions": {
         "tsConfigPath": "apps/users/tsconfig.app.json"
       }
+    },
+    "groups": {
+      "type": "application",
+      "root": "apps/groups",
+      "entryFile": "main",
+      "sourceRoot": "apps/groups/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/groups/tsconfig.app.json"
+      }
+    },
+    "places": {
+      "type": "application",
+      "root": "apps/places",
+      "entryFile": "main",
+      "sourceRoot": "apps/places/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/places/tsconfig.app.json"
+      }
     }
   }
 }
