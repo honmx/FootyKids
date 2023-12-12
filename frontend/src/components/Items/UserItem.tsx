@@ -19,9 +19,10 @@ import { getNameAndSurname } from "@/helpers/getNameAndSurname";
 
 interface Props extends BoxProps {
   user: UserType;
+  renderType?: boolean;
 }
 
-const UserItem: FC<Props> = ({ user, sx, ...restProps }) => {
+const UserItem: FC<Props> = ({ user, renderType = false, sx, ...restProps }) => {
 
   const { hoverRef, isHover, setIsHover } = useHover();
 
@@ -105,7 +106,15 @@ const UserItem: FC<Props> = ({ user, sx, ...restProps }) => {
             </Stack>
           </Grid>
           <Grid item xs={1} />
-          <Grid item xs={3}>
+          {
+            renderType &&
+            <Grid item xs={2}>
+              {user.type === "user" && <Typography>Ребенок</Typography>}
+              {user.type === "coach" && user.role?.value === "SUPER_ADMIN" && <Typography>Главный тренер</Typography>}
+              {user.type === "coach" && (user.role?.value === "ADMIN" || !user.role) && <Typography>Тренер</Typography>}
+            </Grid>
+          }
+          <Grid item xs={renderType ? 2 : 3}>
             {
               user.type === "user" && (
                 user.group
@@ -115,9 +124,9 @@ const UserItem: FC<Props> = ({ user, sx, ...restProps }) => {
             }
             {
               user.type === "coach" && <>
-                { user.role?.value === "SUPER_ADMIN" && <Typography>Главный тренер</Typography> }
-                { user.role?.value === "ADMIN" && <Typography>Тренер</Typography> }
-                { user.role === null && <Typography>Без роли</Typography> }
+                {user.role?.value === "SUPER_ADMIN" && <Typography>Главный тренер</Typography>}
+                {user.role?.value === "ADMIN" && <Typography>Тренер</Typography>}
+                {user.role === null && <Typography>Без роли</Typography>}
               </>
             }
           </Grid>

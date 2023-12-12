@@ -66,6 +66,7 @@ const UsersPage: INextPageWithLayout<Props> = ({ }) => {
                       <UserItem
                         key={user.id}
                         user={user}
+                        renderType
                         sx={{ borderBottom: i !== filteredUsers.length - 1 ? "1px solid #DDD" : 0 }}
                       />
                     ))
