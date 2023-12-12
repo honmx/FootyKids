@@ -22,7 +22,7 @@ interface Props extends BoxProps {
 
 const UserItem: FC<Props> = ({ user, sx, ...restProps }) => {
 
-  const { hoverRef, isHover } = useHover();
+  const { hoverRef, isHover, setIsHover } = useHover();
 
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const [isProfileModalActive, setIsProfileModalActive] = useState<boolean>(false);
@@ -31,28 +31,42 @@ const UserItem: FC<Props> = ({ user, sx, ...restProps }) => {
 
   useOutsideClick(hoverRef, () => setIsMenuOpen(false));
 
-  const handleMenuClick = (e: MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation();
+  const clearStatesAndStopPropagation = (e?: MouseEvent<HTMLDivElement>) => {
+    e?.stopPropagation();
+    setIsMenuOpen(false);
+    setIsHover(false);
+  }
+
+  const handleMenuClick = () => {
     setIsMenuOpen(prev => !prev);
   }
 
-  const handleOpenProfileModalClick = (e?: MouseEvent<any>) => {
+  const handleOpenProfileModalClick = (e?: MouseEvent<HTMLDivElement>) => {
+    if ((e?.target as Element).id !== "menu-btn" && (e?.target as Element).id !== "menu-img") {
+      setIsProfileModalActive(prev => !prev);
+      clearStatesAndStopPropagation(e);
+    }
+  }
+
+  const handleOpenChangeRoleModalClick = (e?: MouseEvent<HTMLDivElement>) => {
     e?.stopPropagation();
-    setIsProfileModalActive(prev => !prev);
   }
 
-  const handleOpenChangeChildGroupModalClick = () => {
+  const handleOpenChangeChildGroupModalClick = (e?: MouseEvent<HTMLDivElement>) => {
     setIsChangeChildGroupModalActive(prev => !prev);
+    clearStatesAndStopPropagation(e);
   }
 
-  const handleOpenExpelChildModalClick = () => {
+  const handleOpenExpelChildModalClick = (e?: MouseEvent<HTMLDivElement>) => {
     setIsExpelChildModalActive(prev => !prev);
+    clearStatesAndStopPropagation(e);
   }
 
   const menuButtons = [
-    { text: "Подробнее", onClick: handleOpenProfileModalClick },
-    { text: "Назначить группу", onClick: handleOpenChangeChildGroupModalClick },
-    { text: "Исключить", onClick: handleOpenExpelChildModalClick },
+    { text: "Подробнее", onClick: handleOpenProfileModalClick, render: true },
+    { text: "Назначить роль", onClick: handleOpenChangeRoleModalClick, render: user.type === "coach" },
+    { text: "Назначить группу", onClick: handleOpenChangeChildGroupModalClick, render: user.type === "user" },
+    { text: "Исключить", onClick: handleOpenExpelChildModalClick, render: user.type === "user" && user.group !== null },
   ]
 
   return (
@@ -90,12 +104,22 @@ const UserItem: FC<Props> = ({ user, sx, ...restProps }) => {
             </Stack>
           </Grid>
           <Grid item xs={1} />
-          {
-            user.type === "user" &&
-            <Grid item xs={3}>
-              <Typography>{user.group.name}</Typography>
-            </Grid>
-          }
+          <Grid item xs={3}>
+            {
+              user.type === "user" && (
+                user.group
+                  ? <Typography>{user.group.name}</Typography>
+                  : <Typography>Без группы</Typography>
+              )
+            }
+            {
+              user.type === "coach" && <>
+                { user.role?.value === "SUPER_ADMIN" && <Typography>Главный тренер</Typography> }
+                { user.role?.value === "ADMIN" && <Typography>Тренер</Typography> }
+                { user.role === null && <Typography>Без роли</Typography> }
+              </>
+            }
+          </Grid>
           {
             user.type === "user" &&
             <Grid item xs={3}>
@@ -142,13 +166,14 @@ const UserItem: FC<Props> = ({ user, sx, ...restProps }) => {
         }}>
           {
             (isHover || isMenuOpen) &&
-            <IconButton color="black" onClick={handleMenuClick}>
-              <Image src={menuDropdownIcon} alt="menu icon" />
+            <IconButton color="black" onClick={handleMenuClick} id="menu-btn">
+              <Image src={menuDropdownIcon} alt="menu icon" id="menu-img" />
             </IconButton>
           }
           <Dropdown open={isMenuOpen} sx={{ zIndex: 1000 }}>
             {
               menuButtons.map(button => (
+                button.render &&
                 <ListItemButton key={button.text} onClick={button.onClick} sx={{ paddingTop: 0.75, paddingBottom: 0.75 }}>
                   <Typography sx={{ margin: "0 auto", textAlign: "center" }}>{button.text}</Typography>
                 </ListItemButton>
@@ -158,7 +183,7 @@ const UserItem: FC<Props> = ({ user, sx, ...restProps }) => {
         </Box>
       </Box>
       {
-        typeof document !== "undefined" && user.type === "user" &&
+        typeof document !== "undefined" &&
         createPortal(
           <ProfileModal open={isProfileModalActive} handleCloseClick={handleOpenProfileModalClick} user={user} />,
           document.body.querySelector("#modal-container") as Element

@@ -62,6 +62,7 @@ const AddChildrenModal: FC<Props> = ({ open, handleCloseClick }) => {
         <Box>
           {
             users
+              .sort((a, b) => a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1)
               .filter(user => user.name.split(" ").slice(0, 2).join(" ").toLowerCase().includes(name.toLowerCase()))
               .map((user, i) => (
                 <UserSelectItem

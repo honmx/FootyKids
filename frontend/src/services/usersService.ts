@@ -1,5 +1,16 @@
 import { $usersAPI } from "@/http/usersAxios"
 import { IChild } from "@/types/IChild"
+import { UserType } from "@/types/UserType";
+
+const getAllUsers = async () => {
+  try {
+    const { data: users } = await $usersAPI.get<UserType[]>(`/`);
+    return users;
+
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 const getUsersWithoutGroup = async () => {
   try {
@@ -13,8 +24,8 @@ const getUsersWithoutGroup = async () => {
 
 const expelChild = async (userId: number) => {
   try {
-    const { data: participants } = await $usersAPI.patch<IChild[]>(`/${userId}/removeGroup`);
-    return participants;
+    const { data: expelledChild } = await $usersAPI.patch<IChild>(`/${userId}/removeGroup`);
+    return expelledChild;
 
   } catch (error) {
     console.log(error);
@@ -32,6 +43,7 @@ const changeGroup = async (userId: number, groupId: number) => {
 }
 
 export default {
+  getAllUsers,
   getUsersWithoutGroup,
   expelChild,
   changeGroup

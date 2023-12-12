@@ -10,6 +10,7 @@ import userPhoto from "@/assets/user.jpg";
 import Avatar from "../UI/Avatar";
 import usersService from "@/services/usersService";
 import { GroupContext } from "@/contexts/groupContext";
+import { UsersContext } from "@/contexts/usersContext";
 
 interface Props extends IModalProps {
   user: IChild;
@@ -18,12 +19,13 @@ interface Props extends IModalProps {
 const ChangeChildGroupModal: FC<Props> = ({ open, handleCloseClick, user }) => {
 
   const { group, setGroup } = useContext(GroupContext);
+  const { users, setUsers } = useContext(UsersContext);
 
   const [groups, setGroups] = useState<Pick<IGroup, "id" | "name">[]>([]);
-  const [selectedGroupId, setSelectedGroupId] = useState<number>(user.group.id);
+  const [selectedGroupId, setSelectedGroupId] = useState<number>(user.group?.id || groups[0]?.id || 0);
 
   useEffect(() => {
-    setSelectedGroupId(user.group.id);
+    setSelectedGroupId(user.group?.id || groups[0]?.id || 0);
   }, [open]);
 
   useEffect(() => {
@@ -38,14 +40,16 @@ const ChangeChildGroupModal: FC<Props> = ({ open, handleCloseClick, user }) => {
   }
 
   const handleChangeGroupClick = async () => {
-    if (selectedGroupId === user.group.id) return;
+    if (selectedGroupId === user.group?.id) return;
 
     const userWithChangedGroup = await usersService.changeGroup(user.id, selectedGroupId);
-    console.log(userWithChangedGroup);
 
     if (!userWithChangedGroup) return;
 
     setGroup({ ...group, participants: group?.participants?.filter(user => user.id !== userWithChangedGroup.id) });
+    setUsers(users.map(user => user.id === userWithChangedGroup.id ? userWithChangedGroup : user));
+
+    handleCloseClick();
   }
 
   return (

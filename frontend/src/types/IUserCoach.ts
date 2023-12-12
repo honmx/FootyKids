@@ -3,5 +3,5 @@ import { IRole } from "./IRole";
 
 export interface IUserCoach extends ICommonUserProps {
   type: "coach";
-  role: IRole<"ADMIN">;
+  role: IRole<"ADMIN"> | null;
 }

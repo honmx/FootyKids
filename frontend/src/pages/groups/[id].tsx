@@ -26,7 +26,7 @@ interface Props {
 
 const GroupPage: INextPageWithLayout<Props> = ({ group }) => {
 
-  const { user, isLoading } = useCheckAuth  ({ routeToPushIfNoAuth: "/auth" });
+  const { user, isLoading } = useCheckAuth({ routeToPushIfNoAuth: "/auth" });
 
   const [groupFromContext, setGroupFromContext] = useState<IGroup>(sortGroupSchedules(group));
   const [isChangeGroupNameModalActive, setIsChangeGroupNameModalActive] = useState<boolean>(false);
@@ -34,8 +34,6 @@ const GroupPage: INextPageWithLayout<Props> = ({ group }) => {
   const handleOpenChangeGroupNameModal = () => {
     setIsChangeGroupNameModalActive(prev => !prev);
   }
-
-  // console.log(groupFromContext);
 
   if (isLoading || !user) return null;
 
