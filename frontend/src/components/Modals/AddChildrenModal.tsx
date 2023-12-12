@@ -8,6 +8,8 @@ import usersService from "@/services/usersService";
 import UserSelectItem from "../Items/UserSelectItem";
 import groupsService from "@/services/groupsService";
 import { GroupContext } from "@/contexts/groupContext";
+import { useFilteredUsers } from "@/hooks/useFilteredUsers";
+import { getNameAndSurname } from "@/helpers/getNameAndSurname";
 
 interface Props extends IModalProps {
 
@@ -17,9 +19,11 @@ const AddChildrenModal: FC<Props> = ({ open, handleCloseClick }) => {
 
   const { group, setGroup } = useContext(GroupContext);
 
+  const [users, setUsers] = useState<IChild[]>([]);
   const [name, setName] = useState<string>("");
-  const [users, setUsers] = useState<Pick<IChild, "id" | "name" | "photo" | "birth">[]>([]);
   const [selectedUsersId, setSelectedUsersId] = useState<number[]>([]);
+
+  const { filteredUsers } = useFilteredUsers(users, name);
 
   useEffect(() => {
     (async () => {
@@ -61,15 +65,14 @@ const AddChildrenModal: FC<Props> = ({ open, handleCloseClick }) => {
         </Stack>
         <Box>
           {
-            users
-              .sort((a, b) => a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1)
-              .filter(user => user.name.split(" ").slice(0, 2).join(" ").toLowerCase().includes(name.toLowerCase()))
+            filteredUsers
+              .sort((a, b) => getNameAndSurname(a.name).toLowerCase() > getNameAndSurname(b.name).toLowerCase() ? 1 : -1)
               .map((user, i) => (
                 <UserSelectItem
                   key={user.id}
-                  user={user}
+                  user={user as Pick<IChild, "id" | "name" | "photo" | "birth">}
                   handleSelectChild={handleSelectChild}
-                  sx={{ borderBottom: i < users.length - 1 ? "1px solid #DDD" : 0 }}
+                  sx={{ borderBottom: i < filteredUsers.length - 1 ? "1px solid #DDD" : 0 }}
                 />
               ))
           }

@@ -14,7 +14,7 @@ const getAllUsers = async () => {
 
 const getUsersWithoutGroup = async () => {
   try {
-    const { data: users } = await $usersAPI.get<Pick<IChild, "id" | "name" | "photo" | "birth">[]>("/withoutGroup");
+    const { data: users } = await $usersAPI.get<IChild[]>("/withoutGroup");
     return users;
 
   } catch (error) {

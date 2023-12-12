@@ -1,11 +1,8 @@
 import { ChangeEvent, FC, MouseEvent, MouseEventHandler, useState } from "react";
 import { IChild } from "@/types/IChild";
 import { Box, Checkbox, Stack, StackProps, Typography } from "@mui/material";
-import Image from "next/image";
-import userPhoto from "@/assets/user.jpg";
-import emptyCheckBoxIcon from "@/assets/empty checkbox icon.svg";
-import checkedCheckBoxIcon from "@/assets/checked checkbox icon.svg";
 import Avatar from "../UI/Avatar";
+import { getNameAndSurname } from "@/helpers/getNameAndSurname";
 
 interface Props extends StackProps {
   user: Pick<IChild, "id" | "name" | "photo" | "birth">;
@@ -45,7 +42,7 @@ const UserSelectItem: FC<Props> = ({ user, handleSelectChild, sx, ...restProps }
       <Stack spacing={1} direction="row" sx={{ alignItems: "center" }}>
         <Avatar photo={user.photo} />
         <Box>
-          <Typography>{user.name.split(" ").slice(0, 2).join(" ")}</Typography>
+          <Typography>{getNameAndSurname(user.name)}</Typography>
           <Typography fontSize={12}>{user.birth}</Typography>
         </Box>
       </Stack>

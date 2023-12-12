@@ -11,6 +11,7 @@ import Avatar from "../UI/Avatar";
 import usersService from "@/services/usersService";
 import { GroupContext } from "@/contexts/groupContext";
 import { UsersContext } from "@/contexts/usersContext";
+import { getNameAndSurname } from "@/helpers/getNameAndSurname";
 
 interface Props extends IModalProps {
   user: IChild;
@@ -60,7 +61,7 @@ const ChangeChildGroupModal: FC<Props> = ({ open, handleCloseClick, user }) => {
           <Stack spacing={1} direction="row" sx={{ alignItems: "center" }}>
             <Avatar photo={user.photo} />
             <Box>
-              <Typography>{user.name.split(" ").slice(0, 2).join(" ")}</Typography>
+              <Typography>{getNameAndSurname(user.name)}</Typography>
               <Typography>{user.birth}</Typography>
             </Box>
           </Stack>

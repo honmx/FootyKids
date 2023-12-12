@@ -15,6 +15,7 @@ import ExpelChildModal from "../Modals/ExpelChildModal";
 import ChangeChildGroupModal from "../Modals/ChangeChildGroupModal";
 import Avatar from "../UI/Avatar";
 import ProfileModal from "../Modals/ProfileModal";
+import { getNameAndSurname } from "@/helpers/getNameAndSurname";
 
 interface Props extends BoxProps {
   user: UserType;
@@ -95,7 +96,7 @@ const UserItem: FC<Props> = ({ user, sx, ...restProps }) => {
             <Stack spacing={1} direction="row" sx={{ alignItems: "center" }}>
               <Avatar photo={user.photo} />
               <Box>
-                <Typography>{user.name.split(" ").slice(0, 2).join(" ")}</Typography>
+                <Typography>{getNameAndSurname(user.name)}</Typography>
                 {
                   user.type === "user" &&
                   <Typography fontSize={12}>{user.birth}</Typography>

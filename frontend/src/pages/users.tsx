@@ -1,4 +1,4 @@
-import { FC, useContext, useEffect, useState } from "react";
+import { ChangeEvent, FC, useContext, useEffect, useState } from "react";
 import { GetStaticProps, NextPage } from "next";
 import { Box, Container, Paper, Select, Stack, TextField, Typography } from "@mui/material";
 import Head from "next/head";
@@ -12,6 +12,7 @@ import { UserType } from "@/types/UserType";
 import { useCheckAuth } from "@/hooks/useCheckAuth";
 import UserItem from "@/components/Items/UserItem";
 import { UsersContext } from "@/contexts/usersContext";
+import { useFilteredUsers } from "@/hooks/useFilteredUsers";
 
 interface Props {
 
@@ -22,6 +23,9 @@ const UsersPage: INextPageWithLayout<Props> = ({ }) => {
   const { user, isLoading } = useCheckAuth({ routeToPushIfNoAuth: "/auth" });
 
   const [users, setUsers] = useState<UserType[]>([]);
+  const [name, setName] = useState<string>("");
+
+  const { filteredUsers } = useFilteredUsers(users, name);
 
   useEffect(() => {
     (async () => {
@@ -32,6 +36,10 @@ const UsersPage: INextPageWithLayout<Props> = ({ }) => {
       setUsers(users);
     })()
   }, []);
+
+  const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setName(e.target.value);
+  }
 
   if (isLoading || !user) return null;
 
@@ -48,18 +56,19 @@ const UsersPage: INextPageWithLayout<Props> = ({ }) => {
             <Stack spacing={3}>
               <Stack spacing={3} direction="row" sx={{ justifyContent: "space-between", alignItems: "flex-end" }}>
                 <Typography fontSize={28}>Пользователи</Typography>
-                <TextField variant="standard" placeholder="Имя/фамилия" />
+                <TextField variant="standard" placeholder="Имя/фамилия" value={name} onChange={handleNameChange} />
                 <Select />
               </Stack>
               <Box>
                 {
-                  users.map((user, i) => (
-                    <UserItem
-                      key={user.id}
-                      user={user}
-                      sx={{ borderBottom: i !== users.length - 1 ? "1px solid #DDD" : 0 }}
-                    />
-                  ))
+                  filteredUsers
+                    .map((user, i) => (
+                      <UserItem
+                        key={user.id}
+                        user={user}
+                        sx={{ borderBottom: i !== filteredUsers.length - 1 ? "1px solid #DDD" : 0 }}
+                      />
+                    ))
                 }
               </Box>
             </Stack>
