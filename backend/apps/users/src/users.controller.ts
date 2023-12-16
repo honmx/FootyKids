@@ -15,6 +15,7 @@ import { SetInsuranceExpirationDto } from './dto/setInsuranceExpirationDto';
 import { GetUsersByGroupIdDto } from './dto/getUsersByGroupIdDto';
 import { RemoveGroupDto } from './dto/removeGroupDto';
 import { ChangeGroupDto } from './dto/changeGroupDto';
+import { ChangeRoleDto } from './dto/changeRoleDto';
 // import { createRoleDto } from 'apps/backend/src/users/dto/createRoleDto';
 
 @Controller()
@@ -101,6 +102,13 @@ export class UsersController {
     return response;
   }
 
+  @MessagePattern("change-role")
+  async changeRole(@Payload() dto: ChangeRoleDto, @Ctx() context: RmqContext) {
+    const response = await this.usersService.changeRole(dto);
+    this.rmqService.ack(context);
+    return response;
+  }
+
   @MessagePattern("upload-medical-document-photo")
   async uploadMedicalDocumentPhoto(@Payload() dto: UploadMedicalDocumentPhotoDto, @Ctx() context: RmqContext) {
     const response = await this.usersService.uploadMedicalDocumentPhoto(dto);
@@ -125,6 +133,13 @@ export class UsersController {
   @MessagePattern("set-insurance-expiration")
   async setInsuranceExpiration(@Payload() dto: SetInsuranceExpirationDto, @Ctx() context: RmqContext) {
     const response = await this.usersService.setInsuranceExpiration(dto);
+    this.rmqService.ack(context);
+    return response;
+  }
+
+  @MessagePattern("get-coach-roles")
+  async getCoachRoles(@Ctx() context: RmqContext) {
+    const response = await this.usersService.getCoachRoles();
     this.rmqService.ack(context);
     return response;
   }

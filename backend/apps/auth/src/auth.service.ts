@@ -96,6 +96,7 @@ export class AuthService {
     try {
       const user = this.jwtService.verify(refreshToken, { secret: this.configServce.get<string>("JWT_PRIVATE_REFRESH_KEY") });
       return user;
+
     } catch (error) {
       return null;
     }

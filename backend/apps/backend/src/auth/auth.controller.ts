@@ -48,10 +48,10 @@ export class AuthController {
   }
 
   @Get("/validateRefreshToken")
-  async validateRefreshToken(@Req() req: Request) {
+  async validateRefreshToken(@Req() req: Request, res: Response) {
     const refreshToken = req.headers.cookie?.split("=")[1] || "";
 
-    const response = await this.authService.validateRefreshToken(refreshToken);
+    const response = await this.authService.validateRefreshToken(refreshToken, res);
     return response;
   }
 

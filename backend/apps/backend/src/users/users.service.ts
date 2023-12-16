@@ -7,6 +7,7 @@ import { FileService, HelpersService } from '@app/common';
 import { SetMedicalDocumentExpirationDto } from './dto/setMedicalDocumentExpirationDto';
 import { SetInsuranceExpirationDto } from './dto/setInsuranceExpirationDto';
 import { ChangeGroupDto } from './dto/changeGroupDto';
+import { ChangeRoleDto } from './dto/changeRoleDto';
 
 @Injectable()
 export class UsersService {
@@ -75,6 +76,16 @@ export class UsersService {
 
     return response;
   }
+  
+  async changeRole(id: number, changeRoleDto: ChangeRoleDto) {
+    const response = await lastValueFrom(this.usersClient.send("change-role", { id, ...changeRoleDto }));
+  
+    if (response?.status >= 400) {
+      throw new HttpException(response?.message || "Some error", response?.status || HttpStatus.BAD_REQUEST);
+    }
+  
+    return response;
+  }
 
   async uploadMedicalDocumentPhoto(id: number, photo: Express.Multer.File) {
     const uploadedPhoto = await this.fileService.uploadFile(
@@ -137,6 +148,17 @@ export class UsersService {
 
     return response;
   }
+
+  async getCoachRoles() {
+    const response = await lastValueFrom(this.usersClient.send("get-coach-roles", {}));
+
+    if (response?.status >= 400) {
+      throw new HttpException(response?.message || "Some error", response?.status || HttpStatus.BAD_REQUEST);
+    }
+
+    return response;
+  }
+
   // async createRole(createRoleDto: createRoleDto) {
   //   return await lastValueFrom(this.usersClient.send("create-role", createRoleDto));
   // }
