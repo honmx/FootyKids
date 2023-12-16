@@ -1,6 +1,6 @@
 import { ChangeEvent, FC, useContext, useEffect, useState } from "react";
 import { GetStaticProps, NextPage } from "next";
-import { Box, Container, Paper, Select, Stack, TextField, Typography } from "@mui/material";
+import { Box, Container, MenuItem, Paper, Select, SelectChangeEvent, Stack, TextField, Typography } from "@mui/material";
 import Head from "next/head";
 import { INextPageWithLayout } from "@/types/INextPageWithLayout";
 import Layout from "@/components/Layout/Layout";
@@ -13,6 +13,8 @@ import { useCheckAuth } from "@/hooks/useCheckAuth";
 import UserItem from "@/components/Items/UserItem";
 import { UsersContext } from "@/contexts/usersContext";
 import { useFilteredUsers } from "@/hooks/useFilteredUsers";
+import { selectUserFilterValues } from "@/data/selectUserFilterValues";
+import { useRequest } from "@/hooks/useRequest";
 
 interface Props {
 
@@ -22,26 +24,29 @@ const UsersPage: INextPageWithLayout<Props> = ({ }) => {
 
   const { user, isLoading } = useCheckAuth({ routeToPushIfNoAuth: "/auth" });
 
-  const [users, setUsers] = useState<UserType[]>([]);
   const [name, setName] = useState<string>("");
+  const [selectValueId, setSelectValueId] = useState<number>(selectUserFilterValues[0].id);
 
-  const { filteredUsers } = useFilteredUsers(users, name);
+  const {
+    data: users,
+    setData: setUsers,
+    isLoading: isUsersLoading,
+    error
+  } = useRequest(() => usersService.getAllUsers(), []);
 
-  useEffect(() => {
-    (async () => {
-      const users = await usersService.getAllUsers();
-
-      if (!users) return;
-
-      setUsers(users);
-    })()
-  }, []);
+  const { filteredUsers } = useFilteredUsers(users, name, selectValueId);
 
   const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
   }
 
-  if (isLoading || !user) return null;
+  const handleSelectChange = (e: SelectChangeEvent<number>) => {
+    setSelectValueId(Number(e.target.value));
+  }
+  
+  if (isLoading || isUsersLoading) return <Typography>Loading...</Typography>
+
+  if (!user) return null;
 
   return (
     <>
@@ -54,11 +59,17 @@ const UsersPage: INextPageWithLayout<Props> = ({ }) => {
         <Container sx={{ height: "100%" }}>
           <Paper sx={{ padding: 2, overflow: "visible" }}>
             <Stack spacing={3}>
-              <Stack spacing={3} direction="row" sx={{ justifyContent: "space-between", alignItems: "flex-end" }}>
+              <Stack spacing={3} direction="row" sx={{ justifyContent: "space-between", alignItems: "center" }}>
                 <Typography fontSize={28}>Пользователи</Typography>
-                <TextField variant="standard" placeholder="Имя/фамилия" value={name} onChange={handleNameChange} />
-                <Select />
+                <Select value={selectValueId} onChange={handleSelectChange}>
+                  {
+                    selectUserFilterValues.map(filterValue => (
+                      <MenuItem key={filterValue.id} value={filterValue.id}>{filterValue.text}</MenuItem>
+                    ))
+                  }
+                </Select>
               </Stack>
+              <TextField variant="standard" placeholder="Имя/фамилия" value={name} onChange={handleNameChange} sx={{ width: "200px" }} />
               <Box>
                 {
                   filteredUsers

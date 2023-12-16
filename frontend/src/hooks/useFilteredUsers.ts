@@ -1,13 +1,10 @@
+import { selectUserFilterValues } from "@/data/selectUserFilterValues";
 import { getNameAndSurname } from "@/helpers/getNameAndSurname";
 import { IChild } from "@/types/IChild";
 import { UserType } from "@/types/UserType";
 import { useEffect, useState } from "react";
 
-interface ISelectValue {
-
-}
-
-export const useFilteredUsers = (users: UserType[], name: string, selectValue?: ISelectValue) => {
+export const useFilteredUsers = (users: UserType[], name: string, selectValueId: number) => {
 
   const [filteredUsers, setFilteredUsers] = useState<UserType[]>(users);
 
@@ -15,8 +12,9 @@ export const useFilteredUsers = (users: UserType[], name: string, selectValue?: 
     setFilteredUsers(
       users
         .filter(user => getNameAndSurname(user.name).toLowerCase().includes(name.toLowerCase()))
+        .filter(selectUserFilterValues.find(value => value.id === selectValueId)?.filterFn || (() => true))
     )
-  }, [users, name, selectValue]);
+  }, [users, name, selectValueId]);
 
   return { filteredUsers };
 }

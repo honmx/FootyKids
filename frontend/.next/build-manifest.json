@@ -22,10 +22,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/groups/[id]": [
+    "/account": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/groups/[id].js"
+      "static/chunks/pages/account.js"
     ],
     "/users": [
       "static/chunks/webpack.js",

@@ -6,10 +6,11 @@ import TrainingByDayItem from "../Items/TrainingByDayItem";
 import { ITrainingByDay } from "@/types/ITrainingByDay";
 import { IPlace } from "@/types/IPlace";
 import { useTrainingChange } from "@/hooks/useTrainingChange";
-import { usePlaces } from "@/hooks/usePlaces";
 import { useTrainingRequest } from "@/hooks/useTrainingRequest";
 import groupsService from "@/services/groupsService";
 import { GroupContext } from "@/contexts/groupContext";
+import { useRequest } from "@/hooks/useRequest";
+import placesService from "@/services/placesService";
 
 interface Props extends IModalProps {
   date: string;
@@ -21,7 +22,7 @@ const CreateTrainingModal: FC<Props> = ({ open, handleCloseClick, date }) => {
 
   const [error, setError] = useState<string>("");
 
-  const places = usePlaces();
+  const { data: places, isLoading, error: placesError } = useRequest(() => placesService.getPlaces(), []);
 
   const training = {
     date,

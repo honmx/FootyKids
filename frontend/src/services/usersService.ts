@@ -1,15 +1,13 @@
 import { $usersAPI } from "@/http/usersAxios"
 import { IChild } from "@/types/IChild"
+import { IRole } from "@/types/IRole";
+import { IUserCoach } from "@/types/IUserCoach";
+import { IUserGeneralCoach } from "@/types/IUserGeneralCoach";
 import { UserType } from "@/types/UserType";
 
 const getAllUsers = async () => {
-  try {
-    const { data: users } = await $usersAPI.get<UserType[]>(`/`);
-    return users;
-
-  } catch (error) {
-    console.log(error);
-  }
+  const { data: users } = await $usersAPI.get<UserType[]>(`/`);
+  return users;
 }
 
 const getUsersWithoutGroup = async () => {
@@ -42,9 +40,26 @@ const changeGroup = async (userId: number, groupId: number) => {
   }
 }
 
+const getCoachRoles = async () => {
+  const { data: roles } = await $usersAPI.get<IRole[]>(`/coachRoles`);
+  return roles;
+}
+
+const changeRole = async (userId: number, roleId: number) => {
+  try {
+    const { data: user } = await $usersAPI.patch<IUserCoach | IUserGeneralCoach>(`/${userId}/changeRole`, { roleId });
+    return user;
+    
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export default {
   getAllUsers,
   getUsersWithoutGroup,
   expelChild,
-  changeGroup
+  changeGroup,
+  getCoachRoles,
+  changeRole,
 }

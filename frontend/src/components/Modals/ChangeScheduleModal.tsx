@@ -11,7 +11,7 @@ import TrainingByDayOfTheWeekItem from "../Items/TrainingByDayOfTheWeekItem";
 import { IPlace } from "@/types/IPlace";
 import placesService from "@/services/placesService";
 import groupsService from "@/services/groupsService";
-import { usePlaces } from "@/hooks/usePlaces";
+import { useRequest } from "@/hooks/useRequest";
 
 interface Props extends IModalProps {
 
@@ -27,10 +27,10 @@ const ChangeScheduleModal: FC<Props> = ({ open, handleCloseClick }) => {
   const [trainings, setTrainings] = useState<ITrainingByDayOfTheWeek[]>(currentSchedule?.trainingsByDayOfTheWeek.sort((a, b) =>
     (a.dayOfTheWeek === 0 ? 7 : a.dayOfTheWeek) - (b.dayOfTheWeek === 0 ? 7 : b.dayOfTheWeek)
   ) || []);
-  
+
   const [error, setError] = useState<string>("");
 
-  const places = usePlaces();
+  const { data: places, isLoading, error: placesError } = useRequest(() => placesService.getPlaces(), []);
 
   useEffect(() => {
     setTrainings(currentSchedule?.trainingsByDayOfTheWeek.sort((a, b) =>
@@ -75,6 +75,8 @@ const ChangeScheduleModal: FC<Props> = ({ open, handleCloseClick }) => {
 
     handleCloseClick();
   }
+
+  if (isLoading) {}
 
   return (
     <ModalWrapper open={open} handleCloseClick={handleCloseClick}>
