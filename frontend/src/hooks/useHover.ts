@@ -27,5 +27,5 @@ export const useHover = () => {
     }
   }, []);
 
-  return { hoverRef, isHover }
+  return { hoverRef, isHover, setIsHover }
 }

@@ -73,10 +73,11 @@ export class AuthService {
     return response;
   }
 
-  async validateRefreshToken(refreshToken: string) {
+  async validateRefreshToken(refreshToken: string, res: Response) {
     const response = await lastValueFrom(this.authClient.send("validate-refresh-token", { refreshToken }));
 
     if (response?.status >= 400) {
+      res.clearCookie("refreshToken");
       throw new HttpException(response?.message || "Some error", response?.status || HttpStatus.BAD_REQUEST);
     }
 

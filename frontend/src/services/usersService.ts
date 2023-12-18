@@ -1,9 +1,18 @@
 import { $usersAPI } from "@/http/usersAxios"
 import { IChild } from "@/types/IChild"
+import { IRole } from "@/types/IRole";
+import { IUserCoach } from "@/types/IUserCoach";
+import { IUserGeneralCoach } from "@/types/IUserGeneralCoach";
+import { UserType } from "@/types/UserType";
+
+const getAllUsers = async () => {
+  const { data: users } = await $usersAPI.get<UserType[]>(`/`);
+  return users;
+}
 
 const getUsersWithoutGroup = async () => {
   try {
-    const { data: users } = await $usersAPI.get<Pick<IChild, "id" | "name" | "photo" | "birth">[]>("/withoutGroup");
+    const { data: users } = await $usersAPI.get<IChild[]>("/withoutGroup");
     return users;
 
   } catch (error) {
@@ -13,8 +22,8 @@ const getUsersWithoutGroup = async () => {
 
 const expelChild = async (userId: number) => {
   try {
-    const { data: participants } = await $usersAPI.patch<IChild[]>(`/${userId}/removeGroup`);
-    return participants;
+    const { data: expelledChild } = await $usersAPI.patch<IChild>(`/${userId}/removeGroup`);
+    return expelledChild;
 
   } catch (error) {
     console.log(error);
@@ -31,8 +40,37 @@ const changeGroup = async (userId: number, groupId: number) => {
   }
 }
 
+const getCoachRoles = async () => {
+  const { data: roles } = await $usersAPI.get<IRole[]>(`/coachRoles`);
+  return roles;
+}
+
+const changeRole = async (userId: number, roleId: number) => {
+  try {
+    const { data: user } = await $usersAPI.patch<IUserCoach | IUserGeneralCoach>(`/${userId}/changeRole`, { roleId });
+    return user;
+    
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+const deleteRole = async (userId: number) => {
+  try {
+    const { data: user } = await $usersAPI.patch<IUserCoach | IUserGeneralCoach>(`/${userId}/deleteRole`);
+    return user;
+    
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export default {
+  getAllUsers,
   getUsersWithoutGroup,
   expelChild,
-  changeGroup
+  changeGroup,
+  getCoachRoles,
+  changeRole,
+  deleteRole
 }

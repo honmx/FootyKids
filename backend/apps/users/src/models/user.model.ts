@@ -41,7 +41,7 @@ export class User extends Model<User, UserCreationAttrs> {
   @Column({ type: DataType.TEXT, allowNull: true })
   birth: string;
 
-  @Column({ type: DataType.INTEGER })
+  @Column({ type: DataType.INTEGER, defaultValue: 0 })
   trainingsLeft: number;
 
   @ForeignKey(() => Role)

@@ -11,7 +11,7 @@ export interface IChild extends ICommonUserProps {
   birth: string;
   phone: string;
   trainingsLeft: number;
-  group: Pick<IGroup, "id" | "name">;
+  group: Pick<IGroup, "id" | "name"> | null;
   role: IRole<"USER">;
   medicalDocument: IMedicalDocument | null;
   insurance: IInsurance | null;

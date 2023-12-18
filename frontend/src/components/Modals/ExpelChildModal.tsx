@@ -8,6 +8,8 @@ import userPhoto from "@/assets/user.jpg";
 import usersService from "@/services/usersService";
 import { GroupContext } from "@/contexts/groupContext";
 import Avatar from "../UI/Avatar";
+import { getNameAndSurname } from "@/helpers/getNameAndSurname";
+import { UsersContext } from "@/contexts/usersContext";
 
 interface Props extends IModalProps {
   user: IChild;
@@ -16,12 +18,14 @@ interface Props extends IModalProps {
 const ExpelChildModal: FC<Props> = ({ open, handleCloseClick, user }) => {
 
   const { group, setGroup } = useContext(GroupContext);
+  const { users, setUsers } = useContext(UsersContext);
 
   const handleExpelClick = async () => {
-    const participants = await usersService.expelChild(user.id);
+    const expelledChild = await usersService.expelChild(user.id);
 
-    if (participants) {
-      setGroup({ ...group, participants });
+    if (expelledChild) {
+      setGroup({ ...group, participants: group.participants?.filter(participant => participant.id !== expelledChild.id) });
+      setUsers(users.map(user => user.id === expelledChild.id ? expelledChild : user));
     }
 
     handleCloseClick();
@@ -31,12 +35,15 @@ const ExpelChildModal: FC<Props> = ({ open, handleCloseClick, user }) => {
     <ModalWrapper open={open} handleCloseClick={handleCloseClick}>
       <Stack spacing={3} sx={{ padding: 2 }}>
         <Typography fontSize={28}>Исключить</Typography>
-        <Stack spacing={1} direction="row" sx={{ alignItems: "center" }}>
-          <Avatar photo={user.photo} />
-          <Box>
-            <Typography>{user.name.split(" ").slice(0, 2).join(" ")}</Typography>
-            <Typography>{user.birth}</Typography>
-          </Box>
+        <Stack spacing={3} direction="row" sx={{ alignItems: "center" }}>
+          <Stack spacing={1} direction="row" sx={{ alignItems: "center" }}>
+            <Avatar photo={user.photo} />
+            <Box>
+              <Typography>{getNameAndSurname(user.name)}</Typography>
+              <Typography fontSize={12}>{user.birth}</Typography>
+            </Box>
+          </Stack>
+          <Typography>{user.group?.name}</Typography>
         </Stack>
         <Button onClick={handleExpelClick}>Исключить</Button>
       </Stack>

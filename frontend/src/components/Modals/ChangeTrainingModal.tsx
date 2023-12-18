@@ -6,12 +6,13 @@ import { getCurrentCalendarDates } from "@/helpers/getCurrentCalendarDates";
 import { DateContext } from "@/contexts/dateContext";
 import { ITrainingByDay } from "@/types/ITrainingByDay";
 import TrainingByDayItem from "../Items/TrainingByDayItem";
-import { usePlaces } from "@/hooks/usePlaces";
 import groupsService from "@/services/groupsService";
 import { GroupContext } from "@/contexts/groupContext";
 import { IPlace } from "@/types/IPlace";
 import { useTrainingChange } from "@/hooks/useTrainingChange";
 import { useTrainingRequest } from "@/hooks/useTrainingRequest";
+import { useRequest } from "@/hooks/useRequest";
+import placesService from "@/services/placesService";
 
 interface Props extends IModalProps {
   training: ITrainingByDay;
@@ -23,7 +24,7 @@ const ChangeTrainingModal: FC<Props> = ({ open, handleCloseClick, training }) =>
 
   const [error, setError] = useState<string>("");
 
-  const places = usePlaces();
+  const { data: places, isLoading, error: placesError } = useRequest(() => placesService.getPlaces(), []);
 
   const { changedTraining, handleChangeTraining } = useTrainingChange(training);
 

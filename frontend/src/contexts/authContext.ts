@@ -1,9 +1,9 @@
-import { IUser } from "@/types/UserType";
+import { UserType } from "@/types/UserType";
 import { Dispatch, SetStateAction, createContext } from "react";
 
 interface IAuthContext {
-  user: IUser | null;
-  setUser: Dispatch<SetStateAction<IUser | null>>
+  user: UserType | null;
+  setUser: Dispatch<SetStateAction<UserType | null>>
 }
 
 export const AuthContext = createContext<IAuthContext>({

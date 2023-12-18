@@ -22,6 +22,8 @@ import { RemoveGroupDto } from './dto/removeGroupDto';
 import { lastValueFrom } from 'rxjs';
 import { ClientProxy } from '@nestjs/microservices';
 import { ChangeGroupDto } from './dto/changeGroupDto';
+import { ChangeRoleDto } from './dto/changeRoleDto';
+import { DeleteRoleDto } from './dto/deleteRoleDto';
 // import { createRoleDto } from 'apps/backend/src/users/dto/createRoleDto';
 
 @Injectable()
@@ -34,7 +36,14 @@ export class UsersService {
   ) { }
 
   async getUsers() {
-    const users = await this.usersRepository.findAll({ include: { all: true } });
+    const users = await this.usersRepository.findAll({
+      include: [
+        { model: Group },
+        { model: MedicalDocument },
+        { model: Insurance },
+        { model: Role },
+      ]
+    });
     return users;
   }
 
@@ -122,8 +131,14 @@ export class UsersService {
 
     await this.usersRepository.update({ groupId: null }, { where: { id: dto.id } });
 
-    const participants = await this.getUsersByGroupId({ groupId: user.groupId });
-    return participants;
+    return await this.usersRepository.findOne({
+      where: { id: dto.id },
+      include: [
+        { model: Group },
+        { model: MedicalDocument },
+        { model: Insurance },
+      ]
+    });
   }
 
   async changeGroup(dto: ChangeGroupDto) {
@@ -141,6 +156,52 @@ export class UsersService {
         { model: Group },
         { model: MedicalDocument },
         { model: Insurance },
+      ]
+    });
+  }
+
+  async changeRole(dto: ChangeRoleDto) {
+    const user = await this.usersRepository.findOne({ where: { id: dto.id } });
+
+    if (!user) {
+      return new BadRequestException("Такого пользователя не существует");
+    }
+
+    const role = await this.rolesRepository.findOne({ where: { id: dto.roleId } });
+
+    if (!role) {
+      return new BadRequestException("Такой роли не существует");
+    }
+
+    await this.usersRepository.update({ roleId: dto.roleId }, { where: { id: dto.id } });
+
+    return await this.usersRepository.findOne({
+      where: { id: dto.id },
+      include: [
+        { model: Group },
+        { model: MedicalDocument },
+        { model: Insurance },
+        { model: Role },
+      ]
+    });
+  }
+
+  async deleteRole(dto: DeleteRoleDto) {
+    const user = await this.usersRepository.findOne({ where: { id: dto.id } });
+
+    if (!user) {
+      return new BadRequestException("Такого пользователя не существует");
+    }
+
+    await this.usersRepository.update({ roleId: null }, { where: { id: dto.id } });
+
+    return await this.usersRepository.findOne({
+      where: { id: dto.id },
+      include: [
+        { model: Group },
+        { model: MedicalDocument },
+        { model: Insurance },
+        { model: Role },
       ]
     });
   }
@@ -227,6 +288,11 @@ export class UsersService {
     user.$set("insurance", insurance.id);
 
     return insurance;
+  }
+
+  async getCoachRoles() {
+    const coachRoles = await this.rolesRepository.findAll({ where: { [Op.or]: [{ value: "ADMIN" }, { value: "SUPER_ADMIN" }] } });
+    return coachRoles;
   }
 
   // async getRoleByValue(value: string) {

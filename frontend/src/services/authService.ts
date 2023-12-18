@@ -65,6 +65,7 @@ const validateRefreshToken = async (): Promise<UserType | undefined> => {
   try {
     const { data: user } = await $authAPI.get<UserType>("/validateRefreshToken");
     return user;
+
   } catch (error) {
     return undefined;
   }

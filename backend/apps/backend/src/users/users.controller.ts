@@ -6,6 +6,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { SetMedicalDocumentExpirationDto } from './dto/setMedicalDocumentExpirationDto';
 import { SetInsuranceExpirationDto } from './dto/setInsuranceExpirationDto';
 import { ChangeGroupDto } from './dto/changeGroupDto';
+import { ChangeRoleDto } from './dto/changeRoleDto';
 
 @Controller("users")
 export class UsersController {
@@ -20,6 +21,11 @@ export class UsersController {
   @Get("/withoutGroup")
   async getUsersWithoutGroup() {
     return await this.usersService.getUsersWithoutGroup();
+  }
+
+  @Get("/coachRoles")
+  async getCoachRoles() {
+    return await this.usersService.getCoachRoles();
   }
 
   @Get("/:id")
@@ -40,6 +46,16 @@ export class UsersController {
   @Patch(":id/changeGroup")
   async changeGroup(@Body() changeGroupDto: ChangeGroupDto, @Param("id") id: number) {
     return await this.usersService.changeGroup(id, changeGroupDto);
+  }
+  
+  @Patch(":id/changeRole")
+  async changeRole(@Body() changeRoleDto: ChangeRoleDto, @Param("id") id: number) {
+    return await this.usersService.changeRole(id, changeRoleDto);
+  }
+
+  @Patch(":id/deleteRole")
+  async deleteRole(@Param("id") id: number) {
+    return await this.usersService.deleteRole(id);
   }
 
   @Patch(":id/uploadMedicalDocumentPhoto")
