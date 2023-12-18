@@ -2,7 +2,7 @@ import { FC, useContext, useState } from "react";
 import ModalWrapper from "../Wrappers/ModalWrapper";
 import { IModalProps } from "@/types/IModalProps";
 import { IUserCoach } from "@/types/IUserCoach";
-import { Button, MenuItem, Select, SelectChangeEvent, Stack, Typography } from "@mui/material";
+import { Box, Button, MenuItem, Select, SelectChangeEvent, Stack, Typography } from "@mui/material";
 import { IUserGeneralCoach } from "@/types/IUserGeneralCoach";
 import Avatar from "../UI/Avatar";
 import { getNameAndSurname } from "@/helpers/getNameAndSurname";
@@ -42,18 +42,20 @@ const ChangeRoleModal: FC<Props> = ({ open, handleCloseClick, user }) => {
     <ModalWrapper open={open} handleCloseClick={handleCloseClick}>
       <Stack spacing={3} sx={{ padding: 2 }}>
         <Typography fontSize={28}>Сменить роль</Typography>
-        <Stack spacing={3} direction="row">
+        <Stack spacing={3} direction="row" sx={{ alignItems: "center" }}>
           <Stack direction="row" spacing={1} sx={{ alignItems: "center" }}>
             <Avatar photo={user.photo} />
             <Typography>{getNameAndSurname(user.name)}</Typography>
           </Stack>
-          <Select value={selectedRoleId} onChange={handleRoleIdChange}>
-            {
-              roles.map(role => (
-                <MenuItem key={role.id} value={role.id}>{role.text}</MenuItem>
-              ))
-            }
-          </Select>
+          <Box>
+            <Select value={selectedRoleId} onChange={handleRoleIdChange}>
+              {
+                roles.map(role => (
+                  <MenuItem key={role.id} value={role.id}>{role.text}</MenuItem>
+                ))
+              }
+            </Select>
+          </Box>
         </Stack>
         <Button onClick={handleChangeRoleClick}>Назначить</Button>
       </Stack>

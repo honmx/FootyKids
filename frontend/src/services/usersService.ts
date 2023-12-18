@@ -55,6 +55,16 @@ const changeRole = async (userId: number, roleId: number) => {
   }
 }
 
+const deleteRole = async (userId: number) => {
+  try {
+    const { data: user } = await $usersAPI.patch<IUserCoach | IUserGeneralCoach>(`/${userId}/deleteRole`);
+    return user;
+    
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export default {
   getAllUsers,
   getUsersWithoutGroup,
@@ -62,4 +72,5 @@ export default {
   changeGroup,
   getCoachRoles,
   changeRole,
+  deleteRole
 }

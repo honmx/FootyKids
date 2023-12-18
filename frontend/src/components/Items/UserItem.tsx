@@ -18,6 +18,7 @@ import ProfileModal from "../Modals/ProfileModal";
 import { getNameAndSurname } from "@/helpers/getNameAndSurname";
 import ChangeRoleModal from "../Modals/ChangeRoleModal";
 import { AuthContext } from "@/contexts/authContext";
+import DeleteRoleModal from "../Modals/DeleteRoleModal";
 
 interface Props extends BoxProps {
   user: UserType;
@@ -34,6 +35,7 @@ const UserItem: FC<Props> = ({ user, renderType = false, sx, ...restProps }) => 
 
   const [isProfileModalActive, setIsProfileModalActive] = useState<boolean>(false);
   const [isChangeRoleModalActive, setIsChangeRoleModalActive] = useState<boolean>(false);
+  const [isDeleteRoleModalActive, setIsDeleteRoleModalActive] = useState<boolean>(false);
   const [isChangeChildGroupModalActive, setIsChangeChildGroupModalActive] = useState<boolean>(false);
   const [isExpelChildModalActive, setIsExpelChildModalActive] = useState<boolean>(false);
   const [isDeleteUserModalActive, setIsDeleteUserModalActive] = useState<boolean>(false);
@@ -61,6 +63,11 @@ const UserItem: FC<Props> = ({ user, renderType = false, sx, ...restProps }) => 
     setIsChangeRoleModalActive(prev => !prev);
     clearStatesAndStopPropagation(e);
   }
+  
+  const handleOpenDeleteRoleModalClick = (e?: MouseEvent<HTMLDivElement>) => {
+    setIsDeleteRoleModalActive(prev => !prev);
+    clearStatesAndStopPropagation(e);
+  }
 
   const handleOpenChangeChildGroupModalClick = (e?: MouseEvent<HTMLDivElement>) => {
     setIsChangeChildGroupModalActive(prev => !prev);
@@ -80,6 +87,7 @@ const UserItem: FC<Props> = ({ user, renderType = false, sx, ...restProps }) => 
   const menuButtons = [
     { text: "Подробнее", onClick: handleOpenProfileModalClick, render: true },
     { text: "Назначить роль", onClick: handleOpenChangeRoleModalClick, render: user.type === "coach" && authUser?.id !== user.id },
+    { text: "Снять роль", onClick: handleOpenDeleteRoleModalClick, render: user.type === "coach" && authUser?.id !== user.id && user.role !== null },
     { text: "Назначить группу", onClick: handleOpenChangeChildGroupModalClick, render: user.type === "user" },
     { text: "Исключить", onClick: handleOpenExpelChildModalClick, render: user.type === "user" && user.group !== null },
     { text: "Удалить", onClick: handleOpenDeleteUserModalClick, render: user.type === "coach" && !user.role && authUser?.id !== user.id || user.type === "user" && !user.group },
@@ -227,6 +235,13 @@ const UserItem: FC<Props> = ({ user, renderType = false, sx, ...restProps }) => 
         typeof document !== "undefined" && user.type === "coach" &&
         createPortal(
           <ChangeRoleModal open={isChangeRoleModalActive} handleCloseClick={handleOpenChangeRoleModalClick} user={user} />,
+          document.body.querySelector("#modal-container") as Element
+        )
+      }
+      {
+        typeof document !== "undefined" && user.type === "coach" &&
+        createPortal(
+          <DeleteRoleModal open={isDeleteRoleModalActive} handleCloseClick={handleOpenDeleteRoleModalClick} user={user} />,
           document.body.querySelector("#modal-container") as Element
         )
       }
