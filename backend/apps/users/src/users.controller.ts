@@ -109,6 +109,13 @@ export class UsersController {
     return response;
   }
 
+  @MessagePattern("delete-role")
+  async deleteRole(@Payload() dto: ChangeRoleDto, @Ctx() context: RmqContext) {
+    const response = await this.usersService.deleteRole(dto);
+    this.rmqService.ack(context);
+    return response;
+  }
+
   @MessagePattern("upload-medical-document-photo")
   async uploadMedicalDocumentPhoto(@Payload() dto: UploadMedicalDocumentPhotoDto, @Ctx() context: RmqContext) {
     const response = await this.usersService.uploadMedicalDocumentPhoto(dto);

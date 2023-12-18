@@ -53,6 +53,11 @@ export class UsersController {
     return await this.usersService.changeRole(id, changeRoleDto);
   }
 
+  @Patch(":id/deleteRole")
+  async deleteRole(@Param("id") id: number) {
+    return await this.usersService.deleteRole(id);
+  }
+
   @Patch(":id/uploadMedicalDocumentPhoto")
   @UseInterceptors(FileInterceptor("photo"))
   async uploadMedicalDocumentPhoto(@Param("id") id: number, @UploadedFile() photo: Express.Multer.File) {

@@ -9,6 +9,7 @@ import usersService from "@/services/usersService";
 import { GroupContext } from "@/contexts/groupContext";
 import Avatar from "../UI/Avatar";
 import { getNameAndSurname } from "@/helpers/getNameAndSurname";
+import { UsersContext } from "@/contexts/usersContext";
 
 interface Props extends IModalProps {
   user: IChild;
@@ -17,12 +18,14 @@ interface Props extends IModalProps {
 const ExpelChildModal: FC<Props> = ({ open, handleCloseClick, user }) => {
 
   const { group, setGroup } = useContext(GroupContext);
+  const { users, setUsers } = useContext(UsersContext);
 
   const handleExpelClick = async () => {
     const expelledChild = await usersService.expelChild(user.id);
 
     if (expelledChild) {
-      setGroup({ ...group, participants: group.participants.filter(participant => participant.id !== expelledChild.id) });
+      setGroup({ ...group, participants: group.participants?.filter(participant => participant.id !== expelledChild.id) });
+      setUsers(users.map(user => user.id === expelledChild.id ? expelledChild : user));
     }
 
     handleCloseClick();
@@ -37,7 +40,7 @@ const ExpelChildModal: FC<Props> = ({ open, handleCloseClick, user }) => {
             <Avatar photo={user.photo} />
             <Box>
               <Typography>{getNameAndSurname(user.name)}</Typography>
-              <Typography>{user.birth}</Typography>
+              <Typography fontSize={12}>{user.birth}</Typography>
             </Box>
           </Stack>
           <Typography>{user.group?.name}</Typography>

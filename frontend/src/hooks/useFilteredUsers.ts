@@ -4,7 +4,7 @@ import { IChild } from "@/types/IChild";
 import { UserType } from "@/types/UserType";
 import { useEffect, useState } from "react";
 
-export const useFilteredUsers = (users: UserType[], name: string, selectValueId: number) => {
+export const useFilteredUsers = (users: UserType[], name: string, selectValueId: number = 0) => {
 
   const [filteredUsers, setFilteredUsers] = useState<UserType[]>(users);
 

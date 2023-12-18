@@ -23,6 +23,7 @@ import { lastValueFrom } from 'rxjs';
 import { ClientProxy } from '@nestjs/microservices';
 import { ChangeGroupDto } from './dto/changeGroupDto';
 import { ChangeRoleDto } from './dto/changeRoleDto';
+import { DeleteRoleDto } from './dto/deleteRoleDto';
 // import { createRoleDto } from 'apps/backend/src/users/dto/createRoleDto';
 
 @Injectable()
@@ -173,6 +174,26 @@ export class UsersService {
     }
 
     await this.usersRepository.update({ roleId: dto.roleId }, { where: { id: dto.id } });
+
+    return await this.usersRepository.findOne({
+      where: { id: dto.id },
+      include: [
+        { model: Group },
+        { model: MedicalDocument },
+        { model: Insurance },
+        { model: Role },
+      ]
+    });
+  }
+
+  async deleteRole(dto: DeleteRoleDto) {
+    const user = await this.usersRepository.findOne({ where: { id: dto.id } });
+
+    if (!user) {
+      return new BadRequestException("Такого пользователя не существует");
+    }
+
+    await this.usersRepository.update({ roleId: null }, { where: { id: dto.id } });
 
     return await this.usersRepository.findOne({
       where: { id: dto.id },

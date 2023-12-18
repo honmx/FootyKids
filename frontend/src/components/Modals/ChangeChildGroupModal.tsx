@@ -41,14 +41,14 @@ const ChangeChildGroupModal: FC<Props> = ({ open, handleCloseClick, user }) => {
   }
 
   const handleChangeGroupClick = async () => {
-    if (selectedGroupId === user.group?.id) return;
+    if (selectedGroupId !== user.group?.id) {
+      const userWithChangedGroup = await usersService.changeGroup(user.id, selectedGroupId);
 
-    const userWithChangedGroup = await usersService.changeGroup(user.id, selectedGroupId);
+      if (!userWithChangedGroup) return;
 
-    if (!userWithChangedGroup) return;
-
-    setGroup({ ...group, participants: group?.participants?.filter(user => user.id !== userWithChangedGroup.id) });
-    setUsers(users.map(user => user.id === userWithChangedGroup.id ? userWithChangedGroup : user));
+      setGroup({ ...group, participants: group?.participants?.filter(user => user.id !== userWithChangedGroup.id) });
+      setUsers(users.map(user => user.id === userWithChangedGroup.id ? userWithChangedGroup : user));
+    }
 
     handleCloseClick();
   }
@@ -62,7 +62,7 @@ const ChangeChildGroupModal: FC<Props> = ({ open, handleCloseClick, user }) => {
             <Avatar photo={user.photo} />
             <Box>
               <Typography>{getNameAndSurname(user.name)}</Typography>
-              <Typography>{user.birth}</Typography>
+              <Typography fontSize={12}>{user.birth}</Typography>
             </Box>
           </Stack>
           <Select value={selectedGroupId} onChange={handleGroupChange}>
